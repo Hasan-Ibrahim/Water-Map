@@ -21,14 +21,8 @@ namespace Web
                       
                       "~/Scripts/Directives/directiveModule.js",
                       "~/Scripts/Directives/googleMapGeoCoder.js",
-                      "~/Scripts/Directives/categoryList.js",
-                      "~/Scripts/Directives/productSummary.js",
-                      "~/Scripts/Directives/productSummaryList.js",
                       "~/Scripts/Directives/ratingDisplay.js",
-                      "~/Scripts/Directives/cartProductSummary.js",
-                      "~/Scripts/Directives/cartProductSummaryList.js",
                       
-                      "~/Scripts/Directives/categorySelector.js",
                       "~/Scripts/App/Utility/utilityModule.js",
                       "~/Scripts/App/Utility/tokenStorage.js",
                       "~/Scripts/App/Utility/accessControl.js",
