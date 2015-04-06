@@ -93,13 +93,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\AuthTokenDbContext.cs" />
-    <Compile Include="Context\DataDbContext.cs" />
-    <Compile Include="Context\ReadDbContext.cs" />
+    <Compile Include="Context\AppDbContext.cs" />
     <Compile Include="Model\DbNoIdModel.cs" />
     <Compile Include="Model\DbUserToken.cs" />
     <Compile Include="Model\DbUser.cs" />
     <Compile Include="Model\DbModel.cs" />
+    <Compile Include="Model\DbWaterSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstraction\InMemoryRepository.cs" />
     <Compile Include="Repositories\Abstraction\IRepository.cs" />

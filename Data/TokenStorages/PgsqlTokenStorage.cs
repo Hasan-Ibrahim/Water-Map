@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Data.Context;
 using System;
 using Data.Model;
 
@@ -9,16 +8,16 @@ namespace Data.TokenStorages
 {
     public class PgsqlTokenStorage : ITokenStorage
     {
-        private readonly AuthTokenDbContext _db;
+        private readonly DbContext _db;
 
-        public PgsqlTokenStorage(AuthTokenDbContext authTokenDbContext)
+        public PgsqlTokenStorage(DbContext authTokenDbContext)
         {
             _db = authTokenDbContext;
         }
         
         public string CreateToken(int userId)
         {
-            var user = _db.DbTokenUsers.FirstOrDefault(tokenUser => tokenUser.UserId == userId);
+            var user = _db.Set<DbUserToken>().FirstOrDefault(tokenUser => tokenUser.UserId == userId);
             var token = Guid.NewGuid().ToString().Replace("-", "");
             if (user != null)
             {
@@ -27,7 +26,7 @@ namespace Data.TokenStorages
             }
             else
             {
-                var tokenUser = _db.DbTokenUsers.Create();
+                var tokenUser = _db.Set<DbUserToken>().Create();
                 tokenUser.UserId = userId;
                 tokenUser.Token = token;
                 _db.Entry(tokenUser).State = EntityState.Added;
@@ -42,7 +41,7 @@ namespace Data.TokenStorages
 
         public int GetUserId(string token)
         {
-            var userTokenTask = _db.DbTokenUsers.FirstOrDefault(tu => tu.Token == token);
+            var userTokenTask = _db.Set<DbUserToken>().FirstOrDefault(tu => tu.Token == token);
             return userTokenTask == null ? 0 : userTokenTask.UserId;
         }
 
@@ -50,7 +49,7 @@ namespace Data.TokenStorages
         {
             if (token != null)
             {
-                var itemToDelete = _db.DbTokenUsers.FirstOrDefault(tu => tu.Token == token);
+                var itemToDelete = _db.Set<DbUserToken>().FirstOrDefault(tu => tu.Token == token);
                 if (itemToDelete != null)
                 {
                     _db.Set<DbUserToken>().Remove(itemToDelete);
