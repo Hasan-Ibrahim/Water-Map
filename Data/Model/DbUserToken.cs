@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Model
 {
-    [Table("UserToken", Schema = "app")]
+    [Table("UserToken")]
     public class DbUserToken
     {
         public string Token { get; set; }

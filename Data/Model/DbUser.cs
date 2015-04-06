@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Model
 {
-    [Table("User", Schema = "app")]
+    [Table("User")]
     public class DbUser : DbModel
     {
         public string LoginId { get; set; }
