@@ -1,5 +1,4 @@
 ﻿using Data.Model;
-using Data.Model.Write;
 using Data.Repositories;
 using Data.Repositories.Abstraction;
 using NUnit.Framework;

@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using Data.Model.Write;
+using Data.Model;
 
 namespace Data.Context
 {

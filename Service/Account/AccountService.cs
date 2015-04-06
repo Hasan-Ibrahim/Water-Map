@@ -1,5 +1,5 @@
 ﻿using System;
-using Data.Model.Write;
+using Data.Model;
 using Data.Repositories;
 using Service.Constants;
 using Service.OAuth;

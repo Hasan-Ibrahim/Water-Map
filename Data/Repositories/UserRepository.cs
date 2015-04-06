@@ -1,4 +1,4 @@
-﻿using Data.Model.Write;
+﻿using Data.Model;
 using Data.Repositories.Abstraction;
 
 namespace Data.Repositories

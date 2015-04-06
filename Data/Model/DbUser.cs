@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Model.Write
+namespace Data.Model
 {
     [Table("User", Schema = "app")]
     public class DbUser : DbModel

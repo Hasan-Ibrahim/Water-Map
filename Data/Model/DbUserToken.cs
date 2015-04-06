@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Model.Auth
+namespace Data.Model
 {
     [Table("UserToken", Schema = "app")]
     public class DbUserToken

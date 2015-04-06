@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Web;
 using Api.AccessControl.OAuth;
 using Data.Context;
-using Data.Model.Write;
+using Data.Model;
 using Data.Repositories;
 using Data.Repositories.Abstraction;
 using Data.TokenStorages;

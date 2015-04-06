@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using Data.Model.Auth;
+using Data.Model;
 
 namespace Data.Context
 {
