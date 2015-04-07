@@ -24,7 +24,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [OverrideAuthorization]
-        public Task<ActiveUser> GetUserProfile()
+        public ActiveUser GetUserProfile()
         {
             var userProfile = _profileService.GetProfile(_tokenUser.UserId);
             return userProfile;

@@ -17,24 +17,24 @@ namespace Data.Repositories.Abstraction
             _db = db;
         }
 
-        public async Task<TModel> Find(int id)
+        public TModel Find(int id)
         {
-            return await _db.Set<TModel>().FindAsync(id);
+            return _db.Set<TModel>().Find(id);
         }
 
-        public async Task<TModel> Find(Expression<Func<TModel, bool>> query)
+        public TModel Find(Expression<Func<TModel, bool>> query)
         {
-            return await _db.Set<TModel>().FirstOrDefaultAsync(query);
+            return _db.Set<TModel>().FirstOrDefault(query);
         }
 
-        public async Task<bool> Exists(Expression<Func<TModel, bool>> query)
+        public bool Exists(Expression<Func<TModel, bool>> query)
         {
-            return await _db.Set<TModel>().AnyAsync(query);
+            return _db.Set<TModel>().Any(query);
         }
 
-        public async Task<IEnumerable<TModel>> GetAll()
+        public IEnumerable<TModel> GetAll()
         {
-            return await _db.Set<TModel>().Where(m => m.IsDeleted == false).ToListAsync();
+            return _db.Set<TModel>().Where(m => m.IsDeleted == false);
         }
 
         public TModel Create(TModel item)
@@ -51,11 +51,11 @@ namespace Data.Repositories.Abstraction
 
         public bool SoftDelete(int id)
         {
-            var itemTask = Find(id);
-            if (itemTask.IsCompleted && itemTask.Result != null)
+            var item = Find(id);
+            if (item != null)
             {
-                itemTask.Result.IsDeleted = true;
-                Update(itemTask.Result);
+                item.IsDeleted = true;
+                Update(item);
                 return true;
             }
             return false;

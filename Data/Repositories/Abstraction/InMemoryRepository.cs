@@ -44,27 +44,27 @@ namespace Data.Repositories.Abstraction
             _collection = (IDictionary<int, TModel>)_database[typeof(TModel)];
         }
 
-        public async Task<TModel> Find(int id)
+        public TModel Find(int id)
         {
-            var first = GetAll().Result.FirstOrDefault(model => model.Id == id);
-            return await Task.FromResult(first);
+            var first = GetAll().FirstOrDefault(model => model.Id == id);
+            return first;
         }
 
-        public async Task<TModel> Find(Expression<Func<TModel, bool>> query)
+        public TModel Find(Expression<Func<TModel, bool>> query)
         {
-            return await Task.FromResult(GetAll().Result.AsQueryable().FirstOrDefault(query));
+            return GetAll().AsQueryable().FirstOrDefault(query);
         }
 
-        public async Task<bool> Exists(Expression<Func<TModel, bool>> query)
+        public bool Exists(Expression<Func<TModel, bool>> query)
         {
-            return await Task.FromResult(GetAll().Result.AsQueryable().Any(query));
+            return GetAll().AsQueryable().Any(query);
         }
 
-        public async Task<IEnumerable<TModel>> GetAll()
+        public IEnumerable<TModel> GetAll()
         {
             var all = _collection.Values.OrderBy(model => model.Id);
             var result = all.Where(model => !model.IsDeleted);
-            return await Task.FromResult(result);
+            return result;
         }
 
         public TModel Create(TModel item)
@@ -92,7 +92,7 @@ namespace Data.Repositories.Abstraction
 
         public bool SoftDelete(int id)
         {
-            var itemToDelete = Find(id).Result;
+            var itemToDelete = Find(id);
             if (itemToDelete == null)
             {
                 return false;

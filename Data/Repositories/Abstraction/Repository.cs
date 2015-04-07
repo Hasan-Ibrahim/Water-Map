@@ -15,24 +15,24 @@ namespace Data.Repositories.Abstraction
             _inneRepository = inneRepository;
         }
 
-        public async Task<TModel> Find(int id)
+        public TModel Find(int id)
         {
-            return await _inneRepository.Find(id);
+            return _inneRepository.Find(id);
         }
 
-        public async Task<TModel> Find(Expression<Func<TModel, bool>> query)
+        public TModel Find(Expression<Func<TModel, bool>> query)
         {
-            return await _inneRepository.Find(query);
+            return _inneRepository.Find(query);
         }
 
-        public async Task<bool> Exists(Expression<Func<TModel, bool>> query)
+        public bool Exists(Expression<Func<TModel, bool>> query)
         {
-            return await _inneRepository.Exists(query);
+            return _inneRepository.Exists(query);
         }
 
-        public async Task<IEnumerable<TModel>> GetAll()
+        public IEnumerable<TModel> GetAll()
         {
-            return await _inneRepository.GetAll();
+            return _inneRepository.GetAll();
         }
 
         public TModel Create(TModel item)

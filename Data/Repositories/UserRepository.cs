@@ -11,7 +11,7 @@ namespace Data.Repositories
 
         public DbUser FindByLoginId(string email)
         {
-            return Find(user => user.LoginId == email).Result;
+            return Find(user => user.LoginId == email);
         }
     }
 }

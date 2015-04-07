@@ -14,23 +14,23 @@ namespace Service.Profile
             _userRepository = userRepository;
         }
 
-        public async Task<ActiveUser> GetProfile(int userId)
+        public ActiveUser GetProfile(int userId)
         {
             var dbUserTask = _userRepository.Find(userId);
-            var dbUser = await dbUserTask;
+            var dbUser = dbUserTask;
             return new ActiveUser(dbUser);
         }
 
         public async Task<string> GetAddress(int userId)
         {
             var dbUserTask = _userRepository.Find(userId);
-            var dbuser = await dbUserTask;
+            var dbuser = dbUserTask;
             return await Task.FromResult(dbuser.Address);
         }
 
         public bool UpdateProfile(int userId, ProfileUpdate update)
         {
-            var profile = _userRepository.Find(userId).Result;
+            var profile = _userRepository.Find(userId);
 
             profile.FullName = update.FullName;
             profile.PhoneNumber = update.PhoneNumber;

@@ -14,7 +14,7 @@ namespace DataTest
         public void ConnectingToPostgres()
         {
             var pgsqlRepo = new PgsqlRepository<DbWaterSource>(new AppDbContext(_connectionString));
-            var data = pgsqlRepo.GetAll().Result;
+            var data = pgsqlRepo.GetAll();
         }
     }
 }

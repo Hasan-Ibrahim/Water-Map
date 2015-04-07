@@ -46,7 +46,7 @@ namespace Service.Account
                 return DataUpdateStatus.PasswordAndRetypePasswordMismatch;
             }
 
-            if (_userRepository.Exists(user => user.LoginId == registration.Email).Result)
+            if (_userRepository.Exists(user => user.LoginId == registration.Email))
             {
                 return DataUpdateStatus.DuplicateUsername;
             }
@@ -71,7 +71,7 @@ namespace Service.Account
 
         public bool UserExists(string loginId)
         {
-            return _userRepository.Exists(user => user.LoginId == loginId).Result;
+            return _userRepository.Exists(user => user.LoginId == loginId);
         }
 
         public void Dispose()
@@ -83,7 +83,7 @@ namespace Service.Account
         {
             if (changePassword.NewPassword == changePassword.RetypePassword)
             {
-                var user = _userRepository.Find(userId).Result;
+                var user = _userRepository.Find(userId);
                 if (user.IsOAuthUser)
                 {
                     return DataUpdateStatus.NotAllowedForOAuthUser;
