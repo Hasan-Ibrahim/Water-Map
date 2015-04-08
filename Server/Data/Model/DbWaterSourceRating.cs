@@ -10,5 +10,16 @@ namespace Data.Model
         public int WaterSourceId { get; set; }
         public Potability Potability { get; set; }
         public int? UserId { get; set; }
+
+        public DbWaterSourceRating()
+        {
+            
+        }
+
+        public DbWaterSourceRating(int waterSourceId, Potability potability)
+        {
+            WaterSourceId = waterSourceId;
+            Potability = potability;
+        }
     }
 }

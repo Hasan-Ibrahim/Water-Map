@@ -78,6 +78,7 @@
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Serialization\GeometryConverter.cs" />
     <Compile Include="WaterSource\WaterSourceCreateEntry.cs" />
+    <Compile Include="WaterSource\WaterSourceRating.cs" />
     <Compile Include="WaterSource\WaterSourceService.cs" />
     <Compile Include="WaterSupply\DailySupplyEntry.cs" />
     <Compile Include="WaterSupply\DailySupplyService.cs" />
