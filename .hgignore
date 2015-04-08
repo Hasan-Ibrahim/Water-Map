@@ -14,3 +14,4 @@ segments.gen
 *.cfx
 *.cfs
 Api/App_Data/
+Server/Api/Properties/PublishProfiles
