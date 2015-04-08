@@ -13,13 +13,13 @@ namespace Data.Model
         public DateTime SupplyDate { get; set; }
         public int NumberOfPeople { get; set; }
         public double StressIndex { get; set; }
-
+        
         public DbDailyAverageSupplySummary()
         {
-            
+
         }
 
-        public DbDailyAverageSupplySummary(Guid groupId, /*DbGeometry location,*/ int supplyInLitre,
+        public DbDailyAverageSupplySummary(Guid groupId, DbGeometry location, int supplyInLitre,
             DateTime supplyDate, int numberOfPeople, double stressIndex)
         {
             GroupId = groupId;
@@ -27,7 +27,7 @@ namespace Data.Model
             SupplyDate = supplyDate;
             NumberOfPeople = numberOfPeople;
             StressIndex = stressIndex;
-            // Location = location;
+            Location = location;
         }
     }
 }

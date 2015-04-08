@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using Data.Model;
 using Data.Repositories.Abstraction;
@@ -22,14 +23,16 @@ namespace Service.WaterSupply
         public void AddSupply(DailySupplyEntry dailySupply)
         {
             var groupId = Guid.NewGuid();
+            var location = DbGeometry.FromText(dailySupply.LocationWkt);
             foreach (var supplyPerSource in dailySupply.Supply)
             {
-                var dbDailyAverageSupply = new DbDailyAverageSupply(groupId, supplyPerSource.Supply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, supplyPerSource.SourceId);
+                var dbDailyAverageSupply = new DbDailyAverageSupply(groupId, location, supplyPerSource.Supply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, supplyPerSource.SourceId);
                 _supplyRepository.Create(dbDailyAverageSupply);
             }
+
             var totalSupply = dailySupply.Supply.Sum(supply => supply.Supply);
-            var stress = WaterSupplyConstant.PerPersonDailyWaterRequirmentInLitre / (totalSupply * dailySupply.NumberOfPeople);
-            var dbSummary = new DbDailyAverageSupplySummary(groupId, totalSupply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, stress);
+            var stress = (1.0 * WaterSupplyConstant.PerPersonDailyWaterRequirmentInLitre) / (totalSupply * dailySupply.NumberOfPeople);
+            var dbSummary = new DbDailyAverageSupplySummary(groupId, location, totalSupply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, stress);
 
             _summaryRepository.Create(dbSummary);
 

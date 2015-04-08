@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Data.Model;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 
 namespace Data.Repositories.Abstraction
 {
-    public class PgsqlRepository<TModel>: IRepository<TModel> where TModel : DbModel
+    public class PgsqlRepository<TModel> : IRepository<TModel> where TModel : DbModel
     {
         private readonly DbContext _db;
 
@@ -47,7 +46,7 @@ namespace Data.Repositories.Abstraction
             _db.Entry(item).State = EntityState.Added;
             return item;
         }
-        
+
         public bool Update(TModel updatedItem)
         {
             _db.Entry(updatedItem).State = EntityState.Modified;
@@ -80,18 +79,12 @@ namespace Data.Repositories.Abstraction
 
         public bool SaveChanges()
         {
-            try
+            if (_db.ChangeTracker.HasChanges())
             {
-                if (_db.ChangeTracker.HasChanges())
-                {
-                    _db.SaveChanges();
-                    return true;
-                }
+                _db.SaveChanges();
+                return true;
             }
-            catch
-            {
-            }
-            
+
             return false;
         }
     }

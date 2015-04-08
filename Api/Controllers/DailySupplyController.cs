@@ -15,9 +15,15 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<StressByLocation> GetStressByLocation()
+        public IEnumerable<StressByLocation> GetStressByLocation(DateTime fromDate, DateTime toDate)
         {
-            return _dailySupplyService.GetStressByLocation(new DateTime(2011, 1, 1), new DateTime(2015, 1, 1));
-        } 
+            return _dailySupplyService.GetStressByLocation(fromDate, toDate);
+        }
+
+        [HttpPost]
+        public void AddDailyAverageWaterSupply(DailySupplyEntry dailySupplyEntry)
+        {
+            _dailySupplyService.AddSupply(dailySupplyEntry);
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Data.Model
         {
         }
 
-        public DbDailyAverageSupply(Guid groupId, /*DbGeometry location,*/ int supplyInLitre, 
+        public DbDailyAverageSupply(Guid groupId, DbGeometry location, int supplyInLitre, 
             DateTime supplyDate, int numberOfPeople, int sourceId)
         {
             GroupId = groupId;
@@ -26,8 +26,7 @@ namespace Data.Model
             SupplyDate = supplyDate;
             NumberOfPeople = numberOfPeople;
             SourceId = sourceId;
-            
-            // Location = location;
+            Location = location;
         }
     }
 }
