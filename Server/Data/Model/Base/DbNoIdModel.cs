@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Model
+namespace Data.Model.Base
 {
     public class DbNoIdModel : DbModel
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Data.Model;
+using Data.Model.Base;
 
 namespace Data.Repositories.Abstraction
 {

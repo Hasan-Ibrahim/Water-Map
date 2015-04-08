@@ -5,6 +5,7 @@ using System.Web;
 using Api.AccessControl.OAuth;
 using Data.Context;
 using Data.Model;
+using Data.Model.Authentication;
 using Data.Repositories;
 using Data.Repositories.Abstraction;
 using Data.TokenStorages;

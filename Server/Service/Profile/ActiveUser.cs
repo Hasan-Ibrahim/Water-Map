@@ -1,4 +1,5 @@
 ﻿using Data.Model;
+using Data.Model.Authentication;
 
 namespace Service.Profile
 {

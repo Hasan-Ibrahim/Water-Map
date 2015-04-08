@@ -1,4 +1,5 @@
 ﻿using Data.Model;
+using Data.Model.Authentication;
 using Data.Repositories;
 using Data.Repositories.Abstraction;
 using NUnit.Framework;
