@@ -42,7 +42,7 @@ namespace Api
             //container.RegisterType<ITokenStorage, PgsqlTokenStorage>();
             container.RegisterType<ITokenStorage, InMemoryTokenStorage>();
 
-            container.RegisterType(typeof(IRepository<>), typeof(PgsqlRepository<>));
+            container.RegisterType(typeof(IRepository<>), typeof(DbContextRepository<>));
             container.RegisterType<DbContext, AppDbContext>(new InjectionConstructor("app"));
             //container.RegisterType(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
@@ -50,7 +50,7 @@ namespace Api
             container.RegisterType<KeywordRepository>(new InjectionConstructor(_keywordIndexDirectory));
             //container.RegisterType<FacebookOAuthClient>(new InjectionConstructor(_facebookClientId, _facebookClientSecret));
 
-            container.RegisterType(typeof(PgsqlRepository<DbUser>), new InjectionConstructor(new ResolvedParameter<AppDbContext>()));
+            container.RegisterType(typeof(DbContextRepository<DbUser>), new InjectionConstructor(new ResolvedParameter<AppDbContext>()));
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

@@ -2,16 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using Data.Model;
 using Data.Model.Authentication;
 
 namespace Data.TokenStorages
 {
-    public class PgsqlTokenStorage : ITokenStorage
+    public class DbContextTokenStorage : ITokenStorage
     {
         private readonly DbContext _db;
 
-        public PgsqlTokenStorage(DbContext authTokenDbContext)
+        public DbContextTokenStorage(DbContext authTokenDbContext)
         {
             _db = authTokenDbContext;
         }

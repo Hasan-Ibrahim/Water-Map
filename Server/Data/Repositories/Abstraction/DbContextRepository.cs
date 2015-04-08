@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using System.Linq.Expressions;
-using Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,11 @@ using Data.Model.Base;
 
 namespace Data.Repositories.Abstraction
 {
-    public class PgsqlRepository<TModel> : IRepository<TModel> where TModel : DbModel
+    public class DbContextRepository<TModel> : IRepository<TModel> where TModel : DbModel
     {
         private readonly DbContext _db;
 
-        public PgsqlRepository(DbContext db)
+        public DbContextRepository(DbContext db)
         {
             _db = db;
         }
