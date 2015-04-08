@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Web;
 using Api.AccessControl.OAuth;
 using Data.Context;
@@ -36,10 +37,13 @@ namespace Api
 
             // container.RegisterType<ITokenStorage, PgsqlTokenStorage>();
             container.RegisterType<IRedisClient, RedisClient>(new InjectionConstructor(redisServerHost, redisServerPort, redisServerPassword, 0L));
-            container.RegisterType<ITokenStorage, RedisTokenStorage>();
+            //container.RegisterType<ITokenStorage, RedisTokenStorage>();
+            //container.RegisterType<ITokenStorage, PgsqlTokenStorage>();
+            container.RegisterType<ITokenStorage, InMemoryTokenStorage>();
 
-            //container.RegisterType(typeof(IRepository<>), typeof(PgsqlRepository<>));
-            container.RegisterType(typeof(IRepository<>), typeof(InMemoryRepository<>));
+            container.RegisterType(typeof(IRepository<>), typeof(PgsqlRepository<>));
+            container.RegisterType<DbContext, AppDbContext>(new InjectionConstructor("app"));
+            //container.RegisterType(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
             container.RegisterType<GoogleOAuthClient>(new InjectionConstructor(_googleClientId, _googleClientSecret));
             container.RegisterType<KeywordRepository>(new InjectionConstructor(_keywordIndexDirectory));
