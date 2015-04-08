@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Data.Model
+namespace Data.Model.Base
 {
     public class DbModel
     {

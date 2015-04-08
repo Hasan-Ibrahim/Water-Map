@@ -1,5 +1,6 @@
 ﻿using System;
 using Data.Model;
+using Data.Model.Authentication;
 using Data.Repositories;
 using Service.Constants;
 using Service.OAuth;

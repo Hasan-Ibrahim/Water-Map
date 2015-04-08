@@ -97,10 +97,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\AppDbContext.cs" />
-    <Compile Include="Model\DbNoIdModel.cs" />
-    <Compile Include="Model\DbUserToken.cs" />
-    <Compile Include="Model\DbUser.cs" />
-    <Compile Include="Model\DbModel.cs" />
+    <Compile Include="Model\Base\DbNoIdModel.cs" />
+    <Compile Include="Model\Authentication\DbUserToken.cs" />
+    <Compile Include="Model\Authentication\DbUser.cs" />
+    <Compile Include="Model\Base\DbModel.cs" />
     <Compile Include="Model\DbWaterSource.cs" />
     <Compile Include="Model\DbDailyAverageSupply.cs" />
     <Compile Include="Model\DbDailyAverageSupplySummary.cs" />

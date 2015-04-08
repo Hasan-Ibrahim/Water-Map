@@ -1,4 +1,6 @@
 ﻿using Data.Model;
+using Data.Model.Authentication;
+using Data.Model.Base;
 using FizzWare.NBuilder;
 using System;
 using System.Collections;

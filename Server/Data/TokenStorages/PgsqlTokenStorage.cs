@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Data.Model;
+using Data.Model.Authentication;
 
 namespace Data.TokenStorages
 {
