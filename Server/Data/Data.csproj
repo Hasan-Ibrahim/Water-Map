@@ -107,13 +107,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstraction\InMemoryRepository.cs" />
     <Compile Include="Repositories\Abstraction\IRepository.cs" />
-    <Compile Include="Repositories\Abstraction\PgsqlRepository.cs" />
+    <Compile Include="Repositories\Abstraction\DbContextRepository.cs" />
     <Compile Include="Repositories\Abstraction\Repository.cs" />
     <Compile Include="Repositories\KeywordRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="TokenStorages\InMemoryTokenStorage.cs" />
     <Compile Include="TokenStorages\ITokenStorage.cs" />
-    <Compile Include="TokenStorages\PgsqlTokenStorage.cs" />
+    <Compile Include="TokenStorages\DbContextTokenStorage.cs" />
     <Compile Include="TokenStorages\RedisTokenStorage.cs" />
     <Compile Include="Utility\Page.cs" />
     <Compile Include="Utility\ProductPropertyNameMapper.cs" />
