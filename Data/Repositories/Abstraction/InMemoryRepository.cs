@@ -67,6 +67,11 @@ namespace Data.Repositories.Abstraction
             return result;
         }
 
+        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        {
+            return GetAll().Where(query);
+        }
+
         public TModel Create(TModel item)
         {
             var id = ++_sequence;

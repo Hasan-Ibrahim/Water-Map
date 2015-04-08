@@ -14,6 +14,7 @@ namespace Data.Repositories.Abstraction
         bool Exists(Expression<Func<TModel, bool>> query);
 
         IEnumerable<TModel> GetAll();
+        IEnumerable<TModel> Where(Func<TModel, bool> query);
 
         TModel Create(TModel item);
         bool Update(TModel updatedItem);

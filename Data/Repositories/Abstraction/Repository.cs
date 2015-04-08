@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Data.Model;
 
 namespace Data.Repositories.Abstraction
@@ -33,6 +32,11 @@ namespace Data.Repositories.Abstraction
         public IEnumerable<TModel> GetAll()
         {
             return _inneRepository.GetAll();
+        }
+
+        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        {
+            return _inneRepository.Where(query);
         }
 
         public TModel Create(TModel item)

@@ -37,6 +37,11 @@ namespace Data.Repositories.Abstraction
             return _db.Set<TModel>().Where(m => m.IsDeleted == false);
         }
 
+        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        {
+            return GetAll().Where(query);
+        }
+
         public TModel Create(TModel item)
         {
             _db.Entry(item).State = EntityState.Added;
