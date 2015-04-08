@@ -118,6 +118,7 @@
     <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\DailySupplyController.cs" />
+    <Compile Include="Controllers\WaterSourceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -127,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Default.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

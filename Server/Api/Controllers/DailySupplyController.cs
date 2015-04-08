@@ -25,5 +25,11 @@ namespace Api.Controllers
         {
             _dailySupplyService.AddSupply(dailySupplyEntry);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _dailySupplyService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

@@ -43,6 +43,13 @@ namespace Data.Repositories.Abstraction
         private readonly IDictionary<int, TModel> _collection;
         public InMemoryRepository()
         {
+            var type = typeof (TModel);
+            if (!_database.ContainsKey(type))
+            {
+                _database[type] = Builder<TModel>.CreateListOfSize(10)
+                    .Build()
+                    .ToDictionary(model => model.Id, model => model);
+            }
             _collection = (IDictionary<int, TModel>)_database[typeof(TModel)];
         }
 
