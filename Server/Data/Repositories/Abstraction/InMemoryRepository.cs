@@ -104,15 +104,9 @@ namespace Data.Repositories.Abstraction
             return true;
         }
 
-        public bool SoftDelete(int id)
+        public bool SoftDelete(TModel deletedItem)
         {
-            var itemToDelete = Find(id);
-            if (itemToDelete == null)
-            {
-                return false;
-            }
-
-            itemToDelete.IsDeleted = true;
+            deletedItem.IsDeleted = true;
             return true;
         }
 
