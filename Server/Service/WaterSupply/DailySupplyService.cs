@@ -43,7 +43,7 @@ namespace Service.WaterSupply
         public IEnumerable<StressByLocation> GetStressByLocation(DateTime from, DateTime to)
         {
             return _summaryRepository.Where(summary => summary.SupplyDate >= from && summary.SupplyDate <= to)
-                .Select(summary => new StressByLocation(summary.Location, summary.StressIndex));
+                .Select(StressByLocation.FromDbDailyAverageSupplySummary);
         }
 
         public void Dispose()

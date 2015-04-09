@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Linq;
 using Data.Model;
 using Data.Model.Constants;
 using Data.Repositories.Abstraction;
@@ -14,6 +17,14 @@ namespace Service.WaterSource
         {
             _sourceRepository = sourceRepository;
             _ratingRepository = ratingRepository;
+        }
+
+        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
+        {
+            var bBox = DbGeometry.FromText(bBoxWkt);
+            return _sourceRepository
+                .Where(source => bBox.Contains(source.Shape))
+                .Select(WaterSource.FromDbWaterSource);
         }
 
         public void AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
