@@ -31,12 +31,12 @@ namespace Data.Repositories.Abstraction
             return _db.Set<TModel>().Any(query);
         }
 
-        public IEnumerable<TModel> GetAll()
+        public IQueryable<TModel> GetAll()
         {
             return _db.Set<TModel>().Where(m => m.IsDeleted == false);
         }
 
-        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        public IQueryable<TModel> Where(Expression<Func<TModel, bool>> query)
         {
             return GetAll().Where(query);
         }

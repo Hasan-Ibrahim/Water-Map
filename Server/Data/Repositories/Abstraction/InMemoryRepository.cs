@@ -69,14 +69,14 @@ namespace Data.Repositories.Abstraction
             return GetAll().AsQueryable().Any(query);
         }
 
-        public IEnumerable<TModel> GetAll()
+        public IQueryable<TModel> GetAll()
         {
             var all = _collection.Values.OrderBy(model => model.Id);
             var result = all.Where(model => !model.IsDeleted);
-            return result;
+            return result.AsQueryable();
         }
 
-        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        public IQueryable<TModel> Where(Expression<Func<TModel, bool>> query)
         {
             return GetAll().Where(query);
         }
