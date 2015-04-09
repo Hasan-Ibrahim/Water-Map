@@ -1,5 +1,5 @@
-﻿using System.Web.Http;
-using Data.Model.Constants;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Service.WaterSource;
 
 namespace Api.Controllers
@@ -11,6 +11,12 @@ namespace Api.Controllers
         public WaterSourceController(WaterSourceService waterSourceService)
         {
             _waterSourceService = waterSourceService;
+        }
+
+        [HttpGet]
+        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
+        {
+            return _waterSourceService.GetWaterSources(bBoxWkt);
         }
 
         [HttpPost]
