@@ -173,20 +173,12 @@ namespace DataTest.Repository
             Assert.AreEqual(6, allUsers.Count());
         }
         [Test]
-        public void SoftDelete_Valid_ReturnsTrue()
+        public void SoftDelete_ReturnsTrue()
         {
-            var isDeleted = _inMemoryRepository.SoftDelete(1);
+            var isDeleted = _inMemoryRepository.SoftDelete(new DbUser {Id = 1});
             Assert.IsTrue(isDeleted);
             var allUsers = _inMemoryRepository.GetAll();
             Assert.AreEqual(4, allUsers.Count());
-        }
-        [Test]
-        public void SoftDelete_InvalidId_ReturnsFalse()
-        {
-            var isDeleted = _inMemoryRepository.SoftDelete(11);
-            Assert.IsFalse(isDeleted);
-            var allUsers = _inMemoryRepository.GetAll();
-            Assert.AreEqual(5, allUsers.Count());
         }
     }
 }

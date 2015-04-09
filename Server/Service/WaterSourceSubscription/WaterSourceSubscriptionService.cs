@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using Data.Model;
 using Data.Model.Constants;
 using Data.Repositories.Abstraction;
@@ -7,48 +9,76 @@ namespace Service.WaterSourceSubscription
 {
     public class WaterSourceSubscriptionService : IDisposable
     {
-        private readonly Repository<DbWaterSourceSubscription> _subscriptionRepository;
+        private readonly Repository<DbWaterSourceSubscription> _sourceSubscriptionRepository;
+        private readonly Repository<DbAreaSubscription> _areaSubscrioptionRepository;
 
-        public WaterSourceSubscriptionService(Repository<DbWaterSourceSubscription> subscriptionRepository)
+        public WaterSourceSubscriptionService(
+            Repository<DbWaterSourceSubscription> sourceSubscriptionRepository,
+            Repository<DbAreaSubscription> areaSubscrioptionRepository)
         {
-            _subscriptionRepository = subscriptionRepository;
+            _sourceSubscriptionRepository = sourceSubscriptionRepository;
+            _areaSubscrioptionRepository = areaSubscrioptionRepository;
         }
 
-        public void Subscribe(SubscriptionEntry subscription, int userId)
+        public void Subscribe(SourceSubscription sourceSubscription, int userId)
         {
-            SourceSubscriptionType type = 0;
-            
-            foreach (var sourceSubscriptionType in subscription.SubscriptionTypes)
-            {
-                type |= sourceSubscriptionType;
-            }
+            var type = GetSubscriptionFlagFromArray(sourceSubscription.SubscriptionTypes);
 
-             var dbSubscription = _subscriptionRepository.Find(
-                dbS => dbS.SourceId == subscription.SourceId && dbS.UserId == userId);
+            var dbSubscription = _sourceSubscriptionRepository.Find(
+                dbS => dbS.SourceId == sourceSubscription.SourceId && dbS.UserId == userId);
 
             if (dbSubscription == null)
             {
-                dbSubscription = new DbWaterSourceSubscription(userId, subscription.SourceId, type);
-                _subscriptionRepository.Create(dbSubscription);
+                dbSubscription = new DbWaterSourceSubscription(userId, sourceSubscription.SourceId, type);
+                _sourceSubscriptionRepository.Create(dbSubscription);
             }
             else
             {
                 dbSubscription.Type = type;
-                _subscriptionRepository.Update(dbSubscription);
+                _sourceSubscriptionRepository.Update(dbSubscription);
             }
-            _subscriptionRepository.SaveChanges();
+            _sourceSubscriptionRepository.SaveChanges();
+        }
+
+        private static WaterSubscriptionType GetSubscriptionFlagFromArray(IEnumerable<WaterSubscriptionType> subscription)
+        {
+            WaterSubscriptionType type = 0;
+
+            foreach (var sourceSubscriptionType in subscription)
+            {
+                type |= sourceSubscriptionType;
+            }
+            return type;
         }
 
         public void Unsubscribe(int sourceId, int userId)
         {
-            var subscription = _subscriptionRepository.Find(ss => ss.SourceId == sourceId && ss.UserId == userId);
+            var subscription = _sourceSubscriptionRepository.Find(ss => ss.SourceId == sourceId && ss.UserId == userId);
 
-            _subscriptionRepository.SoftDelete(subscription.Id);
+            _sourceSubscriptionRepository.SoftDelete(subscription.Id);
+
+            _sourceSubscriptionRepository.SaveChanges();
+        }
+
+        public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
+        {
+            var subscriptionGeo = DbGeometry.FromText(areaSubscription.AreaWkt);
+            var type = GetSubscriptionFlagFromArray(areaSubscription.SubscriptionTypes);
+            var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
+            _areaSubscrioptionRepository.Create(dbAreaSubscription);
+
+            _areaSubscrioptionRepository.SaveChanges();
+        }
+
+        public void UnsubscribeFromArea(int subscriptionId, int userId)
+        {
+            _areaSubscrioptionRepository.SoftDelete(subscriptionId);
         }
 
         public void Dispose()
         {
-            _subscriptionRepository.Dispose();
+            _sourceSubscriptionRepository.Dispose();
+            _areaSubscrioptionRepository.Dispose();
         }
 
     }
