@@ -18,17 +18,18 @@ namespace FileServerApi.Controllers
 
             var imagesPaths = new List<String>();
 
-            foreach (string file in httpRequest.Files)
+            for (var i = 0; i < httpRequest.Files.Count; i++)
             {
                 var imageName = Guid.NewGuid() + ".jpeg";
                 var imagePath = HttpContext.Current.Server.MapPath("~/Images/" + imageName);
-                var postedFile = httpRequest.Files[file];
+                var postedFile = httpRequest.Files[i];
                 if (postedFile != null)
                 {
                     postedFile.SaveAs(imagePath);
-                    imagesPaths.Add(imageBaseUrl+imageName);
+                    imagesPaths.Add(imageBaseUrl + imageName);
                 }
             }
+               
             return Ok(new { imagesPaths });
         }
     }
