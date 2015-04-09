@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Api.AccessControl;
 using Api.AccessControl.Attribtues;
+using Api.Models;
 using Service.WaterSourceSubscription;
 
 namespace Api.Controllers
@@ -23,6 +24,13 @@ namespace Api.Controllers
         public void Subscribe(SubscriptionEntry subscriptionEntry)
         {
             _subscriptionService.Subscribe(subscriptionEntry, _activeUser.UserId);
+        }
+
+        [TokenAuthorize]
+        [HttpPost]
+        public void Unsubscribe(IdParameter idParam)
+        {
+            _subscriptionService.Unsubscribe(idParam.Id, _activeUser.UserId);
         }
 
         protected override void Dispose(bool disposing)
