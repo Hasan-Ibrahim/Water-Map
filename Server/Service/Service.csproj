@@ -69,13 +69,10 @@
     <Compile Include="OAuth\IOAuthTokenResponse.cs" />
     <Compile Include="OAuth\OAuthResponseParameters.cs" />
     <Compile Include="Profile\ProfileService.cs" />
-    <Compile Include="Profile\ActiveUser.cs" />
-    <Compile Include="Profile\SellerProfile.cs" />
+    <Compile Include="Profile\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responses\FailedResponse.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
-    <Compile Include="Review\Review.cs" />
-    <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Serialization\GeometryConverter.cs" />
     <Compile Include="WaterSource\WaterSourceCreateEntry.cs" />
     <Compile Include="WaterSource\WaterSourceRating.cs" />

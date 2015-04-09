@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using Api.AccessControl;
 using Api.AccessControl.Attribtues;
 using Service.Account;
 using Service.Profile;
-using ActiveUser = Api.AccessControl.ActiveUser;
 
 namespace Api.Controllers
 {
@@ -22,7 +22,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [OverrideAuthorization]
-        public Service.Profile.ActiveUser GetUserProfile()
+        public UserProfile GetUserProfile()
         {
             var userProfile = _profileService.GetProfile(_activeUser.UserId);
             return userProfile;
