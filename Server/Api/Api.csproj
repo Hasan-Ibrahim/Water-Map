@@ -109,7 +109,7 @@
     <Compile Include="AccessControl\OAuth\GooglaUserInfo.cs" />
     <Compile Include="AccessControl\OAuth\GoogleOAuthClient.cs" />
     <Compile Include="AccessControl\OAuth\GoogleOAuthTokenResponse.cs" />
-    <Compile Include="AccessControl\TokenUser.cs" />
+    <Compile Include="AccessControl\ActiveUser.cs" />
     <Compile Include="App_Start\StartUp.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

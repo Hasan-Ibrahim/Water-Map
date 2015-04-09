@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using Api.AccessControl;
 using Api.AccessControl.Attribtues;
 using Service.Account;
 using Service.Profile;
+using ActiveUser = Api.AccessControl.ActiveUser;
 
 namespace Api.Controllers
 {
@@ -11,22 +11,20 @@ namespace Api.Controllers
     public class UserProfileController : ApiController
     {
         private readonly ProfileService _profileService;
-        private readonly TokenUser _tokenUser;
-
-
+        private readonly ActiveUser _activeUser;
 
         public UserProfileController(ProfileService profileService,
-            TokenUser tokenUser)
+            ActiveUser activeUser)
         {
             _profileService = profileService;
-            _tokenUser = tokenUser;
+            _activeUser = activeUser;
         }
 
         [HttpGet]
         [OverrideAuthorization]
-        public ActiveUser GetUserProfile()
+        public Service.Profile.ActiveUser GetUserProfile()
         {
-            var userProfile = _profileService.GetProfile(_tokenUser.UserId);
+            var userProfile = _profileService.GetProfile(_activeUser.UserId);
             return userProfile;
         }
 
@@ -43,7 +41,7 @@ namespace Api.Controllers
             var updated = false;
             if (ModelState.IsValid)
             {
-                updated = _profileService.UpdateProfile(_tokenUser.UserId, update);
+                updated = _profileService.UpdateProfile(_activeUser.UserId, update);
             }
             if (updated)
             {

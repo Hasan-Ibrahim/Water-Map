@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Controllers;
-using Data.TokenStorages;
 
 namespace Api.AccessControl.Attribtues
 {
@@ -8,12 +7,10 @@ namespace Api.AccessControl.Attribtues
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            var cookieHandler = (AuthenticationCookieHandler)
-                GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof (AuthenticationCookieHandler));
-            var tokenStorage = (ITokenStorage)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ITokenStorage));
+            var cookieHandler = (ActiveUser)
+                GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ActiveUser));
 
-            var token = cookieHandler.GetTokenFromRequest();
-            return tokenStorage.TokenExists(token).Result;
+            return cookieHandler.IsAuthenticated;
         }
     }
 }

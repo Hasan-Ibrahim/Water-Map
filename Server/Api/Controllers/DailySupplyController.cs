@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Api.AccessControl;
 using Service.WaterSupply;
 
 namespace Api.Controllers
@@ -9,7 +10,7 @@ namespace Api.Controllers
     {
         private readonly DailySupplyService _dailySupplyService;
 
-        public DailySupplyController(DailySupplyService dailySupplyService)
+        public DailySupplyController(DailySupplyService dailySupplyService, ActiveUser activeUser)
         {
             _dailySupplyService = dailySupplyService;
         }

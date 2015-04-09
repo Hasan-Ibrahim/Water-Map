@@ -2,13 +2,13 @@
 
 namespace Api.AccessControl
 {
-    public class TokenUser
+    public class ActiveUser
     {
         public readonly string Token;
         public readonly int UserId;
         public readonly bool IsAuthenticated;
 
-        public TokenUser(ITokenStorage tokenStorage, AuthenticationCookieHandler cookieHandler)
+        public ActiveUser(ITokenStorage tokenStorage, AuthenticationCookieHandler cookieHandler)
         {
             Token = cookieHandler.GetTokenFromRequest();
             if (!string.IsNullOrEmpty(Token))
