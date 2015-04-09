@@ -13,13 +13,13 @@ namespace Data.Model
         /// <summary>
         /// Types are identified by bit positions of flag
         /// </summary>
-        public SourceSubscriptionType Type { get; set; }
+        public WaterSubscriptionType Type { get; set; }
 
         public DbWaterSourceSubscription()
         {
         }
 
-        public DbWaterSourceSubscription(int userId, int sourceId, SourceSubscriptionType type)
+        public DbWaterSourceSubscription(int userId, int sourceId, WaterSubscriptionType type)
         {
             UserId = userId;
             SourceId = sourceId;

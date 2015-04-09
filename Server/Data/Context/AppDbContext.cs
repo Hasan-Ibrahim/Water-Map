@@ -23,5 +23,6 @@ namespace Data.Context
         public DbSet<DbDailyAverageSupply> DailyAverageSupplies { get; set; }
         public DbSet<DbDailyAverageSupplySummary> DailyAverageSupplySummaries { get; set; }
         public DbSet<DbWaterSourceSubscription> WaterSourceSubscriptions { get; set; }
+        public DbSet<DbAreaSubscription> AreaSubscriptions { get; set; }
     }
 }

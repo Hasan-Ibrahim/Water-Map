@@ -21,9 +21,9 @@ namespace Api.Controllers
 
         [TokenAuthorize]
         [HttpPost]
-        public void Subscribe(SubscriptionEntry subscriptionEntry)
+        public void Subscribe(SourceSubscription sourceSubscription)
         {
-            _subscriptionService.Subscribe(subscriptionEntry, _activeUser.UserId);
+            _subscriptionService.Subscribe(sourceSubscription, _activeUser.UserId);
         }
 
         [TokenAuthorize]
@@ -31,6 +31,20 @@ namespace Api.Controllers
         public void Unsubscribe(IdParameter idParam)
         {
             _subscriptionService.Unsubscribe(idParam.Id, _activeUser.UserId);
+        }
+
+        [TokenAuthorize]
+        [HttpPost]
+        public void SubscribeToArea(AreaSubscription areaSubscription)
+        {
+            _subscriptionService.SubscribeToArea(areaSubscription, _activeUser.UserId);
+        }
+
+        [TokenAuthorize]
+        [HttpPost]
+        public void UnsubscribeFromArea(IdParameter idParameter)
+        {
+            _subscriptionService.UnsubscribeFromArea(idParameter.Id, _activeUser.UserId);
         }
 
         protected override void Dispose(bool disposing)

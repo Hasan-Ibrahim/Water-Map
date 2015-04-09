@@ -3,9 +3,9 @@ using Data.Model.Constants;
 
 namespace Service.WaterSourceSubscription
 {
-    public class SubscriptionEntry
+    public class SourceSubscription
     {
         public int SourceId { get; set; }
-        public IList<SourceSubscriptionType> SubscriptionTypes { get; set; }
+        public IList<WaterSubscriptionType> SubscriptionTypes { get; set; }
     }
 }
