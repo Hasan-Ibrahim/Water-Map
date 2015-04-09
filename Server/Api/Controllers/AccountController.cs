@@ -13,17 +13,17 @@ namespace Api.Controllers
     {
         private readonly AccountService _service;
         private readonly ITokenStorage _tokenStorage;
-        private readonly TokenUser _tokenUser;
+        private readonly ActiveUser _activeUser;
         private readonly AuthenticationCookieHandler _cookieHandler;
 
         public AccountController(AccountService service,
             ITokenStorage tokenStorage,
-            TokenUser tokenUser,
+            ActiveUser activeUser,
             AuthenticationCookieHandler cookieHandler)
         {
             _service = service;
             _tokenStorage = tokenStorage;
-            _tokenUser = tokenUser;
+            _activeUser = activeUser;
             _cookieHandler = cookieHandler;
         }
 
@@ -83,14 +83,14 @@ namespace Api.Controllers
         //[TokenAuthorize]
         public bool Logout()
         {
-            return _tokenStorage.DeleteToken(_tokenUser.Token);
+            return _tokenStorage.DeleteToken(_activeUser.Token);
         }
 
         [HttpPost]
         [TokenAuthorize]
         public IHttpActionResult ChangePassword(ChangePassword changePassword)
         {
-            var status = _service.ChangeUserPassword(_tokenUser.UserId, changePassword);
+            var status = _service.ChangeUserPassword(_activeUser.UserId, changePassword);
             var message = Messages.ChangePasswordMessages[status];
             if (status == DataUpdateStatus.Success)
             {

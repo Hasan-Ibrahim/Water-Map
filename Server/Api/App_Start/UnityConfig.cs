@@ -33,6 +33,7 @@ namespace Api
             var redisServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["redisServerPort"]);
             var redisServerPassword = ConfigurationManager.AppSettings["redisServerPassword"];
 
+            container.RegisterType<HttpContext>(new InjectionFactory(unityContainer => HttpContext.Current));
             //container.RegisterType<ITokenStorage, InMemoryTokenStorage>();
             //container.RegisterType(typeof(IRepository<>), typeof(InMemoryRepository<>));
 

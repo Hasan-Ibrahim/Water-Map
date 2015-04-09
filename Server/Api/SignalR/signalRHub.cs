@@ -18,7 +18,7 @@ namespace Api.SignalR
         public override Task OnConnected()
         {
             _mapping.TryAdd(Context.ConnectionId, new List<int>());
-            var user = (TokenUser)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(TokenUser));
+            var user = (ActiveUser)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ActiveUser));
             var userId = user.UserId.ToString();
             Groups.Add(Context.ConnectionId, userId);
             return base.OnConnected();
