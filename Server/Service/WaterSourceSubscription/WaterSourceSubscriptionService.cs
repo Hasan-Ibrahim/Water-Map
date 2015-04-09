@@ -39,9 +39,17 @@ namespace Service.WaterSourceSubscription
             _subscriptionRepository.SaveChanges();
         }
 
+        public void Unsubscribe(int sourceId, int userId)
+        {
+            var subscription = _subscriptionRepository.Find(ss => ss.SourceId == sourceId && ss.UserId == userId);
+
+            _subscriptionRepository.SoftDelete(subscription.Id);
+        }
+
         public void Dispose()
         {
             _subscriptionRepository.Dispose();
         }
+
     }
 }
