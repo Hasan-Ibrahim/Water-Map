@@ -70,9 +70,15 @@ namespace Service.WaterSourceSubscription
             _areaSubscrioptionRepository.SaveChanges();
         }
 
-        public void UnsubscribeFromArea(int subscriptionId, int userId)
+        public bool UnsubscribeFromArea(int subscriptionId, int userId)
         {
-            _areaSubscrioptionRepository.SoftDelete(subscriptionId);
+            var subscription = _areaSubscrioptionRepository.Find(subscriptionId);
+            if (subscription != null && subscription.UserId == userId)
+            {
+                _areaSubscrioptionRepository.SoftDelete(subscription);    
+                return true;
+            }
+            return false;
         }
 
         public void Dispose()
