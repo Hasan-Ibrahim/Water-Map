@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using Api.AccessControl;
+﻿using Api.AccessControl;
 using Api.AccessControl.Attribtues;
 using Data.TokenStorages;
 using Service.Account;
@@ -14,17 +13,14 @@ namespace Api.Controllers
         private readonly AccountService _service;
         private readonly ITokenStorage _tokenStorage;
         private readonly ActiveUser _activeUser;
-        private readonly AuthenticationCookieHandler _cookieHandler;
 
         public AccountController(AccountService service,
             ITokenStorage tokenStorage,
-            ActiveUser activeUser,
-            AuthenticationCookieHandler cookieHandler)
+            ActiveUser activeUser)
         {
             _service = service;
             _tokenStorage = tokenStorage;
             _activeUser = activeUser;
-            _cookieHandler = cookieHandler;
         }
 
 

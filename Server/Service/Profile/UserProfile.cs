@@ -1,9 +1,8 @@
-﻿using Data.Model;
-using Data.Model.Authentication;
+﻿using Data.Model.Authentication;
 
 namespace Service.Profile
 {
-    public class ActiveUser
+    public class UserProfile
     {
         public int Id { get; set; }
         public string LoginId { get; set; }
@@ -13,12 +12,12 @@ namespace Service.Profile
         public bool IsOAuthUser { get; set; }
         public string Address { get; set; }
 
-        public ActiveUser()
+        public UserProfile()
         {
 
         }
 
-        public ActiveUser(DbUser dbUser)
+        public UserProfile(DbUser dbUser)
         {
             if (dbUser == null)
             {
