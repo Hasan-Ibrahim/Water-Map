@@ -28,13 +28,6 @@ namespace Api.Controllers
             return userProfile;
         }
 
-        [HttpGet]
-        [OverrideAuthorization]
-        public Task<string> GetUserAddress(int id)
-        {
-            return _profileService.GetAddress(id);
-        }
-
         [HttpPost]
         public IHttpActionResult UpdateUserProfile([FromBody]ProfileUpdate update)
         {

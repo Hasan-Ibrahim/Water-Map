@@ -74,6 +74,8 @@
     <Compile Include="Responses\FailedResponse.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
     <Compile Include="Serialization\GeometryConverter.cs" />
+    <Compile Include="WaterSourceSubscription\SubscriptionEntry.cs" />
+    <Compile Include="WaterSourceSubscription\WaterSourceSubscriptionService.cs" />
     <Compile Include="WaterSource\WaterSource.cs" />
     <Compile Include="WaterSource\WaterSourceCreateEntry.cs" />
     <Compile Include="WaterSource\WaterSourceRating.cs" />

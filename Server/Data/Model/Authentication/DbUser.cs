@@ -9,9 +9,17 @@ namespace Data.Model.Authentication
     {
         public string LoginId { get; set; }
         public string HashedPassword { get; set; }
+
+        [NotMapped]
         public string FullName { get; set; }
+
+        [NotMapped]
         public string PhoneNumber { get; set; }
+
+        [NotMapped]
         public bool IsOAuthUser { get; set; }
+
+        [NotMapped]
         public String Address { get; set; }
 
         public DbUser()

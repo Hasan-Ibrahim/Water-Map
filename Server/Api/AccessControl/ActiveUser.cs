@@ -13,7 +13,7 @@ namespace Api.AccessControl
             Token = cookieHandler.GetTokenFromRequest();
             if (!string.IsNullOrEmpty(Token))
             {
-                IsAuthenticated = tokenStorage.TokenExists(Token).Result;
+                IsAuthenticated = tokenStorage.TokenExists(Token);
                 if (IsAuthenticated)
                 {
                     UserId = tokenStorage.GetUserId(Token);                    
@@ -24,6 +24,8 @@ namespace Api.AccessControl
                 UserId = 0;
                 IsAuthenticated = false;
             }
+
+            tokenStorage.Dispose();
         }
     }
 }

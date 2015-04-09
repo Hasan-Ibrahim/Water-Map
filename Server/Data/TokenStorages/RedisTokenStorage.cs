@@ -26,11 +26,11 @@ namespace Data.TokenStorages
             return token;
         }
 
-        public async Task<bool> TokenExists(string token)
+        public bool TokenExists(string token)
         {
             using (var redisClient = RedisClient.As<UserToken>())
             {
-                return await Task.FromResult(token != null && redisClient.ContainsKey(_keyPrefix + token));
+                return token != null && redisClient.ContainsKey(_keyPrefix + token);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Data.TokenStorages
 
         public string RenewToken(string oldToken)
         {
-            if (oldToken != null && TokenExists(oldToken).Result)
+            if (oldToken != null && TokenExists(oldToken))
             {
                 var userId = GetUserId(oldToken);
                 DeleteToken(oldToken);

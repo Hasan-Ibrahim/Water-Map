@@ -16,20 +16,20 @@ namespace DataTest
         public void TokenExists_Valid_ReturnsTrue()
         {
             var token = _inMemoryTokenStorage.CreateToken(1);
-            var isExists = _inMemoryTokenStorage.TokenExists(token).Result;
+            var isExists = _inMemoryTokenStorage.TokenExists(token);
             Assert.IsTrue(isExists);
         }
         [Test]
         public void TokenExists_tokenNotExists_ReturnsFalse()
         {
             var token = _inMemoryTokenStorage.CreateToken(1);
-            var isExists = _inMemoryTokenStorage.TokenExists(token + "1").Result;
+            var isExists = _inMemoryTokenStorage.TokenExists(token + "1");
             Assert.IsFalse(isExists);
         }
         [Test]
         public void TokenExists_tokenIsNull_ReturnsFalse()
         {
-            var isExists = _inMemoryTokenStorage.TokenExists(null).Result;
+            var isExists = _inMemoryTokenStorage.TokenExists(null);
             Assert.IsFalse(isExists);
         }
         [Test]

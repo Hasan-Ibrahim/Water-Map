@@ -40,8 +40,8 @@ namespace Api
             // container.RegisterType<ITokenStorage, PgsqlTokenStorage>();
             container.RegisterType<IRedisClient, RedisClient>(new InjectionConstructor(redisServerHost, redisServerPort, redisServerPassword, 0L));
             //container.RegisterType<ITokenStorage, RedisTokenStorage>();
-            //container.RegisterType<ITokenStorage, PgsqlTokenStorage>();
-            container.RegisterType<ITokenStorage, InMemoryTokenStorage>();
+            container.RegisterType<ITokenStorage, DbContextTokenStorage>();
+            //container.RegisterType<ITokenStorage, InMemoryTokenStorage>();
 
             container.RegisterType(typeof(IRepository<>), typeof(DbContextRepository<>));
             container.RegisterType<DbContext, AppDbContext>(new InjectionConstructor("app"));
