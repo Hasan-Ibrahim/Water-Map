@@ -20,7 +20,7 @@ namespace Data.Repositories.Abstraction
 
         TModel Create(TModel item);
         bool Update(TModel updatedItem);
-        bool SoftDelete(int id);
+        bool SoftDelete(TModel deletedItem);
         bool HardDelete(TModel deletedItem);
         bool SaveChanges();
     }

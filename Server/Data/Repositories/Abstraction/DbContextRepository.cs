@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq.Expressions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Data.Model.Base;
 
@@ -53,16 +52,11 @@ namespace Data.Repositories.Abstraction
             return true;
         }
 
-        public bool SoftDelete(int id)
+        public bool SoftDelete(TModel deletedItem)
         {
-            var item = Find(id);
-            if (item != null)
-            {
-                item.IsDeleted = true;
-                Update(item);
-                return true;
-            }
-            return false;
+            deletedItem.IsDeleted = true;
+            Update(deletedItem);
+            return true;
         }
 
         public bool HardDelete(TModel deletedItem)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Data.Model.Base;
@@ -52,7 +51,17 @@ namespace Data.Repositories.Abstraction
 
         public bool SoftDelete(int id)
         {
-            return _inneRepository.SoftDelete(id);
+            var deletedItem = _inneRepository.Find(id);
+            if (deletedItem == null)
+            {
+                return false;
+            }
+            return SoftDelete(deletedItem);
+        }
+
+        public bool SoftDelete(TModel deletedItem)
+        {
+            return _inneRepository.SoftDelete(deletedItem);
         }
 
         public bool HardDelete(TModel deletedItem)
