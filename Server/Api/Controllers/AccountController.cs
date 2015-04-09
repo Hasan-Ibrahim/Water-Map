@@ -66,7 +66,7 @@ namespace Api.Controllers
         [HttpPost]
         public IHttpActionResult RenewToken([FromBody]AuthToken authToken)
         {
-            if (_tokenStorage.TokenExists(authToken.Token).Result)
+            if (_tokenStorage.TokenExists(authToken.Token))
             {
                 var newToken = _tokenStorage.RenewToken(authToken.Token);
                 return Ok(new TokenResponse(newToken, true));

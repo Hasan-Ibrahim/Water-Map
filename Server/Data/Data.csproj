@@ -102,6 +102,8 @@
     <Compile Include="Model\Authentication\DbUser.cs" />
     <Compile Include="Model\Base\DbModel.cs" />
     <Compile Include="Model\Constants\Potability.cs" />
+    <Compile Include="Model\Constants\SourceSubscriptionType.cs" />
+    <Compile Include="Model\DbWaterSourceSubscription.cs" />
     <Compile Include="Model\DbWaterSourceRating.cs" />
     <Compile Include="Model\DbWaterSource.cs" />
     <Compile Include="Model\DbDailyAverageSupply.cs" />

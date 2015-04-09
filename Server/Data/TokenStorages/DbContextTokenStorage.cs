@@ -34,9 +34,9 @@ namespace Data.TokenStorages
             return token;
         }
 
-        public async Task<bool> TokenExists(string token)
+        public bool TokenExists(string token)
         {
-            return await _db.Set<DbUserToken>().AnyAsync(tu => tu.Token == token);
+            return _db.Set<DbUserToken>().Any(tu => tu.Token == token);
         }
 
         public int GetUserId(string token)

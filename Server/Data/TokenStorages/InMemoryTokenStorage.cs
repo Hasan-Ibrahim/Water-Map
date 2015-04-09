@@ -15,9 +15,9 @@ namespace Data.TokenStorages
             return token;
         }
 
-        public async Task<bool> TokenExists(string token)
+        public bool TokenExists(string token)
         {
-            return await Task.FromResult(token != null && _store.ContainsKey(token));
+            return token != null && _store.ContainsKey(token);
         }
 
         public int GetUserId(string token)
@@ -36,7 +36,7 @@ namespace Data.TokenStorages
 
         public string RenewToken(string oldToken)
         {
-            if (oldToken != null && TokenExists(oldToken).Result)
+            if (oldToken != null && TokenExists(oldToken))
             {
                 var userId = GetUserId(oldToken);
                 DeleteToken(oldToken);
