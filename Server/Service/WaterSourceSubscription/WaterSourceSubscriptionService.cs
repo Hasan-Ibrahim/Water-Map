@@ -51,13 +51,17 @@ namespace Service.WaterSourceSubscription
             return type;
         }
 
-        public void Unsubscribe(int sourceId, int userId)
+        public bool Unsubscribe(int sourceId, int userId)
         {
             var subscription = _sourceSubscriptionRepository.Find(ss => ss.SourceId == sourceId && ss.UserId == userId);
+            if (subscription != null)
+            {
+                _sourceSubscriptionRepository.SoftDelete(subscription);
+                _sourceSubscriptionRepository.SaveChanges();
+                return true;                
+            }
 
-            _sourceSubscriptionRepository.SoftDelete(subscription.Id);
-
-            _sourceSubscriptionRepository.SaveChanges();
+            return false;
         }
 
         public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
@@ -75,7 +79,8 @@ namespace Service.WaterSourceSubscription
             var subscription = _areaSubscrioptionRepository.Find(subscriptionId);
             if (subscription != null && subscription.UserId == userId)
             {
-                _areaSubscrioptionRepository.SoftDelete(subscription);    
+                _areaSubscrioptionRepository.SoftDelete(subscription);
+                _areaSubscrioptionRepository.SaveChanges();
                 return true;
             }
             return false;
