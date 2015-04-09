@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
-using Data.Model;
 using Data.Model.Base;
 
 namespace Data.Repositories.Abstraction
@@ -30,12 +30,12 @@ namespace Data.Repositories.Abstraction
             return _inneRepository.Exists(query);
         }
 
-        public IEnumerable<TModel> GetAll()
+        public IQueryable<TModel> GetAll()
         {
             return _inneRepository.GetAll();
         }
 
-        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        public IQueryable<TModel> Where(Expression<Func<TModel, bool>> query)
         {
             return _inneRepository.Where(query);
         }
