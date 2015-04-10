@@ -1,0 +1,40 @@
+﻿<div align="center">
+    <form class="well" name="registrationForm" style="width: 500px;padding: 20px 50px 60px 50px;" ng-submit="register()">
+        <h4 class="header-label">
+            Register
+        </h4>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon" style="padding-left: 55px;"><i class="fa fa-fw fa-user"></i>Full Name </div>
+                <input type="text" ng-model="registerModel.fullName" class="form-control" placeholder="Full Name" name="full-name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon" style="padding-left: 85px;"><i class="fa fa-fw fa-envelope"></i>Email </div>
+                <input type="email" ng-model="registerModel.email" class="form-control" placeholder="Email" name="email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon" style="padding-left: 23px;"><i class="fa fa-fw fa-mobile-phone"></i>Mobile Number </div>
+                <input type="text" ng-model="registerModel.phoneNumber" class="form-control" placeholder="Mobile Number" name="mobile-number" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon" style="padding-left: 58px;"><i class="fa fa-fw fa-key"></i>Password </div>
+                <input type="password" ng-model="registerModel.password" class="form-control" placeholder="Password" name="password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-fw fa-check-circle"></i>Confirm Password </div>
+                <input type="password" ng-model="registerModel.retypePassword" class="form-control" placeholder="Confirm Password" name="retypePassword" required>
+            </div>
+        </div>
+        <div class="form-group" align="left">
+            <input ng-disabled="registrationForm.$invalid" type="submit" class="btn btn-primary" value="Register" style="float:right;" />
+        </div>
+    </form>
+</div>
