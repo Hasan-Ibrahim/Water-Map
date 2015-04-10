@@ -24,9 +24,21 @@ namespace Service.WaterSupply
             _gridRepository = gridRepository;
         }
 
-        public IEnumerable<DbSourceSummaryGrid> GetWaterSourceSummaryGrid()
+        public Dictionary<int, Dictionary<int, int[]>> GetWaterSourceSummaryGrid()
         {
-            return _gridRepository.GetAll();
+            var data = new Dictionary<int, Dictionary<int, int[]>>();
+
+            foreach (var gridData in _gridRepository.GetAll())
+            {
+                if (!data.ContainsKey(gridData.Row))
+                {
+                    data[gridData.Row] = new Dictionary<int, int[]>();
+                }
+                var rowData = data[gridData.Row];
+                rowData[gridData.Col] = new[] {gridData.SupplyInLitre, gridData.NumberOfPeople};
+            }
+
+            return data;
         } 
 
         public void AddSupply(DailySupplyEntry dailySupply)
