@@ -14,9 +14,6 @@ namespace Data.Model
         public DateTime SupplyDate { get; set; }
         public int NumberOfPeople { get; set; }
         public double StressIndex { get; set; }
-
-        public int Row { get; set; }
-        public int Column { get; set; }
         
         public DbDailyAverageSupplySummary()
         {
