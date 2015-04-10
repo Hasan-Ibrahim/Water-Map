@@ -101,7 +101,7 @@ namespace Service.WaterSourceSubscription
 
         public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
         {
-            var subscriptionGeo = DbGeometry.FromText(areaSubscription.AreaWkt);
+            var subscriptionGeo = DbGeometry.FromText(areaSubscription.Geometry);
             var type = GetSubscriptionFlagFromArray(areaSubscription.SubscriptionTypes);
             var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
             _areaSubscrioptionRepository.Create(dbAreaSubscription);

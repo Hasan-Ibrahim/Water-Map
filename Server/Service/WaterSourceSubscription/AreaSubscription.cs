@@ -5,7 +5,7 @@ namespace Service.WaterSourceSubscription
 {
     public class AreaSubscription
     {
-        public string AreaWkt { get; set; }
+        public string Geometry { get; set; }
         public IList<WaterSubscriptionType> SubscriptionTypes { get; set; }
     }
 }
