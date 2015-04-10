@@ -69,5 +69,13 @@ namespace Service.WaterSources
 
             return WaterSourceProperties.FromDbWaterSource(dbSource);
         }
+
+        public void Update(GeometryEntity geometryEntity)
+        {
+            var dbSource = _sourceRepository.Find(geometryEntity.Id);
+            dbSource.Shape = DbGeometry.FromText(geometryEntity.Geometry);
+            _sourceRepository.Update(dbSource);
+            _sourceRepository.SaveChanges();
+        }
     }
 }

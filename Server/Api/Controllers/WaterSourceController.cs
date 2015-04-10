@@ -22,6 +22,12 @@ namespace Api.Controllers
             return properties;
         }
 
+        [HttpPost]
+        public void UpdateWaterSource(GeometryEntity geometryEntity)
+        {
+            _waterSourceService.Update(geometryEntity);
+        }
+
         [HttpGet]
         public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
         {
