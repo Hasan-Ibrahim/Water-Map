@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Data.Model;
 using Data.Model.Constants;
 
 namespace Service.WaterSourceSubscription
@@ -7,5 +9,17 @@ namespace Service.WaterSourceSubscription
     {
         public int SourceId { get; set; }
         public Dictionary<WaterSubscriptionType, bool> Subscriptions { get; set; }
+
+        public static SourceSubscription FromDbSubscription(DbWaterSourceSubscription dbWaterSourceSubscription)
+        {
+            var dic = new Dictionary<WaterSubscriptionType, bool>();
+            foreach (WaterSubscriptionType st in Enum.GetValues(typeof(WaterSubscriptionType)))
+            {
+                dic[st] = dbWaterSourceSubscription.Type.HasFlag(st);
+            }
+            var subscription = new SourceSubscription { SourceId = dbWaterSourceSubscription.SourceId, Subscriptions = dic };
+
+            return subscription;
+        }
     }
 }

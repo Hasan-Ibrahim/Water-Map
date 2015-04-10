@@ -48,6 +48,12 @@ namespace Api.Controllers
             return Ok(idParam);
         }
 
+        [HttpGet]
+        public SourceSubscription GetSourceSubscription(int id)
+        {
+            return _subscriptionService.GetSourceSubscription(id);
+        }
+
         [TokenAuthorize]
         [HttpPost]
         public IHttpActionResult SubscribeToArea(AreaSubscription areaSubscription)
