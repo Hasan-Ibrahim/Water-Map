@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity.Spatial;
 using Data.Model;
 
-namespace Service.WaterSource
+namespace Service.WaterSources
 {
     public class WaterSourceCreateEntry
     {

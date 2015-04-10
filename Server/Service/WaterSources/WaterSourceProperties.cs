@@ -1,24 +1,22 @@
 ﻿using Data.Model;
 
-namespace Service.WaterSource
+namespace Service.WaterSources
 {
-    public class WaterSource
+    public class WaterSourceProperties
     {
         public string SourceType { get; set; }
-        public string ShapeWkt { get; set; }
         public int PotableRatingCount { get; set; }
         public int ProcessableRatingCount { get; set; }
         public int UnpotableRatingCount { get; set; }
         public string[] ImageUrls { get; set; }
 
-        public WaterSource()
+        public WaterSourceProperties()
         {
         }
 
-        public WaterSource(DbWaterSource dbWaterSource)
+        public WaterSourceProperties(DbWaterSource dbWaterSource)
         {
             SourceType = dbWaterSource.SourceType;
-            ShapeWkt = dbWaterSource.Shape.AsText();
             PotableRatingCount = dbWaterSource.PotableRatingCount;
             ProcessableRatingCount = dbWaterSource.ProcessableRatingCount;
             UnpotableRatingCount = dbWaterSource.UnpotableRatingCount;
@@ -26,15 +24,14 @@ namespace Service.WaterSource
                 dbWaterSource.ImageUrls.Split('^') : new string[] { };
         }
 
-        public static WaterSource FromDbWaterSource(DbWaterSource dbWaterSource)
+        public static WaterSourceProperties FromDbWaterSource(DbWaterSource dbWaterSource)
         {
             var imageUrls = string.IsNullOrWhiteSpace(dbWaterSource.ImageUrls)
                 ? dbWaterSource.ImageUrls.Split('^')
                 : new string[] {};
-            return new WaterSource
+            return new WaterSourceProperties
             {
                 SourceType = dbWaterSource.SourceType,
-                ShapeWkt = dbWaterSource.Shape.AsText(),
                 PotableRatingCount = dbWaterSource.PotableRatingCount,
                 ProcessableRatingCount = dbWaterSource.ProcessableRatingCount,
                 UnpotableRatingCount = dbWaterSource.UnpotableRatingCount,
