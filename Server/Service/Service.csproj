@@ -76,6 +76,7 @@
     <Compile Include="Utility\DictionaryExtensions.cs" />
     <Compile Include="WaterSourceSubscription\AreaSubscription.cs" />
     <Compile Include="WaterSourceSubscription\SourceSubscription.cs" />
+    <Compile Include="WaterSourceSubscription\SubscriptionEntry.cs" />
     <Compile Include="WaterSourceSubscription\WaterSourceGroupBySubscription.cs" />
     <Compile Include="WaterSourceSubscription\WaterSourceSubscriptionService.cs" />
     <Compile Include="Utility\GeometryEntity.cs" />
