@@ -1,4 +1,4 @@
-lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'geoLocationService', function ($http, $q, serverUrl, geoLocationService) {
+lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocationService', function ($http, $q, serverUrl, jqHttp, geoLocationService) {
     var appRoot = serverUrl;
     var mainMap = null;
 
@@ -27,23 +27,29 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'geoLocationService'
         getCoveragePoints: function(id){
             return $http.get(appRoot + 'DailySupply/GetSuppliedLocationsForSource?sourceId=' + id);
         },
-        addFeature: function (geometry, sourceType, onSuccess) {
-            $.post(appRoot + "WaterSource/AddWaterSource", {
+        addFeature: function (geometry, sourceType) {
+            return jqHttp.post(appRoot + "WaterSource/AddWaterSource", {
                 Geometry: geometry,
                 SourceType: sourceType
-            }, function (data) {
-                onSuccess(data);
             });
         },
         moveToCurrentLocation: moveToCurrentLocation,
-        rateSource: function (sourceId, quality, onSuccess) {
-            $.post(appRoot + "WaterSource/RateWaterSource", {
+        rateSource: function (sourceId, quality) {
+            return jqHttp.post(appRoot + "WaterSource/RateWaterSource", {
                 WaterSourceId: sourceId,
                 Potability: quality
-            }, function (data) {
-                if (onSuccess)onSuccess(data);
             });
-        }
+        },
+        subscribeFeature: function (sourceId, subscriptions) {
+            return jqHttp.post(appRoot + "WaterSourceSubscription/Subscribe", {
+                SourceId: sourceId,
+                Subscriptions: subscriptions
+            });
+        },
+        getSourceSubscriptionStatus: function (sourceId) {
+            return $http.get(appRoot+'/WaterSourceSubscription/GetSourceSubscription?sourceId='+sourceId);
+        },
+        selectedSourceId: null
     }
 }]);
 

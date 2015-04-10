@@ -1,10 +1,15 @@
-function JqHttp($q, $) {
+function JqHttp($q, $, loginObject) {
     this.post = function (url, data) {
+        data.authentication = loginObject.loginToken;
         var q = $q.defer();
-        $.post(url, data)
-            .done(function (data) {
-                q.resolve({data: data});
-            })
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json"
+        }).done(function (data) {
+            q.resolve({data: data});
+        })
             .fail(function (error) {
                 q.reject(error);
             });
@@ -13,4 +18,4 @@ function JqHttp($q, $) {
     }
 }
 
-lloydApp.service('jqHttp', ['$q', '$', JqHttp]);
+lloydApp.service('jqHttp', ['$q', '$', 'loginObject', JqHttp]);

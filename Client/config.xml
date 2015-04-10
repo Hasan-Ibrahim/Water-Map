@@ -12,5 +12,5 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <!--<preference name="ShowSplashScreenSpinner" value="false" />-->
     <preference name="splashscreen" value="icon" />
-    <preference name="splashScreenDelay" value="60000" />
+    <preference name="splashScreenDelay" value="6000" />
 </widget>
