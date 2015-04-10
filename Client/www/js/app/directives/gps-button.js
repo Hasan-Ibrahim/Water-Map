@@ -1,14 +1,12 @@
-lloydApp.directive('gpsButton', ['mapService', 'sidebarService',
-    function (mapService, sidebarService) {
+lloydApp.directive('gpsButton', ['mapService',
+    function (mapService) {
         return {
 
             scope: {},
             restrict: 'E',
             link: function (scope, element, attrs, controller) {
-                scope.gpsButtonClicked = function () {
-                    mapService.moveToCurrentLocation().then(function () {
-                        sidebarService.toggleTopBar();
-                    });
+                scope.toggleDisplayTracking = function () {
+                    mapService.toggleDisplayTracking();
                 };
             },
             templateUrl: 'partials/gps-button.html',
