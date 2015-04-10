@@ -108,6 +108,7 @@
     <Compile Include="Model\Constants\Potability.cs" />
     <Compile Include="Model\Constants\WaterSubscriptionType.cs" />
     <Compile Include="Model\DbAreaSubscription.cs" />
+    <Compile Include="Model\DbRainHarvestTank.cs" />
     <Compile Include="Model\DbWaterSourceSubscription.cs" />
     <Compile Include="Model\DbWaterSourceRating.cs" />
     <Compile Include="Model\DbWaterSource.cs" />
