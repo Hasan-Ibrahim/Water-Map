@@ -7,13 +7,13 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
             var myFeatureGroupStyle = {
                 radius: 8,
-                fillColor: "#ff7800",
+                fillColor: "#ffff00",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.1
             };
-            myFeatureGroup.setStyle(myFeatureGroupStyle);
+            otherFeatureGroup.setStyle(myFeatureGroupStyle);
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 maxZoom: 20,
                 attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'
