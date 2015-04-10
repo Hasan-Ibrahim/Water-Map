@@ -10,6 +10,7 @@ namespace Service.WaterSources
         public double ProcessableRatingPercent { get; set; }
         public double UnpotableRatingPercent { get; set; }
         public double UnknownRatingPercent { get; set; }
+        public int TotalRatings { get; set; }
         public string[] ImageUrls { get; set; }
         public Accessibility Accessibility { get; set; }
 
@@ -19,11 +20,10 @@ namespace Service.WaterSources
                 ? new string[] {}
                 : dbWaterSource.ImageUrls.Split('^');
 
-            double totalRatingPercent = dbWaterSource.PotableRatingCount + dbWaterSource.ProcessableRatingCount +
-                                   dbWaterSource.UnpotableRatingCount + dbWaterSource.UnknownRatingCount;
-            totalRatingPercent = totalRatingPercent / 100;
+            var totalRatings = dbWaterSource.PotableRatingCount + dbWaterSource.ProcessableRatingCount +
+                             dbWaterSource.UnpotableRatingCount + dbWaterSource.UnknownRatingCount;
 
-            totalRatingPercent = totalRatingPercent == 0 ? .000001 : totalRatingPercent;
+            var totalRatingPercent = totalRatings == 0 ? 0.0001 : totalRatings/100.0;
 
             return new WaterSourceProperties
             {
@@ -33,7 +33,8 @@ namespace Service.WaterSources
                 UnpotableRatingPercent = dbWaterSource.UnpotableRatingCount / totalRatingPercent,
                 UnknownRatingPercent = dbWaterSource.UnpotableRatingCount / totalRatingPercent,
                 ImageUrls = imageUrls,
-                Accessibility = dbWaterSource.Accessibility
+                Accessibility = dbWaterSource.Accessibility,
+                TotalRatings = totalRatings
             };
         }
     }
