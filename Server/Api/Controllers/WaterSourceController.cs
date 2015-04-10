@@ -23,9 +23,10 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public void UpdateWaterSource(GeometryEntity geometryEntity)
+        public IHttpActionResult UpdateWaterSource(GeometryEntity geometryEntity)
         {
             _waterSourceService.Update(geometryEntity);
+            return Ok(geometryEntity);
         }
 
         [HttpGet]
@@ -41,15 +42,18 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public void RateWaterSource(WaterSourceRating rating)
+        public IHttpActionResult RateWaterSource(WaterSourceRating rating)
         {
             _waterSourceService.RateWaterSource(rating);
+            return Ok(rating);
         }
 
         [HttpPost]
-        public void UpdateAccessibility(AccessibilityEntity accessibilityEntity)
+        public IHttpActionResult UpdateAccessibility(AccessibilityEntity accessibilityEntity)
         {
             _waterSourceService.UpdateAccessibility(accessibilityEntity);
+
+            return Ok(accessibilityEntity);
         }
 
         protected override void Dispose(bool disposing)

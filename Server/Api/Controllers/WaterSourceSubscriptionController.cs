@@ -34,30 +34,34 @@ namespace Api.Controllers
 
         [TokenAuthorize]
         [HttpPost]
-        public void Subscribe(SourceSubscription sourceSubscription)
+        public IHttpActionResult Subscribe(SourceSubscription sourceSubscription)
         {
             _subscriptionService.Subscribe(sourceSubscription, _activeUser.UserId);
+            return Ok(sourceSubscription);
         }
 
         [TokenAuthorize]
         [HttpPost]
-        public void Unsubscribe(IdParameter idParam)
+        public IHttpActionResult Unsubscribe(IdParameter idParam)
         {
             _subscriptionService.Unsubscribe(idParam.Id, _activeUser.UserId);
+            return Ok(idParam);
         }
 
         [TokenAuthorize]
         [HttpPost]
-        public void SubscribeToArea(AreaSubscription areaSubscription)
+        public IHttpActionResult SubscribeToArea(AreaSubscription areaSubscription)
         {
             _subscriptionService.SubscribeToArea(areaSubscription, _activeUser.UserId);
+            return Ok(areaSubscription);
         }
 
         [TokenAuthorize]
         [HttpPost]
-        public void UnsubscribeFromArea(IdParameter idParameter)
+        public IHttpActionResult UnsubscribeFromArea(IdParameter idParameter)
         {
             _subscriptionService.UnsubscribeFromArea(idParameter.Id, _activeUser.UserId);
+            return Ok(idParameter);
         }
 
     }

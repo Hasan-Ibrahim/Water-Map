@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Service.WaterSupply;
 
 namespace Api.Controllers
@@ -33,9 +34,11 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public void AddDailyAverageWaterSupply(DailySupplyEntry dailySupplyEntry)
+        public IHttpActionResult AddDailyAverageWaterSupply(DailySupplyEntry dailySupplyEntry)
         {
             _dailySupplyService.AddSupply(dailySupplyEntry);
+
+            return Ok(dailySupplyEntry);
         }
 
         [HttpGet]
