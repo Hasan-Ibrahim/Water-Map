@@ -4,9 +4,10 @@ lloydApp.controller('MapCtrl', ['mapService',
         function init() {
             var mainMap = mapService.getMap();
 
-            var deleteMode = false;
-
-            L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', { maxZoom: 20, attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT' }).addTo(mainMap);
+            L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                maxZoom: 20,
+                attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'
+            }).addTo(mainMap);
 
             navigator.geolocation.getCurrentPosition(showPosition);
 
@@ -18,22 +19,20 @@ lloydApp.controller('MapCtrl', ['mapService',
 
             function drawFeatures() {
 
-                mapService.getSources().success(function(sources){
-                    for(var i = 0 ; i < sources.MySources.length;i++){
+                mapService.getSources().success(function (sources) {
+                    for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
                         addLayerToMap(layer, sources.MySources[i].Id);
                     }
 
-                    for(var j = 0 ; j < sources.OthersSources.length;j++){
+                    for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
                         addLayerToMap(layer, sources.OthersSources[j].Id);
                     }
-
-                    //mainMap.fitBounds(mainMap.getBounds())
                 });
             }
 
-            function addControls(){
+            function addControls() {
                 L.NewLineControl = L.Control.extend({
                     options: {
                         position: 'topleft'
@@ -105,21 +104,40 @@ lloydApp.controller('MapCtrl', ['mapService',
                     console.log("layer created");
                     e.layer.addTo(mainMap);
                     addLayerToMap(e.layer, 0);
-                    mapService.addFeature(toWKT(e.layer), "Test", function(data){
+                    mapService.addFeature(toWKT(e.layer), "Test", function (data) {
                         e.layer.options.id = data.Id;
                         e.layer.disableEdit();
                     });
                 });
             }
 
-            function addLayerToMap(layer, id){
-                layer.options.id=id;
+            function addLayerToMap(layer, id) {
+                layer.options.id = id;
                 layer.addTo(mainMap);
                 layer.bindPopup(formTemplates.source);
 
-                layer.on('click', function(e){
-                    mapService.getProperties(e.target.options.id).success(function(data){
+                layer.on('click', function (e) {
+                    mapService.getProperties(e.target.options.id).success(function (data) {
                         console.log(data);
+                        layer.openPopup();
+                        for (var i in data) {
+                            var container = $('#water-quality td#' + i);
+                            if (container.length) {
+                                container.text(data[i].toFixed(1)+"%");
+                            }
+                        }
+                        $('#water-quality input[type="radio"]').click(function(){
+                            $('#water-quality #submit-quality').enable();
+                        });
+
+                        $('#water-quality #submit-quality').click(function () {
+                            var checked = $('#water-quality input[type=radio]:checked');
+
+                            if(checked.length){
+                                mapService.rateSource(layer.options.id, checked[0].value);
+                                layer.closePopup();
+                            }
+                        });
                     });
                 });
             }

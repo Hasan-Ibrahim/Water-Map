@@ -37,7 +37,15 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', function ($http, $q,
                 onSuccess(data);
             });
         },
-        moveToCurrentLocation: moveToCurrentLocation
+        moveToCurrentLocation: moveToCurrentLocation,
+        rateSource: function (sourceId, quality, onSuccess) {
+            $.post(appRoot + "WaterSource/RateWaterSource", {
+                WaterSourceId: sourceId,
+                Potability: quality
+            }, function (data) {
+                if(onSuccess)onSuccess(data);
+            });
+        }
     }
 }]);
 
