@@ -15,6 +15,14 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        public WaterSourceProperties GetSourceProperties(int sourceId)
+        {
+            var properties = _waterSourceService.GetSourceProperties(sourceId);
+
+            return properties;
+        }
+
+        [HttpGet]
         public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
         {
             return _waterSourceService.GetWaterSources(bBoxWkt);

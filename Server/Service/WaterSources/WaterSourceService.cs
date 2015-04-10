@@ -20,6 +20,12 @@ namespace Service.WaterSources
             _ratingRepository = ratingRepository;
         }
 
+        public void Dispose()
+        {
+            _sourceRepository.Dispose();
+            _ratingRepository.Dispose();
+        }
+
         public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
         {
             var bBox = DbGeometry.FromText(bBoxWkt);
@@ -56,12 +62,12 @@ namespace Service.WaterSources
 
             _ratingRepository.SaveChanges();
         }
-
-        public void Dispose()
+        
+        public WaterSourceProperties GetSourceProperties(int sourceId)
         {
-            _sourceRepository.Dispose();
-            _ratingRepository.Dispose();
-        }
+            var dbSource = _sourceRepository.Find(sourceId);
 
+            return WaterSourceProperties.FromDbWaterSource(dbSource);
+        }
     }
 }
