@@ -56,7 +56,7 @@ namespace Service.WaterSourceSubscription
 
         public void Subscribe(SourceSubscription sourceSubscription, int userId)
         {
-            var type = GetSubscriptionFlagFromArray(sourceSubscription.SubscriptionTypes);
+            var type = GetSubscriptionFlagFromArray(sourceSubscription.Subscriptions);
 
             var dbSubscription = _sourceSubscriptionRepository.Find(
                 dbS => dbS.SourceId == sourceSubscription.SourceId && dbS.UserId == userId);
@@ -75,13 +75,16 @@ namespace Service.WaterSourceSubscription
             _sourceSubscriptionRepository.SaveChanges();
         }
 
-        private static WaterSubscriptionType GetSubscriptionFlagFromArray(IEnumerable<WaterSubscriptionType> subscription)
+        private static WaterSubscriptionType GetSubscriptionFlagFromArray(Dictionary<WaterSubscriptionType, bool> subscriptions)
         {
             WaterSubscriptionType type = 0;
 
-            foreach (var sourceSubscriptionType in subscription)
+            foreach (var subscription in subscriptions)
             {
-                type |= sourceSubscriptionType;
+                if (subscription.Value)
+                {
+                    type |= subscription.Key;
+                }
             }
             return type;
         }
@@ -102,7 +105,7 @@ namespace Service.WaterSourceSubscription
         public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
         {
             var subscriptionGeo = DbGeometry.FromText(areaSubscription.Geometry);
-            var type = GetSubscriptionFlagFromArray(areaSubscription.SubscriptionTypes);
+            var type = GetSubscriptionFlagFromArray(areaSubscription.Subscriptions);
             var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
             _areaSubscrioptionRepository.Create(dbAreaSubscription);
 
