@@ -1,4 +1,4 @@
-lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', function ($http, $q, serverUrl) {
+lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', function ($http, $q, serverUrl, jqHttp) {
     var appRoot = serverUrl;
     var mainMap = null;
 
@@ -29,23 +29,26 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', function ($http, $q,
         getProperties: function (id) {
             return $http.get(appRoot + 'WaterSource/GetSourceProperties?sourceId=' + id);
         },
-        addFeature: function (geometry, sourceType, onSuccess) {
-            $.post(appRoot + "WaterSource/AddWaterSource", {
+        addFeature: function (geometry, sourceType) {
+            jqHttp.post(appRoot + "WaterSource/AddWaterSource", {
                 Geometry: geometry,
                 SourceType: sourceType
-            }, function (data) {
-                onSuccess(data);
             });
         },
         moveToCurrentLocation: moveToCurrentLocation,
-        rateSource: function (sourceId, quality, onSuccess) {
-            $.post(appRoot + "WaterSource/RateWaterSource", {
+        rateSource: function (sourceId, quality) {
+            return jqHttp.post(appRoot + "WaterSource/RateWaterSource", {
                 WaterSourceId: sourceId,
                 Potability: quality
-            }, function (data) {
-                if(onSuccess)onSuccess(data);
             });
-        }
+        },
+        subscribeFeature: function (sourceId, subscriptions) {
+            return jqHttp.post(appRoot + "WaterSourceSubscription/Subscribe", {
+                SourceId: sourceId,
+                Subscriptions: subscriptions
+            });
+        },
+        selectedSourceId: null
     }
 }]);
 
