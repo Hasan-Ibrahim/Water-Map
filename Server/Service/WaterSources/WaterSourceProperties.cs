@@ -31,7 +31,7 @@ namespace Service.WaterSources
                 PotableRatingPercent = dbWaterSource.PotableRatingCount / totalRatingPercent,
                 ProcessableRatingPercent = dbWaterSource.ProcessableRatingCount / totalRatingPercent,
                 UnpotableRatingPercent = dbWaterSource.UnpotableRatingCount / totalRatingPercent,
-                UnknownRatingPercent = dbWaterSource.UnpotableRatingCount / totalRatingPercent,
+                UnknownRatingPercent = dbWaterSource.UnknownRatingCount / totalRatingPercent,
                 ImageUrls = imageUrls,
                 Accessibility = dbWaterSource.Accessibility,
                 TotalRatings = totalRatings
