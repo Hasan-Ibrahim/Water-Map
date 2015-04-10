@@ -1239,9 +1239,9 @@ div.item-note.item-right-panel h2.item-distance {
 .sp-top-box {
     position: absolute;
     height: 500px;
-    width: auto;
+    width: 100%;
     top: 0;
-    left: 0;
+    left: 100px;
     z-index: 1;
 }
 
