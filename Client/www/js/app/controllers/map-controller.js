@@ -1,10 +1,19 @@
-lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService',
+lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope', 'sidebarService',
     function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService) {
+        var preferredAreaMode = false;
         init();
         function init() {
             var mainMap = mapService.getMap();
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
-
+            var myFeatureGroupStyle = {
+                radius: 8,
+                fillColor: "#ffff00",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.1
+            };
+            otherFeatureGroup.setStyle(myFeatureGroupStyle);
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 maxZoom: 20,
                 attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'
@@ -111,6 +120,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 map.editTools.startPolygon();
+                                preferredAreaMode = true;
                             });
 
                         return container;
@@ -122,11 +132,20 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mainMap.addControl(new L.NewPolygonControl());
                 mainMap.addControl(new L.NewPreferredZoneControl());
 
+                new L.Control.GeoSearch({
+                    provider: new L.GeoSearch.Provider.OpenStreetMap()
+                }).addTo(mainMap);
+
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
-                    addLayerToMap(e.layer, 0, otherFeatureGroup);
-                    mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
+                    if (preferredAreaMode) {
+                        addLayerToMap(e.layer, 0, myFeatureGroup);
+                        preferredAreaMode = false;
+                    } else {
+                        addLayerToMap(e.layer, 0, otherFeatureGroup);
+                    }
+                    mapService.addFeature(toWKT(e.layer), "Test").then(function (data) {
                         e.layer.options.id = data.data.Id;
                         e.layer.disableEdit();
                     });
@@ -161,10 +180,8 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
             function addLayerToMap(layer, id, featureGroup) {
                 layer.options.id = id;
                 layer.addTo(featureGroup);
-                layer.bindPopup(formTemplates.source);
-                $rootScope.$broadcast('layerAdded');
                 layer.on('click', function (e) {
-                    $rootScope.$broadcast('markerClicked',e.target.options.id);
+                    $rootScope.$broadcast('markerClicked', e.target.options.id);
                     sidebarService.showBottomBar = true;
                     mapService.selectedSourceId = e.target.options.id;
 
@@ -177,6 +194,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         sourceCoverageControlAdded = true;
                     }
                     mapService.getProperties(e.target.options.id).success(function (data) {
+                        layer.bindPopup(formTemplates.source);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
