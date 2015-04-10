@@ -1,5 +1,5 @@
-lloydApp.controller('MapCtrl', ['mapService',
-    function (mapService) {
+lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService',
+    function (mapService, ConvexHull, sourceCoverageService) {
         init();
         function init() {
             var mainMap = mapService.getMap();
@@ -112,12 +112,45 @@ lloydApp.controller('MapCtrl', ['mapService',
                 });
             }
 
+            var selectedSource = undefined;
+            L.SourceCoverageControl = L.Control.extend({
+                options: {
+                    position: 'topright'
+                },
+
+                onAdd: function (map) {
+                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                        link = L.DomUtil.create('a', '', container);
+
+                    var showingCoverage = false;
+                    link.href = '#';
+                    link.title = 'Add a new marker';
+                    link.innerHTML = 'SC';
+                    sourceCoverageService.storeLink(link);
+                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                        .on(link, 'click', function () {
+                            sourceCoverageService.toggleSourceCoverage(selectedSource.options.id);
+                        });
+                    return container;
+                }
+            });
+
+            var sourceCoverageControlAdded = false;
+
             function addLayerToMap(layer, id){
                 layer.options.id=id;
                 layer.addTo(mainMap);
                 layer.bindPopup(formTemplates.source);
 
                 layer.on('click', function(e){
+                    if(selectedSource && selectedSource != this){
+                        sourceCoverageService.hideCoveragePolygon();
+                    }
+                    selectedSource = this;
+                    if(!sourceCoverageControlAdded) {
+                        mainMap.addControl(new L.SourceCoverageControl());
+                        sourceCoverageControlAdded = true;
+                    }
                     mapService.getProperties(e.target.options.id).success(function(data){
                         console.log(data);
                     });

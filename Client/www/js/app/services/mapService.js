@@ -29,6 +29,9 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', function ($http, $q,
         getProperties: function (id) {
             return $http.get(appRoot + 'WaterSource/GetSourceProperties?sourceId=' + id);
         },
+        getCoveragePoints: function(id){
+            return $http.get(appRoot + 'DailySupply/GetSuppliedLocationsForSource?sourceId=' + id);
+        },
         addFeature: function (geometry, sourceType, onSuccess) {
             $.post(appRoot + "WaterSource/AddWaterSource", {
                 Geometry: geometry,
