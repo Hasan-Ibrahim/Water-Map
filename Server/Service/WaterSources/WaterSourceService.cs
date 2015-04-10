@@ -54,7 +54,7 @@ namespace Service.WaterSources
                 case Potability.Drinkable:
                     source.PotableRatingCount++;
                     break;
-                case Potability.Need_Treatment:
+                case Potability.NeedTreatment:
                     source.ProcessableRatingCount++;
                     break;
                 case Potability.Undrinkable:

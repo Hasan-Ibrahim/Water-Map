@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Data.Model.Constants
+﻿namespace Data.Model.Constants
 {
     public enum Potability
     {
