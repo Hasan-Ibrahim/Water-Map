@@ -1,13 +1,10 @@
-lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'loginService',
-    function ($scope, $rootScope, loginService) {
-        $scope.toggleDisplayHomePlace = function () {
-            if ($rootScope.showHomePlace) {
-                $('.sp-right-box').removeClass('animated fadeInRight');
-                $('.sp-right-box').addClass('animated fadeOutRight');
-            } else {
-                $('.sp-right-box').removeClass('animated fadeOutRight');
-                $('.sp-right-box').addClass('animated fadeInRight');
-            }
-            $rootScope.showHomePlace = !$rootScope.showHomePlace;
-        }
+lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'sidebarService',
+    function ($scope, $rootScope, sidebarService) {
+        $scope.toggleRightBar = function () {
+            sidebarService.toggleRightBar();
+        };
+
+        $rootScope.toggleTopBar = function () {
+            sidebarService.toggleTopBar();
+        };
     }]);

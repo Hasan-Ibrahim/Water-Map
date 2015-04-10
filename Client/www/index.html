@@ -43,6 +43,7 @@
     <script type="text/javascript" src="js/app/services/SafeApply.js"></script>
     <script type="text/javascript" src="js/app/services/DistanceCalculatorService.js"></script>
     <script type="text/javascript" src="js/app/services/DragService.js"></script>
+    <script type="text/javascript" src="js/app/services/sidebar-service.js"></script>
 
     <script type="text/javascript" src="js/app/directives/ionicGestures.js"></script>
     <script type="text/javascript" src="js/app/directives/ionic-swipecards.js"></script>
@@ -72,12 +73,11 @@
         <ion-nav-bar>
         </ion-nav-bar>
 
-        <!--<div class="sp-top-box">-->
-        <!--<input type="text" placeholder="Water Demand"/>-->
-        <!--<input type="text" placeholder="Total Family Member"/>-->
-        <!--</div>-->
+        <div class="sp-top-box" ng-show="showTopBar()">
+            <home-place></home-place>
+        </div>
 
-        <div class="sp-right-box animated fadeInDown" ng-show="showHomePlace">
+        <div class="sp-right-box" ng-show="showRightBar()">
             <home-place></home-place>
         </div>
 </body>
