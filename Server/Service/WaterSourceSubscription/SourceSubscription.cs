@@ -10,14 +10,14 @@ namespace Service.WaterSourceSubscription
         public int SourceId { get; set; }
         public Dictionary<WaterSubscriptionType, bool> Subscriptions { get; set; }
 
-        public static SourceSubscription FromDbSubscription(DbWaterSourceSubscription dbWaterSourceSubscription)
+        public static SourceSubscription FromDbSubscription(DbWaterSourceSubscription dbSubscription)
         {
             var dic = new Dictionary<WaterSubscriptionType, bool>();
             foreach (WaterSubscriptionType st in Enum.GetValues(typeof(WaterSubscriptionType)))
             {
-                dic[st] = dbWaterSourceSubscription.Type.HasFlag(st);
+                dic[st] = dbSubscription.Type.HasFlag(st);
             }
-            var subscription = new SourceSubscription { SourceId = dbWaterSourceSubscription.SourceId, Subscriptions = dic };
+            var subscription = new SourceSubscription { SourceId = dbSubscription.SourceId, Subscriptions = dic };
 
             return subscription;
         }

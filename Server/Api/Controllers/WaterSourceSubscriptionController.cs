@@ -49,9 +49,9 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public SourceSubscription GetSourceSubscription(int id)
+        public SourceSubscription GetSourceSubscription(int sourceId)
         {
-            return _subscriptionService.GetSourceSubscription(id);
+            return _subscriptionService.GetSourceSubscription(sourceId, _activeUser.UserId);
         }
 
         [TokenAuthorize]
