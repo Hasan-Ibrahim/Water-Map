@@ -26,11 +26,11 @@ function SidebarService() {
 
     this.toggleBottomBar = function () {
         if (this.showBottomBar) {
-            $('.sp-bottom-box').removeClass('animated fadeOutDown');
-            $('.sp-bottom-box').addClass('animated fadeInUp');
-        } else {
             $('.sp-bottom-box').removeClass('animated fadeInUp');
             $('.sp-bottom-box').addClass('animated fadeOutDown');
+        } else {
+            $('.sp-bottom-box').removeClass('animated fadeOutDown');
+            $('.sp-bottom-box').addClass('animated fadeInUp');
         }
         this.showBottomBar = !this.showBottomBar;
     };
