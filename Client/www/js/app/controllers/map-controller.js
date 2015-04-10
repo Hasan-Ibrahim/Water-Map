@@ -1,5 +1,6 @@
 lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService',
     function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService) {
+        var preferredAreaMode = false;
         init();
         function init() {
             var mainMap = mapService.getMap();
@@ -125,7 +126,11 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
-                    addLayerToMap(e.layer, 0, otherFeatureGroup);
+                    if(preferredAreaMode){
+                        addLayerToMap(e.layer, 0, myFeatureGroup);
+                    }else{
+                        addLayerToMap(e.layer, 0, otherFeatureGroup);
+                    }
                     mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
                         e.layer.options.id = data.data.Id;
                         e.layer.disableEdit();
@@ -161,8 +166,9 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
             function addLayerToMap(layer, id, featureGroup) {
                 layer.options.id = id;
                 layer.addTo(featureGroup);
-                layer.bindPopup(formTemplates.source);
-                $rootScope.$broadcast('layerAdded');
+                layer.bindPopup(formTemplates.source).on('popupclose', function(){
+                    $rootScope.$broadcast('popupClosed');
+                });
                 layer.on('click', function (e) {
                     $rootScope.$broadcast('markerClicked',e.target.options.id);
                     sidebarService.showBottomBar = true;
