@@ -27,8 +27,8 @@ namespace Service.WaterSources
         public static WaterSourceProperties FromDbWaterSource(DbWaterSource dbWaterSource)
         {
             var imageUrls = string.IsNullOrWhiteSpace(dbWaterSource.ImageUrls)
-                ? dbWaterSource.ImageUrls.Split('^')
-                : new string[] {};
+                ? new string[] {}
+                : dbWaterSource.ImageUrls.Split('^');
             return new WaterSourceProperties
             {
                 SourceType = dbWaterSource.SourceType,
