@@ -15,6 +15,7 @@
 
     <!--<script src="js/vendor/ng-cordova.js"></script>
     <script src="cordova.js"></script>-->
+    <script type="text/javascript" src="bower_components/graham_scan/graham_scan.min.js"></script>
     <script type="text/javascript" src="js/vendor/jquery-2.1.0.js"></script>
     <script type="text/javascript" src="js/vendor/jquery.signalR-2.1.2.min.js"></script>
     <script type="text/javascript" src="js/vendor/ionic.bundle.js"></script>
@@ -46,6 +47,10 @@
     <script type="text/javascript" src="js/app/services/SafeApply.js"></script>
     <script type="text/javascript" src="js/app/services/DistanceCalculatorService.js"></script>
     <script type="text/javascript" src="js/app/services/DragService.js"></script>
+    <script type="text/javascript" src="js/app/services/jquery-wrapper.js"></script>
+    <script type="text/javascript" src="js/app/services/graham-scan-wrapper.js"></script>
+    <script type="text/javascript" src="js/app/services/jq-http.js"></script>
+    <script type="text/javascript" src="js/app/services/db.js"></script>
     <script type="text/javascript" src="js/app/services/sidebar-service.js"></script>
     <script type="text/javascript" src="js/app/services/mapService.js"></script>
 
@@ -54,6 +59,7 @@
     <script type="text/javascript" src="js/app/directives/custom-video-player.js"></script>
     <script type="text/javascript" src="js/app/directives/home-place.js"></script>
     <script type="text/javascript" src="js/app/directives/gps-button.js"></script>
+    <script type="text/javascript" src="js/app/directives/login-form.js"></script>
 
     <script type="text/javascript" src="js/app/controllers/login-controller.js"></script>
     <script type="text/javascript" src="js/app/controllers/map-controller.js"></script>
@@ -83,8 +89,13 @@
 </div>
 
 <div class="sp-right-box" ng-show="showRightBar()">
-    <home-place></home-place>
+    <login-form></login-form>
 </div>
+
+<div class="sp-bottom-box" ng-show="showBottomBar()">
+    <login-form></login-form>
+</div>
+
 <div class="sp-bottom-action-button-container">
     <gps-button></gps-button>
 </div>

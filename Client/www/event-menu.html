@@ -8,7 +8,7 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
             </button>
-            <button class="button button-icon" ui-sref="eventmenu.profile">
+            <button class="button button-icon" ng-click="toggleBottomBar()">
                 <i class="icon ion-person"></i>
             </button>
             <button class="button button-icon" on-tap="logout()" ng-show="isLoggedIn()">

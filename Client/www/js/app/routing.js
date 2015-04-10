@@ -1,6 +1,6 @@
 lloydApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/event/login');
+    $urlRouterProvider.otherwise('/event/map');
     var templateRoot = 'partials/';
 
     $stateProvider
@@ -9,15 +9,6 @@ lloydApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
             abstract: true,
             templateUrl: 'event-menu.html',
             controller: 'MenuCtrl'
-        })
-        .state('eventmenu.login', {
-            url: '/login',
-            views: {
-                menuContent: {
-                    templateUrl: templateRoot + 'login.html',
-                    controller: 'LoginCtrl'
-                }
-            }
         })
         .state('eventmenu.map', {
             url: '/map',
