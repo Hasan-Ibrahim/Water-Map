@@ -37,11 +37,7 @@ namespace Service.WaterSupply
 
             foreach (var gridData in _gridRepository.GetAll())
             {
-                if (!data.ContainsKey(gridData.Row))
-                {
-                    data[gridData.Row] = new Dictionary<int, int[]>();
-                }
-                var rowData = data[gridData.Row];
+                var rowData = data.GetEnsure(gridData.Row, new Dictionary<int, int[]>());
                 rowData[gridData.Col] = new[] { gridData.SupplyInLitre, gridData.NumberOfPeople };
             }
 
