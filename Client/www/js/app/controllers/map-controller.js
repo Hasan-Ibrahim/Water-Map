@@ -1,5 +1,5 @@
-lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService',
-    function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService) {
+lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService', 'markerIconService',
+    function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService) {
         init();
         function init() {
             var mainMap = mapService.getMap();
@@ -23,11 +23,13 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mapService.getSources().success(function (sources) {
                     for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
+                        layer = markerIconService.getAwesomeMarker(layer, true);
                         addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
+                        layer = markerIconService.getAwesomeMarker(layer, false);
                         addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
                     }
                 });
