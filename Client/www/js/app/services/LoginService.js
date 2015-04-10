@@ -10,6 +10,10 @@ function LoginService(remote, db) {
         });
     };
 
+    this.logout = function () {
+        db.setLoginToken('');
+    };
+
     this.isLoggedIn = function () {
         return !!db.getLoginToken();
     };
@@ -20,3 +24,5 @@ function LoginService(remote, db) {
 }
 
 lloydApp.service('loginService', ['remote', 'db', LoginService]);
+
+lloydApp.value('loginObject', {loginToken: ''});
