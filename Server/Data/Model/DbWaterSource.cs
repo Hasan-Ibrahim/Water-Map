@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 using Data.Model.Base;
+using Data.Model.Constants;
 
 namespace Data.Model
 {
@@ -12,6 +13,8 @@ namespace Data.Model
         public int PotableRatingCount { get; set; }
         public int ProcessableRatingCount { get; set; }
         public int UnpotableRatingCount { get; set; }
+        public int UnknownRatingCount { get; set; }
+        public Accessibility Accessibility { get; set; }
 
         /// <summary>
         /// A list of image urls separated by '^' character

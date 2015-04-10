@@ -104,6 +104,7 @@
     <Compile Include="Model\Authentication\DbUserToken.cs" />
     <Compile Include="Model\Authentication\DbUser.cs" />
     <Compile Include="Model\Base\DbModel.cs" />
+    <Compile Include="Model\Constants\Accessibility.cs" />
     <Compile Include="Model\Constants\Potability.cs" />
     <Compile Include="Model\Constants\WaterSubscriptionType.cs" />
     <Compile Include="Model\DbAreaSubscription.cs" />
