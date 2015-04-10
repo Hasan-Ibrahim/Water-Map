@@ -1,5 +1,5 @@
-lloydApp.directive('homePlace', [
-    function () {
+lloydApp.directive('homePlace', ['sidebarService',
+    function (sidebarService) {
         return {
 
             scope: {},
@@ -8,7 +8,13 @@ lloydApp.directive('homePlace', [
                 scope.takeGpsLocation = function () {
                     $rootScope.addNewSource = function () {
                     }
-                }
+                };
+                scope.toggleRightBar = function () {
+                    sidebarService.toggleRightBar();
+                };
+                scope.toggleTopBar = function () {
+                    sidebarService.toggleTopBar();
+                };
             },
             templateUrl: 'partials/home-place.html',
             controller: function () {
