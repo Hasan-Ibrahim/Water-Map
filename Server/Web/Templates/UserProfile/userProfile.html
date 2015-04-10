@@ -1,0 +1,76 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Basic Info
+                    </h3>
+                </div>
+                <form name="profileForm" ng-submit="updateUserProfile()">
+                    <div class="panel-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Full Name
+                                    </td>
+                                    <td>
+                                        <div ng-if="!userProfileForm.isEditable" class="ng-binding">
+                                            {{userProfile.FullName}}
+                                        </div>
+                                        <input ng-if="userProfileForm.isEditable" name="FullName" class="form-control" autofocus="" ng-model="userProfile.FullName" maxlength="50" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Email Address
+                                    </td>
+                                    <td class="ng-binding">
+                                        {{userProfile.LoginId}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Phone Number
+                                    </td>
+                                    <td>
+                                        <div ng-if="!userProfileForm.isEditable" class="ng-binding">
+                                            {{userProfile.PhoneNumber}}
+                                        </div>
+                                        <input ng-if="userProfileForm.isEditable" class="form-control" name="PhoneNumber" ng-model="userProfile.PhoneNumber" maxlength="50" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Address
+                                    </td>
+                                    <td>
+                                        <div ng-if="!userProfileForm.isEditable" class="ng-binding">
+                                            {{userProfile.Address}}
+                                        </div>
+                                        <input ng-if="userProfileForm.isEditable" class="form-control" name="address" ng-model="userProfile.Address" maxlength="200">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel-footer">
+                        <button class="btn btn-primary" ng-if="!userProfileForm.isEditable" ng-click="editProfile()">
+                            <i class="fa fa-pencil-square-o fa-fw"></i>Edit
+
+                        </button>
+                        <button ng-disabled="profileForm.$invalid" type="submit" class="btn btn-success" ng-if="userProfileForm.isEditable">
+                            <i class="fa fa-floppy-o fa-fw"></i>Save
+
+                        </button>
+                        <button class="btn btn-warning" ng-if="userProfileForm.isEditable" ng-click="cancelProfileUpdate()">
+                            <i class="fa fa-times fa-fw"></i>Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
