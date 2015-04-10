@@ -1,0 +1,18 @@
+{
+  "name": "WaterMap",
+  "version": "0.0.0",
+  "authors": [
+    "Nafeez Abrar <nafeezabrar@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "graham_scan": "~1.0.2"
+  }
+}
