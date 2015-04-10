@@ -5,8 +5,9 @@ using System.Linq;
 using Data.Model;
 using Data.Model.Constants;
 using Data.Repositories.Abstraction;
+using Service.Utility;
 
-namespace Service.WaterSource
+namespace Service.WaterSources
 {
     public class WaterSourceService : IDisposable
     {
@@ -19,12 +20,12 @@ namespace Service.WaterSource
             _ratingRepository = ratingRepository;
         }
 
-        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
+        public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
         {
             var bBox = DbGeometry.FromText(bBoxWkt);
             return _sourceRepository
                 .Where(source => bBox.Contains(source.Shape))
-                .Select(WaterSource.FromDbWaterSource);
+                .Select(GeometryEntity.FromDbWaterSource);
         }
 
         public void AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)

@@ -73,11 +73,13 @@
     <Compile Include="Serialization\GeometryConverter.cs" />
     <Compile Include="WaterSourceSubscription\AreaSubscription.cs" />
     <Compile Include="WaterSourceSubscription\SourceSubscription.cs" />
+    <Compile Include="WaterSourceSubscription\WaterSourceGroupBySubscription.cs" />
     <Compile Include="WaterSourceSubscription\WaterSourceSubscriptionService.cs" />
-    <Compile Include="WaterSource\WaterSource.cs" />
-    <Compile Include="WaterSource\WaterSourceCreateEntry.cs" />
-    <Compile Include="WaterSource\WaterSourceRating.cs" />
-    <Compile Include="WaterSource\WaterSourceService.cs" />
+    <Compile Include="Utility\GeometryEntity.cs" />
+    <Compile Include="WaterSources\WaterSourceProperties.cs" />
+    <Compile Include="WaterSources\WaterSourceCreateEntry.cs" />
+    <Compile Include="WaterSources\WaterSourceRating.cs" />
+    <Compile Include="WaterSources\WaterSourceService.cs" />
     <Compile Include="WaterSupply\DailySupplyEntry.cs" />
     <Compile Include="WaterSupply\DailySupplyService.cs" />
     <Compile Include="Utility\HashGenerator.cs" />

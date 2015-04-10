@@ -1,7 +1,7 @@
 ﻿using Data.Model;
 using Data.Model.Constants;
 
-namespace Service.WaterSource
+namespace Service.WaterSources
 {
     public class WaterSourceRating
     {

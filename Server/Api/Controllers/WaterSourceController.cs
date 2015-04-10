@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-using Service.WaterSource;
+using Service.Utility;
+using Service.WaterSources;
 
 namespace Api.Controllers
 {
@@ -14,7 +15,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
+        public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
         {
             return _waterSourceService.GetWaterSources(bBoxWkt);
         }
