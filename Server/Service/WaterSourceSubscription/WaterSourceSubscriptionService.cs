@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using Data.Model;
@@ -63,16 +62,16 @@ namespace Service.WaterSourceSubscription
             return SourceSubscription.FromDbSubscription(dbSubscription);
         }
 
-        public void Subscribe(SourceSubscription sourceSubscription, int userId)
+        public void Subscribe(SubscriptionEntry subscriptionEntry, int userId)
         {
-            var type = GetSubscriptionFlagFromArray(sourceSubscription.Subscriptions);
+            var type = GetSubscriptionFlagFromArray(subscriptionEntry);
 
             var dbSubscription = _sourceSubscriptionRepository.Find(
-                dbS => dbS.SourceId == sourceSubscription.SourceId && dbS.UserId == userId);
+                dbS => dbS.SourceId == subscriptionEntry.SourceId && dbS.UserId == userId);
 
             if (dbSubscription == null)
             {
-                dbSubscription = new DbWaterSourceSubscription(userId, sourceSubscription.SourceId, type);
+                dbSubscription = new DbWaterSourceSubscription(userId, subscriptionEntry.SourceId, type);
                 _sourceSubscriptionRepository.Create(dbSubscription);
             }
             else
@@ -84,16 +83,13 @@ namespace Service.WaterSourceSubscription
             _sourceSubscriptionRepository.SaveChanges();
         }
 
-        private static WaterSubscriptionType GetSubscriptionFlagFromArray(Dictionary<WaterSubscriptionType, bool> subscriptions)
+        private static WaterSubscriptionType GetSubscriptionFlagFromArray(SubscriptionEntry subscriptionEntry)
         {
             WaterSubscriptionType type = 0;
 
-            foreach (var subscription in subscriptions)
+            foreach (var subscription in subscriptionEntry.SubscriptionTypes)
             {
-                if (subscription.Value)
-                {
-                    type |= subscription.Key;
-                }
+                type |= subscription;
             }
             return type;
         }
@@ -111,10 +107,10 @@ namespace Service.WaterSourceSubscription
             return false;
         }
 
-        public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
+        public void SubscribeToArea(SubscriptionEntry subscriptionEntry, int userId)
         {
-            var subscriptionGeo = DbGeometry.FromText(areaSubscription.Geometry);
-            var type = GetSubscriptionFlagFromArray(areaSubscription.Subscriptions);
+            var subscriptionGeo = DbGeometry.FromText(subscriptionEntry.Geometry);
+            var type = GetSubscriptionFlagFromArray(subscriptionEntry);
             var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
             _areaSubscrioptionRepository.Create(dbAreaSubscription);
 

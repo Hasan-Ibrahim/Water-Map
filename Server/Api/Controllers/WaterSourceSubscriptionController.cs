@@ -34,10 +34,10 @@ namespace Api.Controllers
 
         [TokenAuthorize]
         [HttpPost]
-        public IHttpActionResult Subscribe(SourceSubscription sourceSubscription)
+        public IHttpActionResult Subscribe([FromBody]SubscriptionEntry subscriptionEntry)
         {
-            _subscriptionService.Subscribe(sourceSubscription, _activeUser.UserId);
-            return Ok(sourceSubscription);
+            _subscriptionService.Subscribe(subscriptionEntry, _activeUser.UserId);
+            return Ok(subscriptionEntry);
         }
 
         [TokenAuthorize]
@@ -56,10 +56,10 @@ namespace Api.Controllers
 
         [TokenAuthorize]
         [HttpPost]
-        public IHttpActionResult SubscribeToArea(AreaSubscription areaSubscription)
+        public IHttpActionResult SubscribeToArea(SubscriptionEntry subscriptionEntry)
         {
-            _subscriptionService.SubscribeToArea(areaSubscription, _activeUser.UserId);
-            return Ok(areaSubscription);
+            _subscriptionService.SubscribeToArea(subscriptionEntry, _activeUser.UserId);
+            return Ok(subscriptionEntry);
         }
 
         [TokenAuthorize]
