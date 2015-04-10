@@ -48,6 +48,7 @@ namespace Data.Repositories.Abstraction
 
         public bool Update(TModel updatedItem)
         {
+            updatedItem.LastUpdateTime = DateTime.UtcNow;
             _db.Entry(updatedItem).State = EntityState.Modified;
             return true;
         }
