@@ -1,10 +1,12 @@
-﻿namespace Data.Model.Constants
+﻿using System.ComponentModel;
+
+namespace Data.Model.Constants
 {
     public enum Potability
     {
-        Potable = 1000,
-        Processable = 900,
+        Drinkable = 1000,
+        NeedTreatment = 900,
         Unknown = 0,
-        Unpotable = -1000,
+        Undrinkable = -1000,
     }
 }

@@ -51,13 +51,13 @@ namespace Service.WaterSources
 
             switch (waterSourceRating.Potability)
             {
-                case Potability.Potable:
+                case Potability.Drinkable:
                     source.PotableRatingCount++;
                     break;
-                case Potability.Processable:
+                case Potability.Need_Treatment:
                     source.ProcessableRatingCount++;
                     break;
-                case Potability.Unpotable:
+                case Potability.Undrinkable:
                     source.UnpotableRatingCount++;
                     break;
             }
