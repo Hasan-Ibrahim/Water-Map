@@ -75,14 +75,6 @@
                             "count": 4
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         },
@@ -92,6 +84,14 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_VIDEO\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
                         }
                     ],
@@ -136,9 +136,6 @@
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.jantrik.lloyds_list"
         },
-        "org.apache.cordova.geolocation": {
-            "PACKAGE_NAME": "com.jantrik.lloyds_list"
-        },
         "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.jantrik.lloyds_list"
         },
@@ -151,6 +148,9 @@
         "com.phonegap.plugins.facebookconnect": {
             "APP_ID": "291722901017949",
             "APP_NAME": "Lloyds List",
+            "PACKAGE_NAME": "com.jantrik.lloyds_list"
+        },
+        "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "com.jantrik.lloyds_list"
         }
     },
