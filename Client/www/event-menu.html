@@ -72,21 +72,34 @@
 
 
         <ion-content>
+            < class="list">
                 <div class="item item-divider">
-                    Navigation
+                    User
                 </div>
-                <a ng-click="toggleRightBar()" class="item item-icon-left" href="#">
+                <a ui-sref="eventmenu.profile" class="item item-icon-left" href="#">
                     <i class="icon ion-person"></i>
-                    RightBar
+                    Profile
                 </a>
 
-                <a ng-click="toggleTopBar()" class="item item-icon-left" href="#">
+                <a ng-click="toggleDisplayHomePlace()" class="item item-icon-left" href="#">
                     <i class="icon ion-person"></i>
-                    TobBar
+                    Home Place
                 </a>
                 <a class="item item-icon-left" href="https://material.angularjs.org/#/demo/material.components.autocomplete">
                     <i class="icon ion-person"></i>
                     Angular Material
+                </a>
+                <a ui-sref="eventmenu.messages" class="item item-icon-left" href="#">
+                    <i class="icon ion-chatboxes"></i>
+                    Message
+                </a>
+
+                <div class="item item-divider">
+                    Item
+                </div>
+                <a ui-sref="eventmenu.wishListSelling" class="item item-icon-left" href="#">
+                    <i class="icon ion-ios-cart"></i>
+                    Your Post
                 </a>
 
             </ul>

@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="css/leaflet.css">
+<script type="text/javascript" src="js/vendor/leaflet.js"></script>
+<script type="text/javascript" src="js/vendor/leaflet-editable.js"></script>
+<script type="text/javascript" src="js/vendor/leaflet-omnivore.js"></script>
+<script type="text/javascript" src="js/vendor/towkt.js"></script>
+<script type="text/javascript" src="js/vendor/wktToLeafletLayer.js"></script>
+
+<script type="text/javascript" src="js/app/formTemplates.js"></script>
+<script type="text/javascript" src="js/app/map.js"></script>
+<div id='map'></div>
+<style>
+    body
+    {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map
+    {
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+        width: 100%;
+    }
+    svg,path {
+        cursor: pointer;
+    }
+</style>
+<script>
+    map.init();
+</script>
