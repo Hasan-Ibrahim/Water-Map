@@ -23,7 +23,6 @@ namespace Api.Controllers
             _activeUser = activeUser;
         }
 
-
         [HttpPost]
         [TokenUnLoggedIn]
         public IHttpActionResult Login([FromBody]Login login)

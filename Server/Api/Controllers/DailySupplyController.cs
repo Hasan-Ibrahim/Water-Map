@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Data.Model.Views;
 using Service.WaterSupply;
 
 namespace Api.Controllers
@@ -13,6 +14,12 @@ namespace Api.Controllers
         {
             _dailySupplyService = dailySupplyService;
         }
+
+        [HttpGet]
+        public IEnumerable<DbSourceSummaryGrid> GetWaterSourceSummaryGrid()
+        {
+            return _dailySupplyService.GetWaterSourceSummaryGrid();
+        } 
 
         [HttpGet]
         public IEnumerable<StressByLocation> GetStressByLocation(DateTime fromDate, DateTime toDate)
