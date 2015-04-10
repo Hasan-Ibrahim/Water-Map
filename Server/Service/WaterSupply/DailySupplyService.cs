@@ -10,11 +10,11 @@ namespace Service.WaterSupply
 {
     public class DailySupplyService : IDisposable
     {
-        private readonly Repository<DbDailyAverageSupply> _supplyRepository;
-        private readonly Repository<DbDailyAverageSupplySummary> _summaryRepository;
+        private readonly IRepository<DbDailyAverageSupply> _supplyRepository;
+        private readonly IRepository<DbDailyAverageSupplySummary> _summaryRepository;
 
-        public DailySupplyService(Repository<DbDailyAverageSupply> supplyRepository,
-            Repository<DbDailyAverageSupplySummary> summaryRepository)
+        public DailySupplyService(IRepository<DbDailyAverageSupply> supplyRepository,
+            IRepository<DbDailyAverageSupplySummary> summaryRepository)
         {
             _supplyRepository = supplyRepository;
             _summaryRepository = summaryRepository;
