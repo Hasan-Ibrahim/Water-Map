@@ -54,6 +54,13 @@ namespace Service.WaterSourceSubscription
             };
         }
 
+        public SourceSubscription GetSourceSubscription(int sourceSubscriptionId)
+        {
+            var dbSubscription = _sourceSubscriptionRepository.Find(sourceSubscriptionId);
+
+            return SourceSubscription.FromDbSubscription(dbSubscription);
+        }
+
         public void Subscribe(SourceSubscription sourceSubscription, int userId)
         {
             var type = GetSubscriptionFlagFromArray(sourceSubscription.Subscriptions);
