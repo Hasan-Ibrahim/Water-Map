@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Cors;
+using Newtonsoft.Json.Converters;
 
 namespace Api
 {
@@ -7,6 +7,9 @@ namespace Api
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Formatters.JsonFormatter.SerializerSettings.Converters
+                .Add(new StringEnumConverter());
+
             //var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors();
 
