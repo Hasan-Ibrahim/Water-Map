@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using Data.Model;
+using Data.Model.Views;
 using Data.Repositories.Abstraction;
 using Service.Constants;
 
@@ -12,13 +13,21 @@ namespace Service.WaterSupply
     {
         private readonly IRepository<DbDailyAverageSupply> _supplyRepository;
         private readonly IRepository<DbDailyAverageSupplySummary> _summaryRepository;
+        private readonly IRepository<DbSourceSummaryGrid> _gridRepository;
 
         public DailySupplyService(IRepository<DbDailyAverageSupply> supplyRepository,
-            IRepository<DbDailyAverageSupplySummary> summaryRepository)
+            IRepository<DbDailyAverageSupplySummary> summaryRepository,
+            IRepository<DbSourceSummaryGrid> gridRepository)
         {
             _supplyRepository = supplyRepository;
             _summaryRepository = summaryRepository;
+            _gridRepository = gridRepository;
         }
+
+        public IEnumerable<DbSourceSummaryGrid> GetWaterSourceSummaryGrid()
+        {
+            return _gridRepository.GetAll();
+        } 
 
         public void AddSupply(DailySupplyEntry dailySupply)
         {

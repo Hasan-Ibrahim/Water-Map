@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using Data.Model;
 using Data.Model.Authentication;
+using Data.Model.Views;
 
 namespace Data.Context
 {
@@ -24,5 +25,6 @@ namespace Data.Context
         public DbSet<DbDailyAverageSupplySummary> DailyAverageSupplySummaries { get; set; }
         public DbSet<DbWaterSourceSubscription> WaterSourceSubscriptions { get; set; }
         public DbSet<DbAreaSubscription> AreaSubscriptions { get; set; }
+        public DbSet<DbSourceSummaryGrid> SourceSummaryGrids { get; set; }
     }
 }
