@@ -34,7 +34,10 @@ namespace Service.WaterSourceSubscription
 
         public WaterSourceGroupBySubscription GetWaterSourcesBySubscription(int userId)
         {
-            var usersSourceIds = _sourceSubscriptionRepository.Where(subscription => subscription.UserId == userId).Select(subscription => subscription.SourceId);
+            var usersSourceIds = _sourceSubscriptionRepository
+                .Where(subscription => subscription.UserId == userId)
+                .Select(subscription => subscription.SourceId)
+                .ToList();
 
             var usersSources =
                 _sourceRepository.Where(source => usersSourceIds.Contains(source.Id))
@@ -66,6 +69,7 @@ namespace Service.WaterSourceSubscription
             else
             {
                 dbSubscription.Type = type;
+                dbSubscription.IsDeleted = false;
                 _sourceSubscriptionRepository.Update(dbSubscription);
             }
             _sourceSubscriptionRepository.SaveChanges();
@@ -97,7 +101,7 @@ namespace Service.WaterSourceSubscription
 
         public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
         {
-            var subscriptionGeo = DbGeometry.FromText(areaSubscription.AreaWkt);
+            var subscriptionGeo = DbGeometry.FromText(areaSubscription.Geometry);
             var type = GetSubscriptionFlagFromArray(areaSubscription.SubscriptionTypes);
             var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
             _areaSubscrioptionRepository.Create(dbAreaSubscription);
