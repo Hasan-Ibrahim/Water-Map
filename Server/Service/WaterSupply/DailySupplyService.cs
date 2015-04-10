@@ -6,6 +6,7 @@ using Data.Model;
 using Data.Model.Views;
 using Data.Repositories.Abstraction;
 using Service.Constants;
+using Service.Utility;
 
 namespace Service.WaterSupply
 {
@@ -24,6 +25,12 @@ namespace Service.WaterSupply
             _gridRepository = gridRepository;
         }
 
+        public void Dispose()
+        {
+            _supplyRepository.Dispose();
+            _summaryRepository.Dispose();
+        }
+
         public Dictionary<int, Dictionary<int, int[]>> GetWaterSourceSummaryGrid()
         {
             var data = new Dictionary<int, Dictionary<int, int[]>>();
@@ -35,11 +42,11 @@ namespace Service.WaterSupply
                     data[gridData.Row] = new Dictionary<int, int[]>();
                 }
                 var rowData = data[gridData.Row];
-                rowData[gridData.Col] = new[] {gridData.SupplyInLitre, gridData.NumberOfPeople};
+                rowData[gridData.Col] = new[] { gridData.SupplyInLitre, gridData.NumberOfPeople };
             }
 
             return data;
-        } 
+        }
 
         public void AddSupply(DailySupplyEntry dailySupply)
         {
@@ -67,10 +74,16 @@ namespace Service.WaterSupply
                 .Select(StressByLocation.FromDbDailyAverageSupplySummary);
         }
 
-        public void Dispose()
+        public Dictionary<string, List<string>> GetSuppliedLocationsForSource(int sourceId)
         {
-            _supplyRepository.Dispose();
-            _summaryRepository.Dispose();
+            var allData = new Dictionary<string, List<string>>();
+            foreach (var supply in _supplyRepository.Where(supply => supply.SourceId == sourceId))
+            {
+                var dateData = allData.GetEnsure(supply.SupplyDate.Date.ToString("yyyy-MM-dd"), new List<string>());
+                dateData.Add(supply.Location.AsText());
+            }
+
+            return allData;
         }
     }
 }

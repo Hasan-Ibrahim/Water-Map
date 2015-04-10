@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Data.Model.Views;
 using Service.WaterSupply;
 
 namespace Api.Controllers
@@ -13,6 +12,12 @@ namespace Api.Controllers
         public DailySupplyController(DailySupplyService dailySupplyService)
         {
             _dailySupplyService = dailySupplyService;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _dailySupplyService.Dispose();
+            base.Dispose(disposing);
         }
 
         [HttpGet]
@@ -33,10 +38,11 @@ namespace Api.Controllers
             _dailySupplyService.AddSupply(dailySupplyEntry);
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpGet]
+        public Dictionary<string, List<string>> GetSuppliedLocationsForSource(int sourceId)
         {
-            _dailySupplyService.Dispose();
-            base.Dispose(disposing);
+            return _dailySupplyService.GetSuppliedLocationsForSource(sourceId);
         }
+
     }
 }
