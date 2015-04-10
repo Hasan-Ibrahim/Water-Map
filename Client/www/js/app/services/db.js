@@ -1,4 +1,4 @@
-function Db($window) {
+function Db($window, loginObject) {
     this.getHomeLocaiton = function () {
         return JSON.parse($window.localStorage['home-location']);
     };
@@ -8,6 +8,7 @@ function Db($window) {
     };
 
     this.setLoginToken = function (loginToken) {
+        loginObject.loginToken = loginToken;
         $window.localStorage['login-token'] = loginToken;
     };
 

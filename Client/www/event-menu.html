@@ -8,7 +8,7 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
             </button>
-            <button class="button button-icon" ng-click="toggleBottomBar()">
+            <button class="button button-icon" ng-click="toggleBottomBar()" ng-show="isLoggedIn()">
                 <i class="icon ion-person"></i>
             </button>
             <button class="button button-icon" on-tap="logout()" ng-show="isLoggedIn()">
@@ -72,22 +72,23 @@
 
 
         <ion-content>
-                <div class="item item-divider">
-                    Navigation
-                </div>
-                <a ng-click="toggleRightBar()" class="item item-icon-left" href="#">
-                    <i class="icon ion-person"></i>
-                    RightBar
-                </a>
+            <div class="item item-divider">
+                Navigation
+            </div>
+            <a ng-click="toggleRightBar()" class="item item-icon-left" href="#">
+                <i class="icon ion-person"></i>
+                RightBar
+            </a>
 
-                <a ng-click="toggleTopBar()" class="item item-icon-left" href="#">
-                    <i class="icon ion-person"></i>
-                    TobBar
-                </a>
-                <a class="item item-icon-left" href="https://material.angularjs.org/#/demo/material.components.autocomplete">
-                    <i class="icon ion-person"></i>
-                    Angular Material
-                </a>
+            <a ng-click="toggleTopBar()" class="item item-icon-left" href="#">
+                <i class="icon ion-person"></i>
+                TobBar
+            </a>
+            <a class="item item-icon-left"
+               href="https://material.angularjs.org/#/demo/material.components.autocomplete">
+                <i class="icon ion-person"></i>
+                Angular Material
+            </a>
 
             </ul>
         </ion-content>

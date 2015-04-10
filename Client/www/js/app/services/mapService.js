@@ -30,7 +30,7 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', function (
             return $http.get(appRoot + 'WaterSource/GetSourceProperties?sourceId=' + id);
         },
         addFeature: function (geometry, sourceType) {
-            jqHttp.post(appRoot + "WaterSource/AddWaterSource", {
+            return jqHttp.post(appRoot + "WaterSource/AddWaterSource", {
                 Geometry: geometry,
                 SourceType: sourceType
             });
@@ -47,6 +47,9 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', function (
                 SourceId: sourceId,
                 Subscriptions: subscriptions
             });
+        },
+        getSourceSubscriptionStatus: function (sourceId) {
+            return $http.get(appRoot+'/WaterSourceSubscription/GetSourceSubscription?sourceId='+sourceId);
         },
         selectedSourceId: null
     }
