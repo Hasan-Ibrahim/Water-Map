@@ -1,0 +1,120 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Linq;
+using Data.Model;
+using Data.Model.Constants;
+using Data.Repositories.Abstraction;
+using Service.Utility;
+
+namespace Service.WaterSourceSubscription
+{
+    public class WaterSourceSubscriptionService : IDisposable
+    {
+        private readonly IRepository<DbWaterSourceSubscription> _sourceSubscriptionRepository;
+        private readonly IRepository<DbAreaSubscription> _areaSubscrioptionRepository;
+        private readonly IRepository<DbWaterSource> _sourceRepository;
+
+        public WaterSourceSubscriptionService(
+            IRepository<DbWaterSourceSubscription> sourceSubscriptionRepository,
+            IRepository<DbAreaSubscription> areaSubscrioptionRepository,
+            IRepository<DbWaterSource> sourceRepository)
+        {
+            _sourceSubscriptionRepository = sourceSubscriptionRepository;
+            _areaSubscrioptionRepository = areaSubscrioptionRepository;
+            _sourceRepository = sourceRepository;
+        }
+
+        public void Dispose()
+        {
+            _sourceSubscriptionRepository.Dispose();
+            _areaSubscrioptionRepository.Dispose();
+            _sourceRepository.Dispose();
+        }
+
+        public WaterSourceGroupBySubscription GetWaterSourcesBySubscription(int userId)
+        {
+            var usersSourceIds = _sourceSubscriptionRepository.Where(subscription => subscription.UserId == userId).Select(subscription => subscription.SourceId);
+
+            var usersSources =
+                _sourceRepository.Where(source => usersSourceIds.Contains(source.Id))
+                    .Select(GeometryEntity.FromDbWaterSource);
+
+            var otherSources =
+                _sourceRepository.Where(source => !usersSourceIds.Contains(source.Id))
+                    .Select(GeometryEntity.FromDbWaterSource);
+
+            return new WaterSourceGroupBySubscription
+            {
+                MySources = usersSources,
+                OthersSources = otherSources
+            };
+        }
+
+        public void Subscribe(SourceSubscription sourceSubscription, int userId)
+        {
+            var type = GetSubscriptionFlagFromArray(sourceSubscription.SubscriptionTypes);
+
+            var dbSubscription = _sourceSubscriptionRepository.Find(
+                dbS => dbS.SourceId == sourceSubscription.SourceId && dbS.UserId == userId);
+
+            if (dbSubscription == null)
+            {
+                dbSubscription = new DbWaterSourceSubscription(userId, sourceSubscription.SourceId, type);
+                _sourceSubscriptionRepository.Create(dbSubscription);
+            }
+            else
+            {
+                dbSubscription.Type = type;
+                _sourceSubscriptionRepository.Update(dbSubscription);
+            }
+            _sourceSubscriptionRepository.SaveChanges();
+        }
+
+        private static WaterSubscriptionType GetSubscriptionFlagFromArray(IEnumerable<WaterSubscriptionType> subscription)
+        {
+            WaterSubscriptionType type = 0;
+
+            foreach (var sourceSubscriptionType in subscription)
+            {
+                type |= sourceSubscriptionType;
+            }
+            return type;
+        }
+
+        public bool Unsubscribe(int sourceId, int userId)
+        {
+            var subscription = _sourceSubscriptionRepository.Find(ss => ss.SourceId == sourceId && ss.UserId == userId);
+            if (subscription != null)
+            {
+                _sourceSubscriptionRepository.SoftDelete(subscription);
+                _sourceSubscriptionRepository.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void SubscribeToArea(AreaSubscription areaSubscription, int userId)
+        {
+            var subscriptionGeo = DbGeometry.FromText(areaSubscription.AreaWkt);
+            var type = GetSubscriptionFlagFromArray(areaSubscription.SubscriptionTypes);
+            var dbAreaSubscription = new DbAreaSubscription(userId, subscriptionGeo, type);
+            _areaSubscrioptionRepository.Create(dbAreaSubscription);
+
+            _areaSubscrioptionRepository.SaveChanges();
+        }
+
+        public bool UnsubscribeFromArea(int subscriptionId, int userId)
+        {
+            var subscription = _areaSubscrioptionRepository.Find(subscriptionId);
+            if (subscription != null && subscription.UserId == userId)
+            {
+                _areaSubscrioptionRepository.SoftDelete(subscription);
+                _areaSubscrioptionRepository.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+    }
+}
