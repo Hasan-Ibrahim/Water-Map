@@ -17,5 +17,8 @@
         '<td><input type="radio" name="source-state" value="unknown"/></td>' +
         '<td>Unknown</td>' +
         '</tr>' +
+        '<tr>'+
+
+        '</tr>'+
         '</table>'
 };
