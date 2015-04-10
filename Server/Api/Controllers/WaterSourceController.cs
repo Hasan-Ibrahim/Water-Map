@@ -35,9 +35,9 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public void AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
+        public GeometryEntity AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
         {
-            _waterSourceService.AddWaterSource(waterSourceCreationModel);
+            return _waterSourceService.AddWaterSource(waterSourceCreationModel);
         }
 
         [HttpPost]

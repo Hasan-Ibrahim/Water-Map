@@ -34,11 +34,13 @@ namespace Service.WaterSources
                 .Select(GeometryEntity.FromDbWaterSource);
         }
 
-        public void AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
+        public GeometryEntity AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
         {
             var dbWaterSource = waterSourceCreationModel.ToDbWaterSource();
             _sourceRepository.Create(dbWaterSource);
             _sourceRepository.SaveChanges();
+
+            return GeometryEntity.FromDbWaterSource(dbWaterSource);
         }
 
         public void RateWaterSource(WaterSourceRating waterSourceRating)
