@@ -1,9 +1,11 @@
 lloydApp.config(['$httpProvider', function ($httpProvider) {
 
-    $httpProvider.interceptors.push(['$q', '$window', 'connectivityTracker', function ($q, $window, connectivityTracker) {
+    $httpProvider.interceptors.push(['$q', '$window', 'connectivityTracker','loginObject',
+        function ($q, $window, connectivityTracker, loginObject) {
         return {
             request: function (request) {
-                request.headers.authToken = $window.localStorage['auth-token'];
+                request.params = request.params || {};
+                request.params.authentication = loginObject.loginToken;
                 connectivityTracker.requesting(request);
                 return request || $q.when(request);
             },

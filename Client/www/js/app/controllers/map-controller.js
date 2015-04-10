@@ -97,16 +97,38 @@ lloydApp.controller('MapCtrl', ['mapService', '$rootScope','sidebarService',
                     }
                 });
 
+                L.NewPreferredZoneControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
+
+                        link.href = '#';
+                        link.title = 'Add preferred zone';
+                        link.innerHTML = 'preferred zone';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                map.editTools.startPolygon();
+                            });
+
+                        return container;
+                    }
+                });
+
                 mainMap.addControl(new L.NewMarkerControl());
                 mainMap.addControl(new L.NewLineControl());
                 mainMap.addControl(new L.NewPolygonControl());
+                mainMap.addControl(new L.NewPreferredZoneControl());
 
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
                     addLayerToMap(e.layer, 0, otherFeatureGroup);
                     mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
-                        e.layer.options.id = data.Id;
+                        e.layer.options.id = data.data.Id;
+                        e.layer.disableEdit();
                     });
                 });
             }
@@ -115,8 +137,9 @@ lloydApp.controller('MapCtrl', ['mapService', '$rootScope','sidebarService',
                 layer.options.id = id;
                 layer.addTo(featureGroup);
                 layer.bindPopup(formTemplates.source);
-
+                $rootScope.$broadcast('layerAdded');
                 layer.on('click', function (e) {
+                    $rootScope.$broadcast('markerClicked',e.target.options.id);
                     sidebarService.showBottomBar = true;
                     mapService.selectedSourceId = e.target.options.id;
 
@@ -128,6 +151,7 @@ lloydApp.controller('MapCtrl', ['mapService', '$rootScope','sidebarService',
                                 container.text(data[i].toFixed(1) + "%");
                             }
                         }
+
                         $('#water-quality input[type="radio"]').click(function () {
                             var submitButton = $('#water-quality #submit-quality');
                             if (submitButton.is(":disabled")) {
