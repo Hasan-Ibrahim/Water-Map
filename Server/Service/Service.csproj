@@ -71,6 +71,7 @@
     <Compile Include="Responses\FailedResponse.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
     <Compile Include="Serialization\GeometryConverter.cs" />
+    <Compile Include="Utility\DictionaryExtensions.cs" />
     <Compile Include="WaterSourceSubscription\AreaSubscription.cs" />
     <Compile Include="WaterSourceSubscription\SourceSubscription.cs" />
     <Compile Include="WaterSourceSubscription\WaterSourceGroupBySubscription.cs" />
