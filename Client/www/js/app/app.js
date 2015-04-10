@@ -13,4 +13,12 @@ lloydApp.run(['$rootScope', '$ionicSideMenuDelegate', 'sidebarService',
         $rootScope.showTopBar = function () {
             return sidebarService.showTopBar;
         };
+
+        $rootScope.showBottomBar = function () {
+            return sidebarService.showBottomBar;
+        };
+
+        $rootScope.toggleBottomBar = function () {
+            return sidebarService.toggleBottomBar();
+        };
     }]);

@@ -1,6 +1,7 @@
 function SidebarService() {
     this.showTopBar = false;
     this.showRightBar = false;
+    this.showBottomBar = false;
     this.toggleRightBar = function () {
         if (this.showRightBar) {
             $('.sp-right-box').removeClass('animated fadeInRight');
@@ -21,6 +22,17 @@ function SidebarService() {
             $('.sp-top-box').addClass('animated fadeInDown');
         }
         this.showTopBar = !this.showTopBar;
+    };
+
+    this.toggleBottomBar = function () {
+        if (this.showBottomBar) {
+            $('.sp-bottom-box').removeClass('animated fadeInUp');
+            $('.sp-bottom-box').addClass('animated fadeOutDown');
+        } else {
+            $('.sp-bottom-box').removeClass('animated fadeOutDown');
+            $('.sp-bottom-box').addClass('animated fadeInUp');
+        }
+        this.showBottomBar = !this.showBottomBar;
     };
 }
 

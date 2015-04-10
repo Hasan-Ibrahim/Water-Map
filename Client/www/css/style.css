@@ -1272,6 +1272,20 @@ div.item-note.item-right-panel h2.item-distance {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
+.sp-bottom-box {
+    padding: 10px;
+    position: absolute;
+    height: auto;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: whitesmoke;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
 .sp-home-place-up-arrow {
     font-size: 29pt;
     float: right;

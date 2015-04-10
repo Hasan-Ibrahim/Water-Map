@@ -1,4 +1,4 @@
-function GeoLocationService($rootScope, $window, remote) {
+function GeoLocationService($cordovaGeolocation) {
     var ACQUIRING_STATE = {
         NEVER_TRIED: 0,
         ACQUIRING: 1,
@@ -10,22 +10,15 @@ function GeoLocationService($rootScope, $window, remote) {
     var userLocation = defaultLocation;
     var acquiringState = ACQUIRING_STATE.NEVER_TRIED;
 
-    this.acquireLocation = function (success, fail) {
-        success = success || function () {
-        };
-        fail = fail || function () {
-        };
+    this.getCurrentPosition = function () {
         acquiringState = ACQUIRING_STATE.ACQUIRING;
-        $window.navigator.geolocation.getCurrentPosition(function (geoLocation) {
-            storeUserLocation(geoLocation);
-            remote.sendUserLocationToServer(userLocation.latitude, userLocation.longitude);
+        return $cordovaGeolocation.getCurrentPosition().then(function (position) {
             acquiringState = ACQUIRING_STATE.ACQUIRED;
-            success();
-            $rootScope.$apply();
+            storeUserLocation(position);
+            return position
         }, function (error) {
             acquiringState = ACQUIRING_STATE.FAILED;
-            fail();
-            $rootScope.$apply();
+            return error;
         });
     };
 
@@ -60,4 +53,4 @@ function GeoLocationService($rootScope, $window, remote) {
     }
 }
 
-lloydApp.service('geoLocationService', ['$rootScope', '$window', 'remote', GeoLocationService]);
+lloydApp.service('geoLocationService', ['$cordovaGeolocation', GeoLocationService]);
