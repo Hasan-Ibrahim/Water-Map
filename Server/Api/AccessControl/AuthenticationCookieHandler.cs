@@ -14,7 +14,7 @@ namespace Api.AccessControl
 
         public string GetTokenFromRequest()
         {
-            var token = _currentContext.Request.Headers[CookieKey];
+            var token = _currentContext.Request.Headers[CookieKey] ?? _currentContext.Request.Params[CookieKey];
             return token;
         }
     }
