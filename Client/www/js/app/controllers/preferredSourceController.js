@@ -1,8 +1,6 @@
-lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sidebarService', 'mapService',
-    function ($scope, $rootScope, sidebarService, mapService) {
+lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sidebarService', 'mapService', '$timeout',
+    function ($scope, $rootScope, sidebarService, mapService, timeout) {
 
-
-        $scope.isPreferred = false;
         $scope.options = null;
         $rootScope.$on('markerClicked', function (e, sourceId) {
             mapService.getSourceSubscriptionStatus(sourceId).success(function (data) {
@@ -10,6 +8,13 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
             }).error(function () {
                 alert('failed to get subscription status.');
             });
+        });
+
+        $rootScope.$on('popupClosed', function () {
+            $scope.options = null;
+            timeout(function () {
+                sidebarService.showBottomBar = false;
+            }, 150);
         });
 
         $scope.submit = function () {

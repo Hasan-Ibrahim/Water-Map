@@ -43,11 +43,17 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
         subscribeFeature: function (sourceId, subscriptions) {
             return jqHttp.post(appRoot + "WaterSourceSubscription/Subscribe", {
                 SourceId: sourceId,
-                Subscriptions: subscriptions
+                Subscriptions: {1:true,2:false,4:true,8:false}
             });
         },
         getSourceSubscriptionStatus: function (sourceId) {
-            return $http.get(appRoot+'/WaterSourceSubscription/GetSourceSubscription?sourceId='+sourceId);
+            return $http.get(appRoot + '/WaterSourceSubscription/GetSourceSubscription?sourceId=' + sourceId);
+        },
+        subscribeArea: function (geometry, subscriptions) {
+            return jqHttp.post(appRoot + "WaterSourceSubscription/SubscribeToArea", {
+                Geometry: geometry,
+                SubscriptionTypes: subscriptions
+            });
         },
         selectedSourceId: null
     }
