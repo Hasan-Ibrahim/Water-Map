@@ -1,4 +1,4 @@
-function GeoLocationService($cordovaGeolocation) {
+function GeoLocationService($q, $cordovaGeolocation) {
     var ACQUIRING_STATE = {
         NEVER_TRIED: 0,
         ACQUIRING: 1,
@@ -14,11 +14,31 @@ function GeoLocationService($cordovaGeolocation) {
         acquiringState = ACQUIRING_STATE.ACQUIRING;
         return $cordovaGeolocation.getCurrentPosition().then(function (position) {
             acquiringState = ACQUIRING_STATE.ACQUIRED;
+            console.log(position);
             storeUserLocation(position);
             return position
         }, function (error) {
+
             acquiringState = ACQUIRING_STATE.FAILED;
             return error;
+        });
+    };
+
+    this.watchPosition = function () {
+        var watchOptions = {
+            frequency: 1000,
+            timeout: 3000,
+            enableHighAccuracy: false // may cause errors if true
+        };
+        var watch = $cordovaGeolocation.watchPosition(watchOptions);
+        return watch.then(null, function (error) {
+            acquiringState = ACQUIRING_STATE.FAILED;
+            return error;
+        }, function (position) {
+            console.log(position);
+            acquiringState = ACQUIRING_STATE.ACQUIRED;
+            storeUserLocation(position);
+            return position;
         });
     };
 
@@ -53,4 +73,4 @@ function GeoLocationService($cordovaGeolocation) {
     }
 }
 
-lloydApp.service('geoLocationService', ['$cordovaGeolocation', GeoLocationService]);
+lloydApp.service('geoLocationService', ['$q', '$cordovaGeolocation', GeoLocationService]);
