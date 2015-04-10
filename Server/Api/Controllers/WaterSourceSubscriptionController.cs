@@ -19,6 +19,19 @@ namespace Api.Controllers
             _subscriptionService = subscriptionService;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _subscriptionService.Dispose();
+            base.Dispose(disposing);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetWaterSources()
+        {
+            var sources = _subscriptionService.GetWaterSourcesBySubscription(_activeUser.UserId);
+            return Ok(sources);
+        }
+
         [TokenAuthorize]
         [HttpPost]
         public void Subscribe(SourceSubscription sourceSubscription)
@@ -47,10 +60,5 @@ namespace Api.Controllers
             _subscriptionService.UnsubscribeFromArea(idParameter.Id, _activeUser.UserId);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            _subscriptionService.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }

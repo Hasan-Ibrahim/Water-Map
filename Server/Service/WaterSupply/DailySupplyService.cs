@@ -23,7 +23,7 @@ namespace Service.WaterSupply
         public void AddSupply(DailySupplyEntry dailySupply)
         {
             var groupId = Guid.NewGuid();
-            var location = DbGeometry.FromText(dailySupply.LocationWkt);
+            var location = DbGeometry.FromText(dailySupply.Location);
             foreach (var supplyPerSource in dailySupply.Supply)
             {
                 var dbDailyAverageSupply = new DbDailyAverageSupply(groupId, location, supplyPerSource.Supply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, supplyPerSource.SourceId);
