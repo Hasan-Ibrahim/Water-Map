@@ -3,6 +3,11 @@ lloydApp.controller('MapCtrl', ['mapService',
         init();
         function init() {
             var mainMap = L.map('map', { editable: true });
+            var myStyle={};
+            var otherStyle = {};
+            var myFeatureGroup = L.featureGroup().addTo(mainMap);
+            var otherFeatureGroup = L.featureGroup().addTo(mainMap);
+
             var deleteMode = false;
             var editMode = false;
 
@@ -12,17 +17,46 @@ lloydApp.controller('MapCtrl', ['mapService',
 
             function showPosition(position) {
                 mainMap.setView([position.coords.latitude, position.coords.longitude], 14);
-                //drawFeatures();
-                console.log(mainMap.getBounds());
-                mapService.getSources().success(function(sources){
-                    console.log(sources);
-                });
+                drawFeatures();
+                addControls();
             }
-            var featureGroup = L.featureGroup().addTo(mainMap);
 
             function drawFeatures() {
 
-                var polyline = L.polyline([[43.1, 1.2], [43.2, 1.3], [43.3, 1.2]]).addTo(featureGroup);
+                mapService.getSources().success(function(sources){
+                    for(var i = 0 ; i < sources.MySources.length;i++){
+                        var layer = getLeafletLayer(sources.MySources[i].Geometry);
+                        layer.options.id=sources.MySources[i].Id;
+                        layer.addTo(myFeatureGroup);
+                        layer.bindPopup(formTemplates.source);
+                    }
+                    for(var j = 0 ; j < sources.OthersSources.length;j++){
+                        var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
+                        layer.options.id=sources.OthersSources[j].Id;
+                        layer.addTo(otherFeatureGroup);
+                        layer.bindPopup(formTemplates.source);
+                    }
+
+                    myFeatureGroup.on('click', function(e){
+                        mapService.getProperties(e.layer.options.id).success(function(data){
+                            if(deleteMode){
+                                e.layer.openPopup();
+                            }else{
+                                e.layer.remove();
+                            }
+                        });
+                    });
+
+                    otherFeatureGroup.on('click', function(e){
+                        mapService.getProperties(e.layer.options.id).success(function(){
+                            e.layer.openPopup();
+                        });
+                    });
+
+                    mainMap.fitBounds(otherFeatureGroup.getBounds())
+                });
+               // mapService.login();
+               /* var polyline = L.polyline([[43.1, 1.2], [43.2, 1.3], [43.3, 1.2]]).addTo(featureGroup);
                 var polyline2 = L.polyline([[43.3, 1.25], [43.22, 1.34], [43.33, 1.23]]);
                 polyline2.addTo(featureGroup);
                 var point1 = L.marker(L.latLng(-80.1, 0)).addTo(featureGroup);
@@ -37,9 +71,9 @@ lloydApp.controller('MapCtrl', ['mapService',
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(featureGroup);
-                });
+                });*/
 
-                featureGroup.bindPopup(formTemplates.source);
+                /*featureGroup.bindPopup(formTemplates.source);
                 featureGroup.on('click', function (e) {
                     if (!deleteMode) {
                         e.layer.openPopup();
@@ -51,117 +85,81 @@ lloydApp.controller('MapCtrl', ['mapService',
                     polyline.disableEdit();
                 });
 
-                console.log(toWKT(polyline));
+                console.log(toWKT(polyline));*/
             }
 
-            L.NewLineControl = L.Control.extend({
-                options: {
-                    position: 'topleft'
-                },
+            function addControls(){
+                L.NewLineControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
 
-                onAdd: function (map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                        link = L.DomUtil.create('a', '', container);
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
 
-                    link.href = '#';
-                    link.title = 'Create a new line';
-                    link.innerHTML = 'line';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                        .on(link, 'click', function () {
-                            map.editTools.startPolyline();
-                        });
+                        link.href = '#';
+                        link.title = 'Create a new line';
+                        link.innerHTML = 'line';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                map.editTools.startPolyline();
+                            });
 
-                    return container;
-                }
-            });
+                        return container;
+                    }
+                });
 
-            L.NewPolygonControl = L.Control.extend({
-                options: {
-                    position: 'topleft'
-                },
+                L.NewPolygonControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
 
-                onAdd: function (map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                        link = L.DomUtil.create('a', '', container);
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
 
-                    link.href = '#';
-                    link.title = 'Create a new polygon';
-                    link.innerHTML = 'polygon';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                        .on(link, 'click', function () {
-                            map.editTools.startPolygon();
-                        });
+                        link.href = '#';
+                        link.title = 'Create a new polygon';
+                        link.innerHTML = 'polygon';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                map.editTools.startPolygon();
+                            });
 
-                    return container;
-                }
-            });
+                        return container;
+                    }
+                });
 
-            L.NewMarkerControl = L.Control.extend({
-                options: {
-                    position: 'topleft'
-                },
+                L.NewMarkerControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
 
-                onAdd: function (map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                        link = L.DomUtil.create('a', '', container);
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
 
-                    link.href = '#';
-                    link.title = 'Add a new marker';
-                    link.innerHTML = 'marker';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                        .on(link, 'click', function () {
-                            map.editTools.startMarker();
-                        });
+                        link.href = '#';
+                        link.title = 'Add a new marker';
+                        link.innerHTML = 'marker';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                map.editTools.startMarker();
+                            });
 
-                    return container;
-                }
-            });
-            L.DeleteFeatureControl = L.Control.extend({
-                options: {
-                    position: 'topleft'
-                },
-                onAdd: function (map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                        link = L.DomUtil.create('a', '', container);
+                        return container;
+                    }
+                });
 
-                    link.href = '#';
-                    link.title = 'Delete';
-                    link.innerHTML = 'Del';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                        .on(link, 'click', function (e) {
-                            deleteMode = !deleteMode;
-                            featureGroup.disableEdit();
-                        });
+                mainMap.addControl(new L.NewMarkerControl());
+                mainMap.addControl(new L.NewLineControl());
+                mainMap.addControl(new L.NewPolygonControl());
 
-                    return container;
-                }
-            });
-
-            L.EditFeatureControl = L.Control.extend({
-                options: {
-                    position:'topleft'
-                },
-                onAdd: function() {
-                    var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                        link = L.DomUtil.create('a', '', container);
-
-                    link.href = '#';
-                    link.title = 'Edit';
-                    link.innerHTML = 'Edit';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                        .on(link, 'click', function (e) {
-                            deleteMode = !deleteMode;
-                            featureGroup.disableEdit();
-                        });
-
-                    return container;
-                }
-            });
-
-            mainMap.addControl(new L.NewMarkerControl());
-            mainMap.addControl(new L.NewLineControl());
-            mainMap.addControl(new L.NewPolygonControl());
-            mainMap.addControl(new L.DeleteFeatureControl());
+                mainMap.on("editable:drawing:end", function (e) {
+                    console.log("layer created");
+                    e.layer.addTo(myFeatureGroup);
+                });
+            }
         }
-
     }]);

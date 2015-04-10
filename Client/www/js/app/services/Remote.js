@@ -20,4 +20,4 @@ function DummyRemote($q) {
 }
 
 //lloydApp.service('remote', ['$http', 'serverUrl', Remote]);
-lloydApp.service('remote', ['$q', DummyRemote]);
+lloydApp.service('remote', ['$q', Remote]);
