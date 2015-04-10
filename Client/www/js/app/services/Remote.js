@@ -1,5 +1,4 @@
-function Remote($http, serverUrl) {
-
+function Remote($http, serverUrl, jqHttp) {
     this.login = function (loginId, passoword, rememberMe) {
         var url = serverUrl + 'Account/Login';
         var data = {
@@ -7,7 +6,7 @@ function Remote($http, serverUrl) {
             Password: passoword,
             RememberMe: rememberMe
         };
-        return $http.post(url, data);
+        return jqHttp.post(url, data);
     };
 }
 
@@ -19,5 +18,5 @@ function DummyRemote($q) {
     };
 }
 
-//lloydApp.service('remote', ['$http', 'serverUrl', Remote]);
-lloydApp.service('remote', ['$q', Remote]);
+lloydApp.service('remote', ['$http', 'serverUrl', 'jqHttp', Remote]);
+//lloydApp.service('remote', ['$q', DummyRemote]);
