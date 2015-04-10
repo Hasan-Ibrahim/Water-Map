@@ -1,8 +1,9 @@
-lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService',
-    function (mapService, ConvexHull, sourceCoverageService) {
+lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService',
+    function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService) {
         init();
         function init() {
             var mainMap = mapService.getMap();
+            var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
 
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 maxZoom: 20,
@@ -22,12 +23,12 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mapService.getSources().success(function (sources) {
                     for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
-                        addLayerToMap(layer, sources.MySources[i].Id);
+                        addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
-                        addLayerToMap(layer, sources.OthersSources[j].Id);
+                        addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
                     }
                 });
             }
@@ -96,16 +97,37 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                     }
                 });
 
+                L.NewPreferredZoneControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
+
+                        link.href = '#';
+                        link.title = 'Add preferred zone';
+                        link.innerHTML = 'preferred zone';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                map.editTools.startPolygon();
+                            });
+
+                        return container;
+                    }
+                });
+
                 mainMap.addControl(new L.NewMarkerControl());
                 mainMap.addControl(new L.NewLineControl());
                 mainMap.addControl(new L.NewPolygonControl());
+                mainMap.addControl(new L.NewPreferredZoneControl());
 
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
-                    addLayerToMap(e.layer, 0);
-                    mapService.addFeature(toWKT(e.layer), "Test", function (data) {
-                        e.layer.options.id = data.Id;
+                    addLayerToMap(e.layer, 0, otherFeatureGroup);
+                    mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
+                        e.layer.options.id = data.data.Id;
                         e.layer.disableEdit();
                     });
                 });
@@ -136,12 +158,16 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
             var sourceCoverageControlAdded = false;
 
-            function addLayerToMap(layer, id) {
+            function addLayerToMap(layer, id, featureGroup) {
                 layer.options.id = id;
-                layer.addTo(mainMap);
+                layer.addTo(featureGroup);
                 layer.bindPopup(formTemplates.source);
-
+                $rootScope.$broadcast('layerAdded');
                 layer.on('click', function (e) {
+                    $rootScope.$broadcast('markerClicked',e.target.options.id);
+                    sidebarService.showBottomBar = true;
+                    mapService.selectedSourceId = e.target.options.id;
+
                     if (selectedSource && selectedSource != this) {
                         sourceCoverageService.hideCoveragePolygon();
                     }
@@ -151,7 +177,6 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         sourceCoverageControlAdded = true;
                     }
                     mapService.getProperties(e.target.options.id).success(function (data) {
-                        console.log(data);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
@@ -159,6 +184,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                                 container.text(data[i].toFixed(1) + "%");
                             }
                         }
+
                         $('#water-quality input[type="radio"]').click(function () {
                             var submitButton = $('#water-quality #submit-quality');
                             if (submitButton.is(":disabled")) {
