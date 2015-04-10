@@ -9,12 +9,12 @@ namespace Service.WaterSourceSubscription
 {
     public class WaterSourceSubscriptionService : IDisposable
     {
-        private readonly Repository<DbWaterSourceSubscription> _sourceSubscriptionRepository;
-        private readonly Repository<DbAreaSubscription> _areaSubscrioptionRepository;
+        private readonly IRepository<DbWaterSourceSubscription> _sourceSubscriptionRepository;
+        private readonly IRepository<DbAreaSubscription> _areaSubscrioptionRepository;
 
         public WaterSourceSubscriptionService(
-            Repository<DbWaterSourceSubscription> sourceSubscriptionRepository,
-            Repository<DbAreaSubscription> areaSubscrioptionRepository)
+            IRepository<DbWaterSourceSubscription> sourceSubscriptionRepository,
+            IRepository<DbAreaSubscription> areaSubscrioptionRepository)
         {
             _sourceSubscriptionRepository = sourceSubscriptionRepository;
             _areaSubscrioptionRepository = areaSubscrioptionRepository;

@@ -10,10 +10,10 @@ namespace Service.WaterSource
 {
     public class WaterSourceService : IDisposable
     {
-        private readonly Repository<DbWaterSource> _sourceRepository;
-        private readonly Repository<DbWaterSourceRating> _ratingRepository;
+        private readonly IRepository<DbWaterSource> _sourceRepository;
+        private readonly IRepository<DbWaterSourceRating> _ratingRepository;
 
-        public WaterSourceService(Repository<DbWaterSource> sourceRepository, Repository<DbWaterSourceRating> ratingRepository)
+        public WaterSourceService(IRepository<DbWaterSource> sourceRepository, IRepository<DbWaterSourceRating> ratingRepository)
         {
             _sourceRepository = sourceRepository;
             _ratingRepository = ratingRepository;
