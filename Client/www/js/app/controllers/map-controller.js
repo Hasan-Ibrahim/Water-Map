@@ -1,8 +1,9 @@
-lloydApp.controller('MapCtrl', ['mapService',
-    function (mapService) {
+lloydApp.controller('MapCtrl', ['mapService', '$rootScope',
+    function (mapService, $rootScope) {
         init();
         function init() {
             var mainMap = mapService.getMap();
+            var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
 
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 maxZoom: 20,
@@ -22,12 +23,12 @@ lloydApp.controller('MapCtrl', ['mapService',
                 mapService.getSources().success(function (sources) {
                     for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
-                        addLayerToMap(layer, sources.MySources[i].Id);
+                        addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
-                        addLayerToMap(layer, sources.OthersSources[j].Id);
+                        addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
                     }
                 });
             }
@@ -103,7 +104,7 @@ lloydApp.controller('MapCtrl', ['mapService',
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
-                    addLayerToMap(e.layer, 0);
+                    addLayerToMap(e.layer, 0, otherFeatureGroup);
                     mapService.addFeature(toWKT(e.layer), "Test", function (data) {
                         e.layer.options.id = data.Id;
                         e.layer.disableEdit();
@@ -111,24 +112,23 @@ lloydApp.controller('MapCtrl', ['mapService',
                 });
             }
 
-            function addLayerToMap(layer, id) {
+            function addLayerToMap(layer, id, featureGroup) {
                 layer.options.id = id;
-                layer.addTo(mainMap);
+                layer.addTo(featureGroup);
                 layer.bindPopup(formTemplates.source);
 
                 layer.on('click', function (e) {
                     mapService.getProperties(e.target.options.id).success(function (data) {
-                        console.log(data);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
                             if (container.length) {
-                                container.text(data[i].toFixed(1)+"%");
+                                container.text(data[i].toFixed(1) + "%");
                             }
                         }
-                        $('#water-quality input[type="radio"]').click(function(){
+                        $('#water-quality input[type="radio"]').click(function () {
                             var submitButton = $('#water-quality #submit-quality');
-                            if(submitButton.is(":disabled")){
+                            if (submitButton.is(":disabled")) {
                                 submitButton.removeAttr('disabled');
                             }
                         });
@@ -136,7 +136,7 @@ lloydApp.controller('MapCtrl', ['mapService',
                         $('#water-quality #submit-quality').click(function () {
                             var checked = $('#water-quality input[type=radio]:checked');
 
-                            if(checked.length){
+                            if (checked.length) {
                                 mapService.rateSource(layer.options.id, checked[0].value);
                                 layer.closePopup();
                             }
