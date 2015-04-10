@@ -127,7 +127,10 @@ lloydApp.controller('MapCtrl', ['mapService',
                             }
                         }
                         $('#water-quality input[type="radio"]').click(function(){
-                            $('#water-quality #submit-quality').enable();
+                            var submitButton = $('#water-quality #submit-quality');
+                            if(submitButton.is(":disabled")){
+                                submitButton.removeAttr('disabled');
+                            }
                         });
 
                         $('#water-quality #submit-quality').click(function () {
