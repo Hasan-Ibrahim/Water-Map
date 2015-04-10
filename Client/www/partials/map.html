@@ -1,0 +1,27 @@
+<ion-view>
+    <ion-content>
+        <div id='map'></div>
+    </ion-content>
+</ion-view>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+<script type="text/javascript" src="../js/app/map.js"></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet'/>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet'/>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+<script>
+    map.init();
+</script>
