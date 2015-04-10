@@ -46,6 +46,12 @@ namespace Api.Controllers
             _waterSourceService.RateWaterSource(rating);
         }
 
+        [HttpPost]
+        public void UpdateAccessibility(AccessibilityEntity accessibilityEntity)
+        {
+            _waterSourceService.UpdateAccessibility(accessibilityEntity);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _waterSourceService.Dispose();

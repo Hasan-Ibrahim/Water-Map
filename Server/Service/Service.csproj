@@ -77,6 +77,7 @@
     <Compile Include="WaterSourceSubscription\WaterSourceGroupBySubscription.cs" />
     <Compile Include="WaterSourceSubscription\WaterSourceSubscriptionService.cs" />
     <Compile Include="Utility\GeometryEntity.cs" />
+    <Compile Include="WaterSources\AccessibilityEntity.cs" />
     <Compile Include="WaterSources\WaterSourceProperties.cs" />
     <Compile Include="WaterSources\WaterSourceCreateEntry.cs" />
     <Compile Include="WaterSources\WaterSourceRating.cs" />

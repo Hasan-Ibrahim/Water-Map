@@ -46,7 +46,7 @@ namespace Service.WaterSources
         public void RateWaterSource(WaterSourceRating waterSourceRating)
         {
             _ratingRepository.Create(waterSourceRating.ToDbWaterSourceRating());
-            
+
             var source = _sourceRepository.Find(waterSourceRating.WaterSourceId);
 
             switch (waterSourceRating.Potability)
@@ -60,11 +60,22 @@ namespace Service.WaterSources
                 case Potability.Undrinkable:
                     source.UnpotableRatingCount++;
                     break;
+                case Potability.Unknown:
+                    source.UnknownRatingCount++;
+                    break;
             }
 
             _ratingRepository.SaveChanges();
         }
-        
+
+        public void UpdateAccessibility(AccessibilityEntity accessibilityEntity)
+        {
+            var waterSource = _sourceRepository.Find(accessibilityEntity.WaterSourceId);
+            waterSource.Accessibility = accessibilityEntity.Accessibility;
+            _sourceRepository.Update(waterSource);
+            _sourceRepository.SaveChanges();
+        }
+
         public WaterSourceProperties GetSourceProperties(int sourceId)
         {
             var dbSource = _sourceRepository.Find(sourceId);

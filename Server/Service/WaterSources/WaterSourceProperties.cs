@@ -1,4 +1,5 @@
 ﻿using Data.Model;
+using Data.Model.Constants;
 
 namespace Service.WaterSources
 {
@@ -8,21 +9,9 @@ namespace Service.WaterSources
         public int PotableRatingCount { get; set; }
         public int ProcessableRatingCount { get; set; }
         public int UnpotableRatingCount { get; set; }
+        public int UnknownRatingCount { get; set; }
         public string[] ImageUrls { get; set; }
-
-        public WaterSourceProperties()
-        {
-        }
-
-        public WaterSourceProperties(DbWaterSource dbWaterSource)
-        {
-            SourceType = dbWaterSource.SourceType;
-            PotableRatingCount = dbWaterSource.PotableRatingCount;
-            ProcessableRatingCount = dbWaterSource.ProcessableRatingCount;
-            UnpotableRatingCount = dbWaterSource.UnpotableRatingCount;
-            ImageUrls = string.IsNullOrWhiteSpace(dbWaterSource.ImageUrls) ?
-                dbWaterSource.ImageUrls.Split('^') : new string[] { };
-        }
+        public Accessibility Accessibility { get; set; }
 
         public static WaterSourceProperties FromDbWaterSource(DbWaterSource dbWaterSource)
         {
@@ -35,7 +24,9 @@ namespace Service.WaterSources
                 PotableRatingCount = dbWaterSource.PotableRatingCount,
                 ProcessableRatingCount = dbWaterSource.ProcessableRatingCount,
                 UnpotableRatingCount = dbWaterSource.UnpotableRatingCount,
-                ImageUrls = imageUrls
+                UnknownRatingCount = dbWaterSource.UnpotableRatingCount,
+                ImageUrls = imageUrls,
+                Accessibility = dbWaterSource.Accessibility
             };
         }
     }
