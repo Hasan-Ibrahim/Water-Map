@@ -7,8 +7,8 @@ namespace Api
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            //var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors();
 
             // Web API configuration and services
 
