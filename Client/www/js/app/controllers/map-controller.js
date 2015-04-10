@@ -9,13 +9,13 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'
             }).addTo(mainMap);
 
-            navigator.geolocation.getCurrentPosition(showPosition);
-
-            function showPosition(position) {
-                mainMap.setView([position.coords.latitude, position.coords.longitude], 14);
+            mapService.moveToCurrentLocation().then(function (position) {
                 drawFeatures();
                 addControls();
-            }
+            }, function (error) {
+                // TODO: show error
+                alert('Could not get current location' + JSON.stringify(error));
+            });
 
             function drawFeatures() {
 
@@ -142,11 +142,11 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 layer.bindPopup(formTemplates.source);
 
                 layer.on('click', function (e) {
-                    if(selectedSource && selectedSource != this){
+                    if (selectedSource && selectedSource != this) {
                         sourceCoverageService.hideCoveragePolygon();
                     }
                     selectedSource = this;
-                    if(!sourceCoverageControlAdded) {
+                    if (!sourceCoverageControlAdded) {
                         mainMap.addControl(new L.SourceCoverageControl());
                         sourceCoverageControlAdded = true;
                     }
@@ -156,12 +156,12 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
                             if (container.length) {
-                                container.text(data[i].toFixed(1)+"%");
+                                container.text(data[i].toFixed(1) + "%");
                             }
                         }
-                        $('#water-quality input[type="radio"]').click(function(){
+                        $('#water-quality input[type="radio"]').click(function () {
                             var submitButton = $('#water-quality #submit-quality');
-                            if(submitButton.is(":disabled")){
+                            if (submitButton.is(":disabled")) {
                                 submitButton.removeAttr('disabled');
                             }
                         });
@@ -169,7 +169,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         $('#water-quality #submit-quality').click(function () {
                             var checked = $('#water-quality input[type=radio]:checked');
 
-                            if(checked.length){
+                            if (checked.length) {
                                 mapService.rateSource(layer.options.id, checked[0].value);
                                 layer.closePopup();
                             }
