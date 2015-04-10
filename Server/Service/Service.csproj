@@ -68,6 +68,8 @@
     <Compile Include="Profile\ProfileService.cs" />
     <Compile Include="Profile\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RainWater\RainHarvestTankEntry.cs" />
+    <Compile Include="RainWater\RainWaterService.cs" />
     <Compile Include="Responses\FailedResponse.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
     <Compile Include="Serialization\GeometryConverter.cs" />
