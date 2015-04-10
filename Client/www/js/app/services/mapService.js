@@ -1,22 +1,20 @@
 lloydApp.factory('mapService',['$http',function($http){
-    var appRoot = 'http://10.50.210.88:6543/';
+    var appRoot = 'http://172.16.0.228:6543/';
     return {
         getSources: function(){
             return $http.get(appRoot+'WaterSourceSubscription/GetWaterSources');
         },
         getProperties: function(id){
             return $http.get(appRoot+'WaterSource/GetSourceProperties?sourceId='+id);
-        }
-        ,login: function(){
-            return $http.post(appRoot+'account/login',{
-                "LoginId": "Mohayemin",
-                "Password": "123",
-                "RememberMe": true
-            }).success(function(){
-                alert('success');
-            }).error(function(){
-                alert("failed");
+        },
+        addFeature: function(geometry, sourceType, onSuccess){
+            $.post(appRoot+"WaterSource/AddWaterSource",{
+                Geometry: geometry,
+                SourceType: sourceType
+            }, function(data){
+                onSuccess(data);
             });
         }
     }
 }]);
+
