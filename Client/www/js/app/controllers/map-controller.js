@@ -1,5 +1,5 @@
-lloydApp.controller('MapCtrl', ['mapService', '$rootScope',
-    function (mapService, $rootScope) {
+lloydApp.controller('MapCtrl', ['mapService', '$rootScope','sidebarService',
+    function (mapService, $rootScope, sidebarService) {
         init();
         function init() {
             var mainMap = mapService.getMap();
@@ -105,9 +105,8 @@ lloydApp.controller('MapCtrl', ['mapService', '$rootScope',
                     console.log("layer created");
                     e.layer.addTo(mainMap);
                     addLayerToMap(e.layer, 0, otherFeatureGroup);
-                    mapService.addFeature(toWKT(e.layer), "Test", function (data) {
+                    mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
                         e.layer.options.id = data.Id;
-                        e.layer.disableEdit();
                     });
                 });
             }
@@ -118,6 +117,9 @@ lloydApp.controller('MapCtrl', ['mapService', '$rootScope',
                 layer.bindPopup(formTemplates.source);
 
                 layer.on('click', function (e) {
+                    sidebarService.showBottomBar = true;
+                    mapService.selectedSourceId = e.target.options.id;
+
                     mapService.getProperties(e.target.options.id).success(function (data) {
                         layer.openPopup();
                         for (var i in data) {
