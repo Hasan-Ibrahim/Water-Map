@@ -16,7 +16,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<DbSourceSummaryGrid> GetWaterSourceSummaryGrid()
+        public Dictionary<int, Dictionary<int, int[]>> GetWaterSourceSummaryGrid()
         {
             return _dailySupplyService.GetWaterSourceSummaryGrid();
         } 
