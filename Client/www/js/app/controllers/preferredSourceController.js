@@ -10,13 +10,6 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
             });
         });
 
-        $rootScope.$on('popupClosed', function () {
-            $scope.options = null;
-            timeout(function () {
-                sidebarService.showBottomBar = false;
-            }, 150);
-        });
-
         $scope.submit = function () {
             console.log($scope.options);
             sidebarService.showBottomBar = false;
