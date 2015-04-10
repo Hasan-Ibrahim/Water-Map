@@ -194,6 +194,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         sourceCoverageControlAdded = true;
                     }
                     mapService.getProperties(e.target.options.id).success(function (data) {
+                        layer.bindPopup(formTemplates.source);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
