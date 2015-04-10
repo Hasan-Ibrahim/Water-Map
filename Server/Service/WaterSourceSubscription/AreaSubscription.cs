@@ -6,6 +6,6 @@ namespace Service.WaterSourceSubscription
     public class AreaSubscription
     {
         public string Geometry { get; set; }
-        public IList<WaterSubscriptionType> SubscriptionTypes { get; set; }
+        public Dictionary<WaterSubscriptionType, bool> Subscriptions { get; set; }
     }
 }
