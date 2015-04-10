@@ -2,7 +2,7 @@ lloydApp.controller('MapCtrl', ['mapService',
     function (mapService) {
         init();
         function init() {
-            var mainMap = L.map('map', { editable: true });
+            var mainMap = mapService.getMap();
             var deleteMode = false;
             var editMode = false;
 

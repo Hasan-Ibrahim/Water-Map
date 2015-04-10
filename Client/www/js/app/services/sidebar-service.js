@@ -1,5 +1,5 @@
 function SidebarService() {
-    this.showTopBar = true;
+    this.showTopBar = false;
     this.showRightBar = false;
     this.toggleRightBar = function () {
         if (this.showRightBar) {
