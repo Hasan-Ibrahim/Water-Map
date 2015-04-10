@@ -1,4 +1,6 @@
 function SidebarService() {
+    this.showTopBar = true;
+    this.showRightBar = false;
     this.toggleRightBar = function () {
         if (this.showRightBar) {
             $('.sp-right-box').removeClass('animated fadeInRight');

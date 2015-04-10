@@ -1,5 +1,19 @@
-Home Location
-<input type="text" placeholder="Water Demand" ng-model="waterDemand">
-<input type="text" placeholder="Water Supply" ng-model="waterSupply">
-<input type="text" placeholder="Family Members" ng-model="familyMember">
-<input type="button" ng-click="takeGpsLocation()" value="Take GPS Location">
+<div class="list">
+    <a href="" style="padding: 2px;cursor: hand">
+        <i class="i-con ion-arrow-up-b sp-home-place-up-arrow" ng-click="toggleTopBar()"></i>
+    </a>
+    <button class="button button-positive">
+        <img src="img/gpsIco.png" ng-click="takeGpsLocation()">
+    </button>
+    <div style="margin-top: 10px;">
+        <label class="item item-input">
+            <input type="text" placeholder="Water Demand" ng-model="waterDemand">
+        </label>
+        <label class="item item-input">
+            <input type="text" placeholder="Water Supply" ng-model="waterSupply">
+        </label>
+        <label class="item item-input">
+            <input type="text" placeholder="Family Members" ng-model="familyMember">
+        </label>
+    </div>
+</div>
