@@ -2,7 +2,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
     function ($scope, $rootScope, mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService, $ionicModal) {
         init();
         function init() {
-            var currentSourceType, preferredAreaMode = false;
+            var currentSourceType, preferredAreaMode = false, rainWaterMode = false;
 
             var mainMap = mapService.getMap();
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
@@ -143,6 +143,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             .on(link, 'click', function () {
                                 currentSourceType = "Rain_Water";
                                 map.editTools.startMarker();
+                                rainWaterMode = true;
                             });
                         return container;
                     }
@@ -177,13 +178,13 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                 var tempLayer = undefined;
 
                 $scope.$on('modal.hidden', function () {
-                    if($rootScope.areaOptions && $rootScope.areaOptions.length){
-                        mapService.subscribeArea(toWKT(tempLayer), $rootScope.areaOptions).then(function(data){
+                    if ($rootScope.areaOptions && $rootScope.areaOptions.length) {
+                        mapService.subscribeArea(toWKT(tempLayer), $rootScope.areaOptions).then(function (data) {
                             tempLayer.options.id = data.data.Id;
                             tempLayer.disableEdit();
                             tempLayer.setStyle(preferredAreaStyle);
                         });
-                    }else{
+                    } else {
                         tempLayer.remove();
                     }
 
@@ -201,6 +202,9 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                         tempLayer = e.layer;
                         $scope.showNotificationForAreaWindow();
 
+                    } else if (rainWaterMode) {
+                        addLayerToMap(e.layer, 0, myFeatureGroup);
+                        rainWaterMode = false;
                     } else {
                         addLayerToMap(e.layer, 0, otherFeatureGroup);
                         mapService.addFeature(toWKT(e.layer), sourceType).then(function (data) {
@@ -241,7 +245,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                 layer.options.id = id;
                 layer.addTo(featureGroup);
                 layer.on('click', function (e) {
-                    if(!e.target.options.id)return;
+                    if (!e.target.options.id)return;
                     $rootScope.$broadcast('markerClicked', e.target.options.id);
                     sidebarService.showBottomBar = true;
                     mapService.selectedSourceId = e.target.options.id;
