@@ -1,0 +1,105 @@
+<ion-side-menus>
+
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-assertive">
+            <ion-nav-back-button class="button-icon ion-ios7-arrow-left">
+            </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
+            </button>
+            <button class="button button-icon" ng-click="toggleBottomBar()" ng-show="isLoggedIn()">
+                <i class="icon ion-person"></i>
+            </button>
+            <button class="button button-icon" on-tap="logout()" ng-show="isLoggedIn()">
+                Logout
+            </button>
+            <button class="button button-icon" ng-show="isAcquiringLocation()">
+                Acquiring Location
+            </button>
+            <button class="button button-icon" ng-show="isLocationAcquired()">
+                Location Acquired
+            </button>
+            <button class="button button-icon" ng-show="isLocationAcquiringFailed()" on-tap="acquireLocation()">
+                Location Acquiring Failed -- Retry
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon" ui-sref="eventmenu.messages">
+                <img src="img/messageIco.png" width="32" height="32">
+            </button>
+        </ion-nav-buttons>
+
+        <!--<div class="bar bar-subheader bar-stable">-->
+
+        <!--<div class="button-bar" >-->
+        <!--<a class="button">All</a>-->
+        <!--<a class="button">Channel 1</a>-->
+        <!--<a class="button">Channel 2</a>-->
+        <!--<a class="button">Channel 3</a>-->
+        <!--<a class="button">Channel 4</a>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left" class="left-menu">
+        <ion-header-bar class="item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios7-search placeholder-icon"></i>
+                <input type="search" placeholder="Search the Stream">
+            </label>
+        </ion-header-bar>
+
+        <ion-footer-bar>
+            <div class="tabs tabs-dark tabs-icon-only">
+                <a class="tab-item">
+                    <i class="icon ion-ios7-person"></i>
+                    <span class="badge badge-assertive">0</span>
+                </a>
+                <a class="tab-item">
+                    <i class="icon ion-star"></i>
+
+                </a>
+                <a class="tab-item">
+                    <i class="icon ion-gear-a"></i>
+
+                </a>
+            </div>
+        </ion-footer-bar>
+
+
+        <ion-content>
+            <div class="item item-divider">
+                Navigation
+            </div>
+            <a ng-click="toggleRightBar()" class="item item-icon-left" href="#">
+                <i class="icon ion-person"></i>
+                RightBar
+            </a>
+
+            <a ng-click="toggleTopBar()" class="item item-icon-left" href="#">
+                <i class="icon ion-person"></i>
+                TobBar
+            </a>
+            <a class="item item-icon-left"
+               href="https://material.angularjs.org/#/demo/material.components.autocomplete">
+                <i class="icon ion-person"></i>
+                Angular Material
+            </a>
+            <a class="item item-icon-left" ng-click="showRainWaterHarvest()">
+                <i class="icon ion-person"></i>
+                Rain Water Harvest Map
+            </a>
+            <a class="item item-icon-left" ng-click="showTRMMMap()">
+                <i class="icon ion-person"></i>
+                TRMM Precipitation Map
+            </a>
+
+            </ul>
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>
