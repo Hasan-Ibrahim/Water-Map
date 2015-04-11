@@ -12,6 +12,7 @@ using Data.TokenStorages;
 using Microsoft.Practices.Unity;
 using System.Web.Http;
 using NServiceKit.Redis;
+using Service.RainWater;
 using Unity.WebApi;
 
 namespace Api
@@ -27,7 +28,8 @@ namespace Api
             ConfigureTokenStorage(container, false, false);
             ConfigureRepository(container, false);
 
-            container.RegisterType<HttpContext>(new InjectionFactory(unityContainer => HttpContext.Current));            
+            container.RegisterType<HttpContext>(new InjectionFactory(unityContainer => HttpContext.Current));   
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
 
@@ -50,6 +52,9 @@ namespace Api
                 container.RegisterType(typeof(IRepository<>), typeof(DbContextRepository<>));
                 container.RegisterType<DbContext, AppDbContext>(new InjectionConstructor("app"));
             }
+
+            var trmmFilePath = ConfigurationManager.AppSettings["trmmFilePath"];
+            container.RegisterType<RainWaterHarvest>(new InjectionConstructor(trmmFilePath));
         }
 
         private static void ConfigureTokenStorage(UnityContainer container, bool useInMemory, bool useRadis)

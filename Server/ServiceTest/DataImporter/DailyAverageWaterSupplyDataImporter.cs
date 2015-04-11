@@ -25,7 +25,7 @@ namespace ServiceTest.DataImporter
                 new DbContextRepository<DbSourceSummaryGrid>(dbContext));
 
             _rainWaterService = new RainWaterService(
-                new DbContextRepository<DbRainHarvestTank>(dbContext), null);
+                new DbContextRepository<DbRainHarvestTank>(dbContext), null, null);
         }
 
         // Do not run this if you do not know what it is!

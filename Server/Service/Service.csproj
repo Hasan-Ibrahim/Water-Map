@@ -61,6 +61,7 @@
     <Compile Include="Constants\DataUpdateStatus.cs" />
     <Compile Include="Constants\Messages.cs" />
     <Compile Include="Constants\WaterSupplyConstant.cs" />
+    <Compile Include="Notifications\NotificationService.cs" />
     <Compile Include="OAuth\IOAuthClient.cs" />
     <Compile Include="OAuth\IOAuthUserInfo.cs" />
     <Compile Include="OAuth\IOAuthTokenResponse.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Profile\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RainWater\RainHarvestTankEntry.cs" />
+    <Compile Include="RainWater\RainWaterHarvest.cs" />
     <Compile Include="RainWater\RainWaterService.cs" />
     <Compile Include="Responses\FailedResponse.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
