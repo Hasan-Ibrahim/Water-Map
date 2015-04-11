@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Service.Utility;
+using Service.WaterSources;
 
 namespace Service.WaterSourceSubscription
 {
     public class WaterSourceGroupBySubscription
     {
-        public IEnumerable<GeometryEntity> MySources { get; set; }
-        public IEnumerable<GeometryEntity> OthersSources { get; set; }
+        public IEnumerable<WaterSource> MySources { get; set; }
+        public IEnumerable<WaterSource> OthersSources { get; set; }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using Data.Model;
 using Data.Model.Constants;
 
-namespace Service.Utility
+namespace Service.WaterSources
 {
-    public class GeometryEntity
+    public class WaterSource
     {
         public int Id { get; set; }
         public string Geometry { get; set; }
         public string SourceType { get; set; }
         public Potability MajorQuality { get; set; }
         
-        public static GeometryEntity FromDbWaterSource(DbWaterSource dbWaterSource)
+        public static WaterSource FromDbWaterSource(DbWaterSource dbWaterSource)
         {
             var majorQuality = Potability.Drinkable;
             var majorQualityValue = dbWaterSource.PotableRatingCount;
@@ -29,7 +29,7 @@ namespace Service.Utility
                 majorQuality = Potability.Unknown;
             }
 
-            return new GeometryEntity
+            return new WaterSource
             {
                 Id = dbWaterSource.Id,
                 Geometry = dbWaterSource.Shape.AsText(),

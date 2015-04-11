@@ -5,6 +5,7 @@ using Data.Model;
 using Data.Model.Constants;
 using Data.Repositories.Abstraction;
 using Service.Utility;
+using Service.WaterSources;
 
 namespace Service.WaterSourceSubscription
 {
@@ -40,11 +41,11 @@ namespace Service.WaterSourceSubscription
 
             var usersSources =
                 _sourceRepository.Where(source => usersSourceIds.Contains(source.Id))
-                    .Select(GeometryEntity.FromDbWaterSource);
+                    .Select(WaterSource.FromDbWaterSource);
 
             var otherSources =
                 _sourceRepository.Where(source => !usersSourceIds.Contains(source.Id))
-                    .Select(GeometryEntity.FromDbWaterSource);
+                    .Select(WaterSource.FromDbWaterSource);
 
             return new WaterSourceGroupBySubscription
             {
