@@ -14,10 +14,8 @@
     '</tr>' +
     '<tr>' +
     '<tr>' +
-    '<td style="color: #b68ada"><input type="radio" name="source-state" value="Unknown"/></td>' +
     '<td style="color: #b68ada">Unknown</td>' +
     '<td id="UnknownRatingPercent" style="color: #b68ada"></td>' +
     '</tr>' +
-    '<td colspan="2"><input id="submit-quality" class="button button-small button-block button-balanced" type="submit"  value="Submit" disabled="disabled"/></td>' +
     '</table>'
 };

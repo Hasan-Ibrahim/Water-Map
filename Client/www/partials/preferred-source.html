@@ -5,7 +5,7 @@
     <button class="button button-small" ng-click="showAccessibilityWindow()">Current Condition</button>
 
 
-    <button class="button button-small" ng-click="showNotificationWindow()">Get Notification</button>
+    <button class="button button-small" ng-click="showNotificationWindow()" ng-if="isLoggedIn()">Get Notification</button>
 
 
     <button class="button button-small" ng-click="showAddPhotoWindow()">Add Photos</button>
