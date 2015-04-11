@@ -5,10 +5,12 @@ lloydApp.controller('accessibilityController', ['$scope', '$rootScope', 'sidebar
 
         $scope.submit = function () {
             mapService.postSourceAccessibility(mapService.selectedSourceId, $scope.source.accessibility);
+            $scope.source = {accessibility:null};
             $scope.closeAccessibilityWindow();
         };
 
         $scope.cancel  = function(){
+            $scope.source = {accessibility:null};
             $scope.closeAccessibilityWindow();
         };
 
