@@ -1,24 +1,26 @@
 lloydApp.directive('homePlace', ['sidebarService',
     function (sidebarService) {
         return {
-
             scope: {},
             restrict: 'E',
             link: function (scope, element, attrs, controller) {
-                scope.takeGpsLocation = function () {
-                    $rootScope.addNewSource = function () {
-                    }
-                };
-                scope.toggleRightBar = function () {
-                    sidebarService.toggleRightBar();
-                };
-                scope.toggleTopBar = function () {
-                    sidebarService.toggleTopBar();
-                };
             },
             templateUrl: 'partials/home-place.html',
-            controller: function () {
-
+            controller: function ($scope, supplyDemandService) {
+                $scope.waterDemand = '';
+                $scope.waterSupply = '';
+                $scope.totalConsumer = '';
+                $scope.submitDemandSupply = function () {
+                    supplyDemandService.submitDemandSupply(
+                        $scope.waterDemand,
+                        $scope.waterSupply,
+                        $scope.totalConsumer).then(function () {
+                            $scope.closeSupplyDemandWindow();
+                        }, function () {
+                            $scope.closeSupplyDemandWindow();
+                        });
+                    $scope.closeSupplyDemandWindow();
+                }
             }
         }
     }
