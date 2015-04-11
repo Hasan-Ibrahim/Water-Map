@@ -23,20 +23,20 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult UpdateWaterSource(GeometryEntity geometryEntity)
+        public IHttpActionResult UpdateWaterSource(WaterSource waterSource)
         {
-            _waterSourceService.Update(geometryEntity);
-            return Ok(geometryEntity);
+            _waterSourceService.Update(waterSource);
+            return Ok(waterSource);
         }
 
         [HttpGet]
-        public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
+        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
         {
             return _waterSourceService.GetWaterSources(bBoxWkt);
         }
 
         [HttpPost]
-        public GeometryEntity AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
+        public WaterSource AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
         {
             return _waterSourceService.AddWaterSource(waterSourceCreationModel);
         }

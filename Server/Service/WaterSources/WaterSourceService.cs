@@ -5,7 +5,7 @@ using System.Linq;
 using Data.Model;
 using Data.Model.Constants;
 using Data.Repositories.Abstraction;
-using Service.Utility;
+using Service.Notifications;
 
 namespace Service.WaterSources
 {
@@ -13,34 +13,39 @@ namespace Service.WaterSources
     {
         private readonly IRepository<DbWaterSource> _sourceRepository;
         private readonly IRepository<DbWaterSourceRating> _ratingRepository;
+        private readonly NotificationService _notificationService;
 
-        public WaterSourceService(IRepository<DbWaterSource> sourceRepository, IRepository<DbWaterSourceRating> ratingRepository)
+        public WaterSourceService(IRepository<DbWaterSource> sourceRepository, 
+            IRepository<DbWaterSourceRating> ratingRepository,
+            NotificationService notificationService)
         {
             _sourceRepository = sourceRepository;
             _ratingRepository = ratingRepository;
+            _notificationService = notificationService;
         }
 
         public void Dispose()
         {
             _sourceRepository.Dispose();
             _ratingRepository.Dispose();
+            _notificationService.Dispose();
         }
 
-        public IEnumerable<GeometryEntity> GetWaterSources(string bBoxWkt)
+        public IEnumerable<WaterSource> GetWaterSources(string bBoxWkt)
         {
             var bBox = DbGeometry.FromText(bBoxWkt);
             return _sourceRepository
                 .Where(source => bBox.Contains(source.Shape))
-                .Select(GeometryEntity.FromDbWaterSource);
+                .Select(WaterSource.FromDbWaterSource);
         }
 
-        public GeometryEntity AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
+        public WaterSource AddWaterSource(WaterSourceCreateEntry waterSourceCreationModel)
         {
             var dbWaterSource = waterSourceCreationModel.ToDbWaterSource();
             _sourceRepository.Create(dbWaterSource);
             _sourceRepository.SaveChanges();
 
-            return GeometryEntity.FromDbWaterSource(dbWaterSource);
+            return WaterSource.FromDbWaterSource(dbWaterSource);
         }
 
         public void RateWaterSource(WaterSourceRating waterSourceRating)
@@ -48,6 +53,8 @@ namespace Service.WaterSources
             _ratingRepository.Create(waterSourceRating.ToDbWaterSourceRating());
 
             var source = _sourceRepository.Find(waterSourceRating.WaterSourceId);
+
+            var oldMajorRate = WaterSource.FromDbWaterSource(source).MajorQuality;
 
             switch (waterSourceRating.Potability)
             {
@@ -65,6 +72,9 @@ namespace Service.WaterSources
                     break;
             }
 
+            var newMajorRate = WaterSource.FromDbWaterSource(source).MajorQuality;
+            _notificationService.SendQualityChangeNotification(oldMajorRate, newMajorRate);
+
             _ratingRepository.SaveChanges();
         }
 
@@ -74,6 +84,8 @@ namespace Service.WaterSources
             waterSource.Accessibility = accessibilityEntity.Accessibility;
             _sourceRepository.Update(waterSource);
             _sourceRepository.SaveChanges();
+
+            _notificationService.SendAccessibilityChangeNotification(accessibilityEntity);
         }
 
         public WaterSourceProperties GetSourceProperties(int sourceId)
@@ -83,10 +95,10 @@ namespace Service.WaterSources
             return WaterSourceProperties.FromDbWaterSource(dbSource);
         }
 
-        public void Update(GeometryEntity geometryEntity)
+        public void Update(WaterSource waterSource)
         {
-            var dbSource = _sourceRepository.Find(geometryEntity.Id);
-            dbSource.Shape = DbGeometry.FromText(geometryEntity.Geometry);
+            var dbSource = _sourceRepository.Find(waterSource.Id);
+            dbSource.Shape = DbGeometry.FromText(waterSource.Geometry);
             _sourceRepository.Update(dbSource);
             _sourceRepository.SaveChanges();
         }
