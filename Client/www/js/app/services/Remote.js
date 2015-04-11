@@ -8,6 +8,23 @@ function Remote($http, serverUrl, jqHttp) {
         };
         return jqHttp.post(url, data);
     };
+
+    this.submitDemandSupply = function (waterDemand, waterSupply, totalConsumer, sourceId, lat, lon) {
+        var url = serverUrl + 'DailySupply/AddDailyAverageWaterSupply';
+        var supplyDate = new Date().toISOString().slice(0, 10);
+        var location = 'POINT(' + lat + ' ' + lon + ')';
+        var supply = [{
+            SourceId: 1,
+            Supply: waterSupply
+        }];
+        var data = {
+            SupplyDate: supplyDate,
+            NumberOfPeople: totalConsumer,
+            Location: location,
+            Supply: supply
+        };
+        return jqHttp.post(url, data);
+    }
 }
 
 function DummyRemote($q) {
