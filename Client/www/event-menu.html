@@ -8,21 +8,15 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
             </button>
-            <button class="button button-icon" ng-click="toggleBottomBar()" ng-show="isLoggedIn()">
-                <i class="icon ion-person"></i>
-            </button>
-            <button class="button button-icon" on-tap="logout()" ng-show="isLoggedIn()">
-                Logout
-            </button>
-            <button class="button button-icon" ng-show="isAcquiringLocation()">
-                Acquiring Location
-            </button>
-            <button class="button button-icon" ng-show="isLocationAcquired()">
-                Location Acquired
-            </button>
-            <button class="button button-icon" ng-show="isLocationAcquiringFailed()" on-tap="acquireLocation()">
-                Location Acquiring Failed -- Retry
-            </button>
+            <!--<button class="button button-icon" ng-show="isAcquiringLocation()">-->
+                <!--Acquiring Location-->
+            <!--</button>-->
+            <!--<button class="button button-icon" ng-show="isLocationAcquired()">-->
+                <!--Location Acquired-->
+            <!--</button>-->
+            <!--<button class="button button-icon" ng-show="isLocationAcquiringFailed()" on-tap="acquireLocation()">-->
+                <!--Location Acquiring Failed &#45;&#45; Retry-->
+            <!--</button>-->
         </ion-nav-buttons>
 
         <!--<div class="bar bar-subheader bar-stable">-->
@@ -69,11 +63,12 @@
         <ion-content>
 
             <div style="padding: 10px;">
-                <button class="button icon ion-person button-balanced" style="float: right;">Login</button>
+                <button class="button icon ion-person button-balanced" style="float: right;" ng-show="isLoggedIn()" ng-click="logout()">Logout</button>
+                <button class="button icon ion-person button-balanced" style="float: right;" ng-hide="isLoggedIn()" ng-click="toggleRightBar()">Login</button>
 
 
 
-                <button class="button icon ion-refresh"></button>
+                <button class="button icon ion-refresh" ng-click="reloadApp()"></button>
             </div>
 
             <a class="item item-icon-left" ng-click="showRainWaterHarvest()">

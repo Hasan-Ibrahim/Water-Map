@@ -1,5 +1,5 @@
-lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'sidebarService', 'rainWaterHarvestService', 'trmmDataService', '$ionicSideMenuDelegate',
-    function ($scope, $rootScope, sidebarService, rainWaterHarvestService, trmmDataService, $ionicSideMenuDelegate) {
+lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'sidebarService', 'rainWaterHarvestService', 'trmmDataService', '$ionicSideMenuDelegate', 'loginService',
+    function ($scope, $rootScope, sidebarService, rainWaterHarvestService, trmmDataService, $ionicSideMenuDelegate, loginService) {
         $scope.toggleRightBar = function () {
             sidebarService.toggleRightBar();
             $ionicSideMenuDelegate.toggleLeft();
@@ -24,6 +24,11 @@ lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'sidebarService', 'rain
 
         $scope.reloadApp = function () {
             window.location.reload();
+            $ionicSideMenuDelegate.toggleLeft();
+        };
+
+        $scope.logout = function () {
+            loginService.logout();
             $ionicSideMenuDelegate.toggleLeft();
         };
     }]);
