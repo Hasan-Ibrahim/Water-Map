@@ -15,7 +15,7 @@ namespace Service.WaterSources
         private readonly IRepository<DbWaterSourceRating> _ratingRepository;
         private readonly NotificationService _notificationService;
 
-        public WaterSourceService(IRepository<DbWaterSource> sourceRepository, 
+        public WaterSourceService(IRepository<DbWaterSource> sourceRepository,
             IRepository<DbWaterSourceRating> ratingRepository,
             NotificationService notificationService)
         {
@@ -74,7 +74,7 @@ namespace Service.WaterSources
 
             var waterSource = WaterSource.FromDbWaterSource(source);
             var newMajorRate = waterSource.MajorQuality;
-            _notificationService.SendQualityChangeNotification(oldMajorRate, newMajorRate);
+            _notificationService.SendQualityChangeNotification(oldMajorRate, newMajorRate, source);
 
             _ratingRepository.SaveChanges();
 
@@ -84,11 +84,12 @@ namespace Service.WaterSources
         public void UpdateAccessibility(AccessibilityEntity accessibilityEntity)
         {
             var waterSource = _sourceRepository.Find(accessibilityEntity.WaterSourceId);
+            var oldAccessibility = waterSource.Accessibility;
             waterSource.Accessibility = accessibilityEntity.Accessibility;
             _sourceRepository.Update(waterSource);
             _sourceRepository.SaveChanges();
 
-            _notificationService.SendAccessibilityChangeNotification(accessibilityEntity);
+            _notificationService.SendAccessibilityChangeNotification(oldAccessibility, accessibilityEntity.Accessibility, waterSource);
         }
 
         public WaterSourceProperties GetSourceProperties(int sourceId)
