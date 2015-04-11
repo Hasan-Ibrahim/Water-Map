@@ -1,10 +1,11 @@
 function Db($window, loginObject) {
-    this.getHomeLocaiton = function () {
+    this.getHomeLocation = function () {
         return JSON.parse($window.localStorage['home-location']);
     };
 
-    this.setHomeLocaiton = function (homeLocation) {
-        $window.localStorage['home-location'] = angular.toJson(homeLocation);
+    this.setHomeLocation = function (homeLocation) {
+        // TODO: stringify it correctly
+        $window.localStorage['home-location'] = JSON.stringify(homeLocation);
     };
 
     this.setLoginToken = function (loginToken) {

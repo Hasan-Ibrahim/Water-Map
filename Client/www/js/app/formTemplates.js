@@ -1,21 +1,21 @@
 ﻿var formTemplates = {
-    source: '<h5>Source Quality</h5>' +
+    source: '<h4>Source Quality</h4>' +
     '<table id="water-quality">' +
     '<tr>' +
-    '<td>Drinkable</td>' +
-    '<td id="PotableRatingPercent"></td>' +
+    '<td style="color: #3d832c">Drinkable</td>' +
+    '<td id="PotableRatingPercent" style="color: #3d832c"></td>' +
     '</tr>' +
-    '<td>NeedTreatment</td>' +
-    '<td id="ProcessableRatingPercent"></td>' +
-    '</tr>' +
-    '<tr>' +
-    '<td>Undrinkable</td>' +
-    '<td id="UnpotableRatingPercent"></td>' +
+    '<td style="color: #ff7301">NeedTreatment</td>' +
+    '<td id="ProcessableRatingPercent" style="color: #ff7301"></td>' +
     '</tr>' +
     '<tr>' +
+    '<td style="color: #b40909">Undrinkable</td>' +
+    '<td id="UnpotableRatingPercent" style="color: #b40909"></td>' +
+    '</tr>' +
     '<tr>' +
-    '<td>Unknown</td>' +
-    '<td id="UnknownRatingPercent"></td>' +
+    '<tr>' +
+    '<td style="color: #b68ada">Unknown</td>' +
+    '<td id="UnknownRatingPercent" style="color: #b68ada"></td>' +
     '</tr>' +
     '</table>'
 };
