@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Service.RainWater;
 
 namespace Api.Controllers
@@ -22,6 +23,12 @@ namespace Api.Controllers
         public IHttpActionResult AddRainHarvestTank(RainHarvestTankEntry rainHarvestTankEntry)
         {
             return Ok(_rainWaterService.AddRainHarvestTank(rainHarvestTankEntry));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetRainHarvestGrid()
+        {
+            return Ok(_rainWaterService.GetRainHarvestGrid());
         }
     }
 }

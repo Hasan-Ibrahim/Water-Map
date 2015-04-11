@@ -114,6 +114,7 @@
     <Compile Include="Model\DbWaterSource.cs" />
     <Compile Include="Model\DbDailyAverageSupply.cs" />
     <Compile Include="Model\DbDailyAverageSupplySummary.cs" />
+    <Compile Include="Model\Views\DbRainHarvestTankGrid.cs" />
     <Compile Include="Model\Views\DbSourceSummaryGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstraction\InMemoryRepository.cs" />
