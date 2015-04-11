@@ -8,7 +8,7 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
         mainMap = mainMap || L.map('map', {editable: true});
         if (!trackingLocation) {
             trackingLocation = true;
-            trackLocation();
+            //trackLocation();
         }
         return mainMap;
     }
