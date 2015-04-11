@@ -212,14 +212,18 @@
 .leaflet-bar a:hover {
 	background-color: #fff;
 	border-bottom: 1px solid #ccc;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
 	display: block;
 	text-align: center;
 	text-decoration: none;
 	color: black;
 	}
+.leaflet-bar a img
+{
+    margin-top: 5px;
+}
 .leaflet-bar a,
 .leaflet-control-layers-toggle {
 	background-position: 50% 50%;
