@@ -1,5 +1,5 @@
 <div ng-controller="accessibilityController">
-    <h5>Provide Source's Condition</h5>
+    <h4>Provide Source's Condition</h4>
     <table id="water-accessibility">
         <tr>
             <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Accessible"/></td>
@@ -31,9 +31,12 @@
         </tr>
         <tr>
             <td></td>
-            <td><input id="submit-quality" type="submit" value="Submit"
+            <td><input class="button button-small button-balanced" id="submit-quality" type="submit" value="Submit"
                                    ng-click="submit()" ng-disabled="!source.accessibility"/>
-            <input type="button" value="Cancel" ng-click="cancel()"/></td>
+            <input class="button button-small button-assertive" type="button" value="Cancel" ng-click="cancel()"/></td>
         </tr>
     </table>
+
+
+
 </div>

@@ -1314,6 +1314,7 @@ div.item-note.item-right-panel h2.item-distance {
     padding: 10px;
     right: 10px;
     bottom: 50px;
+    height: 93%;
 }
 
 #leaflet-control-geosearch-qry {
@@ -1332,4 +1333,11 @@ div.item-note.item-right-panel h2.item-distance {
 
 .button .icon::before, .button.icon::before, .button.icon-left::before, .button.icon-right::before {
     font-size: 20px;
+}
+.modal-backdrop
+{
+    width: 60%;
+    left: 20%;
+    height: 70%;
+    top: 10px;
 }
