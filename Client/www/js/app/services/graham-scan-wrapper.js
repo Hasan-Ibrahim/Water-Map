@@ -1,0 +1,1 @@
+lloydApp.value('ConvexHull', ConvexHullGrahamScan);
