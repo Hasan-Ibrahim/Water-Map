@@ -48,7 +48,7 @@ namespace Service.WaterSources
             return WaterSource.FromDbWaterSource(dbWaterSource);
         }
 
-        public void RateWaterSource(WaterSourceRating waterSourceRating)
+        public WaterSource RateWaterSource(WaterSourceRating waterSourceRating)
         {
             _ratingRepository.Create(waterSourceRating.ToDbWaterSourceRating());
 
@@ -72,10 +72,13 @@ namespace Service.WaterSources
                     break;
             }
 
-            var newMajorRate = WaterSource.FromDbWaterSource(source).MajorQuality;
+            var waterSource = WaterSource.FromDbWaterSource(source);
+            var newMajorRate = waterSource.MajorQuality;
             _notificationService.SendQualityChangeNotification(oldMajorRate, newMajorRate);
 
             _ratingRepository.SaveChanges();
+
+            return waterSource;
         }
 
         public void UpdateAccessibility(AccessibilityEntity accessibilityEntity)
