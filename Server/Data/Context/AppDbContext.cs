@@ -28,5 +28,6 @@ namespace Data.Context
         public DbSet<DbSourceSummaryGrid> SourceSummaryGrids { get; set; }
         public DbSet<DbRainHarvestTank> DbRainHarvestTanks { get; set; }
         public DbSet<DbRainHarvestTankGrid> RainHarvestTankGrids { get; set; }
+        public DbSet<DbStressIndexGrid> DbStressIndexGrids { get; set; }
     }
 }
