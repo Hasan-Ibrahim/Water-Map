@@ -29,15 +29,22 @@ namespace ServiceTest.DataImporter
         }
 
         // Do not run this if you do not know what it is!
-        //[Test]
+        [Test]
         public void ImportRainHarvestData()
         {
             var random = new Random();
-            for (var i = 0; i < 100; i++)
+            var xMax = 92.683;
+            var xMin = 88.000;
+            var yMax = 26.617;
+            var yMin = 21.900;
+
+            var count = 1500;
+
+            for (var i = 0; i < count; i++)
             {
                 _rainWaterService.AddRainHarvestTank(new RainHarvestTankEntry
                 {
-                    Location = string.Format("POINT({0} {1})", random.NextDouble() * 360 - 180, random.NextDouble() * 180 - 90),
+                    Location = string.Format("POINT({0} {1})", (xMax - xMin) * random.NextDouble() + xMin, (yMax - yMin) * random.NextDouble() + yMin),
                     AreaInSquareMetre = random.NextDouble() * 30 + 1
                 });
             }
