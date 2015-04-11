@@ -20,5 +20,4 @@ lloydApp.controller('notificationController', ['$scope', '$rootScope', 'sidebarS
             //$scope.options = null;
             $scope.closeNotificationWindow();
         };
-
     }]);

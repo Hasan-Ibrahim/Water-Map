@@ -208,7 +208,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     } else if (rainWaterMode) {
                         if($rootScope.rainArea){
                             mapService.postRainWaterSource(toWKT(tempLayer),$rootScope.rainArea).then(function (data) {
-                                tempLayer.options.id = data.data.Id;
+                                //tempLayer.options.id = data.data.Id;
                                 tempLayer.disableEdit();
                             });
                         }else{
