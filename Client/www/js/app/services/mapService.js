@@ -125,6 +125,7 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
                 Accessibility: accessibility
             });
         },
+        toggleDisplayTracking: toggleDisplayTracking,
         selectedSourceId: null
     }
 }]);
