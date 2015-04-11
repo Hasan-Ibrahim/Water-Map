@@ -41,9 +41,15 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
             });
         },
         subscribeFeature: function (sourceId, subscriptions) {
+            var selectedTypes = [];
+            for(var i in subscriptions){
+                if(subscriptions[i]){
+                    selectedTypes.push(i);
+                }
+            }
             return jqHttp.post(appRoot + "WaterSourceSubscription/Subscribe", {
                 SourceId: sourceId,
-                Subscriptions: {1:true,2:false,4:true,8:false}
+                SubscriptionTypes: selectedTypes
             });
         },
         getSourceSubscriptionStatus: function (sourceId) {
