@@ -1,21 +1,14 @@
-lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope','sidebarService', 'markerIconService',
-    function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService) {
-        var preferredAreaMode = false;
+lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope', 'sidebarService', 'markerIconService', '$ionicModal',
+    function ($scope, $rootScope, mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService, $ionicModal) {
         init();
         function init() {
-            var currentSourceType;
+            var currentSourceType, preferredAreaMode = false;
 
             var mainMap = mapService.getMap();
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
-            var myFeatureGroupStyle = {
-                radius: 8,
-                fillColor: "#5AD75A",
-                color: "#D65AD6",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6
+            var preferredAreaStyle = {
+                dashArray: "8, 6"
             };
-            otherFeatureGroup.setStyle(myFeatureGroupStyle);
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 maxZoom: 20,
                 attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'
@@ -36,14 +29,10 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
                         layer = markerIconService.getAwesomeMarker(layer, sources.MySources[i], true);
                         addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
-                        if(layer.setStyle){
-                            layer.setStyle(myFeatureGroupStyle);
-                        }
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
-                        //sources.OthersSources[j].SourceType = "Rain_Water";
                         layer = markerIconService.getAwesomeMarker(layer, sources.OthersSources[j], false);
                         addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
                     }
@@ -169,21 +158,57 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                     provider: new L.GeoSearch.Provider.OpenStreetMap()
                 }).addTo(mainMap);
 
+                $ionicModal.fromTemplateUrl('partials/notificationForArea.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up'
+                }).then(function (modal) {
+                    $scope.modal = modal;
+                });
+
+                $scope.showNotificationForAreaWindow = function () {
+                    $scope.modal.show();
+                };
+
+                $scope.closeNotificationForAreaWindow = function () {
+                    $scope.modal.hide();
+
+                };
+
+                var tempLayer = undefined;
+
+                $scope.$on('modal.hidden', function () {
+                    if($rootScope.areaOptions && $rootScope.areaOptions.length){
+                        mapService.subscribeArea(toWKT(tempLayer), $rootScope.areaOptions).then(function(data){
+                            tempLayer.options.id = data.data.Id;
+                            tempLayer.disableEdit();
+                            tempLayer.setStyle(preferredAreaStyle);
+                        });
+                    }else{
+                        tempLayer.remove();
+                    }
+
+                });
+
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
                     var sourceType = currentSourceType ? currentSourceType : "Test";
                     e.layer.options.sourceType = sourceType;
                     if (preferredAreaMode) {
+
                         addLayerToMap(e.layer, 0, myFeatureGroup);
                         preferredAreaMode = false;
+                        tempLayer = e.layer;
+                        $scope.showNotificationForAreaWindow();
+
                     } else {
                         addLayerToMap(e.layer, 0, otherFeatureGroup);
+                        mapService.addFeature(toWKT(e.layer), sourceType).then(function (data) {
+                            e.layer.options.id = data.data.Id;
+                            e.layer.disableEdit();
+                        });
                     }
-                    mapService.addFeature(toWKT(e.layer), sourceType).then(function(data){
-                        e.layer.options.id = data.data.Id;
-                        e.layer.disableEdit();
-                    });
+
                 });
             }
 
