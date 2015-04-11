@@ -28,17 +28,11 @@ lloydApp.service('markerIconService', function () {
             }
             var icon;
             var iconImage;
-            if (isMySource) {
-                iconImage = 'coffee';
-            }
-            else {
-                iconImage = 'spinner';
-            }
             if(sourceType == "Well"){
-                iconImage = 'shopping-cart';
+                iconImage = 'circle';
             }
             else if(sourceType == "Rain_Water"){
-                iconImage = 'info';
+                iconImage = 'cloud';
             }
             icon = L.AwesomeMarkers.icon({icon: iconImage, prefix: 'fa', markerColor: featurecolor, iconColor: '#ffffff'});
             return L.marker([layer._latlng.lat, layer._latlng.lng], {icon: icon});
