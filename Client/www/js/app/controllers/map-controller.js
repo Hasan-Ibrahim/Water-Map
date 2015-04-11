@@ -241,6 +241,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                 layer.options.id = id;
                 layer.addTo(featureGroup);
                 layer.on('click', function (e) {
+                    if(!e.target.options.id)return;
                     $rootScope.$broadcast('markerClicked', e.target.options.id);
                     sidebarService.showBottomBar = true;
                     mapService.selectedSourceId = e.target.options.id;
