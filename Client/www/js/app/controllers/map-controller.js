@@ -59,10 +59,10 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Create a new line';
-                        link.innerHTML = 'Stream';
+                        link.innerHTML = '<img src="img/streamIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
-                                currentSourceType = "Stream";
+                                currentSourceType = "Well";
                                 map.editTools.startPolyline();
                             });
 
@@ -81,7 +81,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Create a new polygon';
-                        link.innerHTML = 'Reservoir';
+                        link.innerHTML = '<img src="img/reservoir.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 currentSourceType = "Reservoir";
@@ -103,7 +103,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Add a new marker';
-                        link.innerHTML = 'Well';
+                        link.innerHTML = '<img src="img/wellIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 currentSourceType = "Well";
@@ -124,7 +124,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Add preferred zone';
-                        link.innerHTML = 'preferred zone';
+                        link.innerHTML = '<img src="img/alertIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 map.editTools.startPolygon();
@@ -146,7 +146,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Add a new marker';
-                        link.innerHTML = 'Rain Water';
+                        link.innerHTML = '<img src="img/rainIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 currentSourceType = "Rain_Water";
@@ -197,7 +197,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                     var showingCoverage = false;
                     link.href = '#';
                     link.title = 'Add a new marker';
-                    link.innerHTML = 'SC';
+                    link.innerHTML = '<img src="img/scIco.png" />';
                     sourceCoverageService.storeLink(link);
                     L.DomEvent.on(link, 'click', L.DomEvent.stop)
                         .on(link, 'click', function () {
