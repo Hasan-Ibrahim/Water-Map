@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.jantrik.water-map" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <access origin="https://oauth.io" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+    </feature>
+    <feature name="Capture">
+        <param name="android-package" value="org.apache.cordova.mediacapture.Capture" />
+    </feature>
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <name>Water Map</name>
+    <description>
+        This app will enable the end users to identify the existing potable water sources, incorporate primary supply info, quality issue, potential hazards, and to monitor source status both spatially and temporally. Based on the crowd-sourcing dataset, the app is able to measure the water stress in different locations and illustrate them in forms of comprehensive water stress maps across the globe. In addition the app can assess the potential rainwater availability based on the satellite precipitation data in the user locations. Finally the app improves the understanding of the potable water condition in a community and connects the mass people with their water usage information in order to meet their present and future water need.
+    </description>
+    <author email="info@jantrik.com" href="http://www.jantrik.com">
+        Jantrik Developers
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="splashscreen" value="screen" />
+    <preference name="splashScreenDelay" value="6000" />
+</widget>
