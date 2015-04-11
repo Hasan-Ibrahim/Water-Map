@@ -113,7 +113,8 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
                 Accessibility: accessibility
             });
         },
-        selectedSourceId: null
+        selectedSourceId: null,
+        setSelectedSource: null
     }
 }]);
 

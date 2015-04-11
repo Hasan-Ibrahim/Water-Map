@@ -224,6 +224,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         sourceCoverageService.hideCoveragePolygon();
                     }
                     selectedSource = this;
+                    mapService.selectedSource = selectedSource;
                     if (!sourceCoverageControlAdded) {
                         mainMap.addControl(new L.SourceCoverageControl());
                         sourceCoverageControlAdded = true;
