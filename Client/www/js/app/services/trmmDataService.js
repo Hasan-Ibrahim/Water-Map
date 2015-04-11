@@ -1,6 +1,9 @@
 lloydApp.service('trmmDataService', ['mapService' ,
     function (mapService) {
 
+        var layerVisible = false;
+        var heatLayer;
+
         var grad = {
             //0.0001: 'blue',
             0.01: '#556EBF',
@@ -11,9 +14,10 @@ lloydApp.service('trmmDataService', ['mapService' ,
             0.85: '#F2AF42',
             1.0: 'red'
         };
-        var gradient = generateGradient(grad, 2000);
+        var length = 2000;
+        var gradient = generateGradient(grad, length);
         var colors = [];
-        for(var i = 0; i<2000 ; i+=4){
+        for(var i = 0; i<length ; i+=1){
             var red = gradient[i * 4];
             var green = gradient[i * 4 + 1];
             var blue = gradient[i * 4 + 2];
@@ -23,7 +27,16 @@ lloydApp.service('trmmDataService', ['mapService' ,
 
         return {
             showTrmmDataMap: function () {
+
                 var mainMap = mapService.getMap();
+                if(layerVisible){
+                    mainMap.removeLayer(heatLayer);
+                    layerVisible = false;
+                    return;
+                }
+
+                layerVisible = true;
+
                 var heat = L.heatLayer(mainMap, trmmData, {radius: 25, blur: 15,
                     gradient: {
                     //0.0001: 'blue',
@@ -65,10 +78,11 @@ lloydApp.service('trmmDataService', ['mapService' ,
                     },
                     colorCodeCalculator: function(value){
                         value = Math.round(value);
-                        value = value >= 2000 ? 1999 : value;
+                        value = value >= length ? length-1 : value;
                         return colors[value];
                     }
                 }).addTo(mainMap);
+                heatLayer = heat;
             }
         }
     }]);
