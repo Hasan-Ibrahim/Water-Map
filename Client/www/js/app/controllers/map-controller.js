@@ -94,7 +94,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add a new marker';
+                        link.title = 'Add a well';
                         link.innerHTML = '<img src="img/wellIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -115,7 +115,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add preferred zone';
+                        link.title = 'Add a preferred zone';
                         link.innerHTML = '<img src="img/alertIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -137,7 +137,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add a new marker';
+                        link.title = 'Add a rain water source';
                         link.innerHTML = '<img src="img/rainIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
