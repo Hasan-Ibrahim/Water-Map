@@ -3,7 +3,7 @@ lloydApp.service('rainWaterHarvestService', ['mapService' , '$http', 'serverUrl'
         var appRoot = serverUrl;
         var layerVisible = false;
         var heatLayer;
-        var grad = {
+        /*var grad = {
             //0.0001: 'blue',
             0.01: '#556EBF',
             0.2: '#6CCFF1',
@@ -12,7 +12,19 @@ lloydApp.service('rainWaterHarvestService', ['mapService' , '$http', 'serverUrl'
             0.65: '#FBEB40',
             0.85: '#F2AF42',
             1.0: 'red'
+        };*/
+        var grad = {
+            //0.0001: 'blue',
+            0.01: '#FEF8EB',
+            /*0.2: '#6CCFF1',
+            0.35: '#92CA95',
+            0.5: '#A2C95C',
+            0.65: '#FBEB40',
+            0.85: '#F2AF42',*/
+            1.0: '#7F0100'
         };
+
+
         var length = 3;
         var gradient = generateGradient(grad, length);
         var colors = [];
