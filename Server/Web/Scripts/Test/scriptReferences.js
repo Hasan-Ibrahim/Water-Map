@@ -1,0 +1,20 @@
+﻿///<reference path="~/Scripts/Lib/jasmine.js"/>
+///<reference path="~/Scripts/Lib/angular.js"/>
+///<reference path="~/Scripts/Lib/angular-toastr.js"/>
+///<reference path="~/Scripts/Lib/angular-route.js"/>
+///<reference path="~/Scripts/Lib/ui-bootstrap-tpls.js"/>
+///<reference path="~/Scripts/Lib/cookies.js"/>
+///<reference path="~/Scripts/Lib/angular-mocks.js"/>
+
+///<reference path="~/Scripts/Lib/angular-file-upload.js"/>
+///<reference path="~/Scripts/Directives/module.js"/>
+///<reference path="~/Scripts/App/Utility/utilityModule.js"/>
+///<reference path="~/Scripts/App/Utility/tokenStorage.js"/>
+///<reference path="~/Scripts/App/appModule.js"/>
+///<reference path="~/Scripts/App/accessControl.js"/>
+///<reference path="~/Scripts/App/urlResolver.js"/>
+///<reference path="~/Scripts/App/Account/Controllers/loginController.js"/>
+///<reference path="~/Scripts/App/UserProfile/Services/userProfileRepository.js"/>
+///<reference path="~/Scripts/App/UserProfile/Services/userProfileService.js"/>
+///<reference path="~/Scripts/App/Account/Services/accountRepository.js"/>
+///<reference path="~/Scripts/App/Account/Services/accountService.js"/>
