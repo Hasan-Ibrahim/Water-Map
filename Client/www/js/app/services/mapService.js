@@ -134,6 +134,12 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
                 Accessibility: accessibility
             });
         },
+        postRainWaterSource: function (location, area) {
+            return jqHttp.post(appRoot + "RainWater/AddRainHarvestTank", {
+                Location: location,
+                AreaInSquareMetre: area
+            });
+        },
         toggleDisplayTracking: toggleDisplayTracking,
         selectedSourceId: null,
         setSelectedSource: null

@@ -94,7 +94,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add a new marker';
+                        link.title = 'Add a well';
                         link.innerHTML = '<img src="img/wellIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -115,7 +115,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add preferred zone';
+                        link.title = 'Add a preferred zone';
                         link.innerHTML = '<img src="img/alertIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -137,7 +137,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Add a new marker';
+                        link.title = 'Add a rain water source';
                         link.innerHTML = '<img src="img/rainIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -175,20 +175,50 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
 
                 };
 
+                $ionicModal.fromTemplateUrl('partials/rainArea.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up'
+                }).then(function (modal) {
+                    $scope.rainAreaModal = modal;
+                });
+
+                $scope.showRainAreaModal = function () {
+                    $scope.rainAreaModal.show();
+                };
+
+                $scope.closeRainAreaModal = function () {
+                    $scope.rainAreaModal.hide();
+                };
+
                 var tempLayer = undefined;
 
                 $scope.$on('modal.hidden', function () {
-                    if ($rootScope.areaOptions && $rootScope.areaOptions.length) {
-                        mapService.subscribeArea(toWKT(tempLayer), $rootScope.areaOptions).then(function (data) {
-                            tempLayer.options.id = data.data.Id;
-                            tempLayer.disableEdit();
-                            tempLayer.setStyle(preferredAreaStyle);
-                        });
-                    } else {
-                        if(tempLayer &&  tempLayer.remove){
-                            tempLayer.remove();
+                    if (preferredAreaMode) {
+                        if ($rootScope.areaOptions && $rootScope.areaOptions.length) {
+                            mapService.subscribeArea(toWKT(tempLayer), $rootScope.areaOptions).then(function (data) {
+                                tempLayer.options.id = data.data.Id;
+                                tempLayer.disableEdit();
+                                tempLayer.setStyle(preferredAreaStyle);
+                            });
+                        } else {
+                            if (tempLayer && tempLayer.remove) {
+                                tempLayer.remove();
+                            }
+                        }
+                    } else if (rainWaterMode) {
+                        if($rootScope.rainArea){
+                            mapService.postRainWaterSource(toWKT(tempLayer),$rootScope.rainArea).then(function (data) {
+                                tempLayer.options.id = data.data.Id;
+                                tempLayer.disableEdit();
+                            });
+                        }else{
+                            if (tempLayer && tempLayer.remove) {
+                                tempLayer.remove();
+                            }
                         }
                     }
+                    preferredAreaMode = false;
+                    rainWaterMode = false;
                 });
 
                 mainMap.on("editable:drawing:end", function (e) {
@@ -197,15 +227,14 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     var sourceType = currentSourceType ? currentSourceType : "Test";
                     e.layer.options.sourceType = sourceType;
                     if (preferredAreaMode) {
-
                         addLayerToMap(e.layer, 0, myFeatureGroup);
-                        preferredAreaMode = false;
                         tempLayer = e.layer;
                         $scope.showNotificationForAreaWindow();
 
                     } else if (rainWaterMode) {
                         addLayerToMap(e.layer, 0, myFeatureGroup);
-                        rainWaterMode = false;
+                        tempLayer = e.layer;
+                        $scope.showRainAreaModal();
                     } else {
                         addLayerToMap(e.layer, 0, otherFeatureGroup);
                         mapService.addFeature(toWKT(e.layer), sourceType).then(function (data) {
@@ -260,6 +289,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                         mainMap.addControl(new L.SourceCoverageControl());
                         sourceCoverageControlAdded = true;
                     }
+
                     mapService.getProperties(e.target.options.id).success(function (data) {
                         layer.bindPopup(formTemplates.source);
                         layer.openPopup();
