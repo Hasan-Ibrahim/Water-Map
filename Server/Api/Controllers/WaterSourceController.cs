@@ -44,8 +44,8 @@ namespace Api.Controllers
         [HttpPost]
         public IHttpActionResult RateWaterSource(WaterSourceRating rating)
         {
-            _waterSourceService.RateWaterSource(rating);
-            return Ok(rating);
+            var waterSource = _waterSourceService.RateWaterSource(rating);
+            return Ok(waterSource);
         }
 
         [HttpPost]

@@ -129,5 +129,11 @@ namespace Service.WaterSourceSubscription
             }
             return false;
         }
+
+        public IQueryable<int> GetUsersBySubscription(WaterSubscriptionType type)
+        {
+            var userIds = _sourceSubscriptionRepository.Where(_ => _.Type.HasFlag(type)).Select(_ => _.UserId);
+            return userIds;
+        }
     }
 }
