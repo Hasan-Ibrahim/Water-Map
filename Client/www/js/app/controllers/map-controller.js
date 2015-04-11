@@ -50,7 +50,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Create a new line';
+                        link.title = 'Create a stream';
                         link.innerHTML = '<img src="img/streamIco.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -72,7 +72,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             link = L.DomUtil.create('a', '', container);
 
                         link.href = '#';
-                        link.title = 'Create a new polygon';
+                        link.title = 'Create a reservoir';
                         link.innerHTML = '<img src="img/reservoir.png" />';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
@@ -185,9 +185,10 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                             tempLayer.setStyle(preferredAreaStyle);
                         });
                     } else {
-                        tempLayer.remove();
+                        if(tempLayer &&  tempLayer.remove){
+                            tempLayer.remove();
+                        }
                     }
-
                 });
 
                 mainMap.on("editable:drawing:end", function (e) {
