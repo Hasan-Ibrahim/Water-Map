@@ -30,11 +30,10 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
     function trackLocation() {
         var map = getMap();
         var icon = L.icon({
-            iconUrl: 'img/gpsIco.png',
-            shadowUrl: 'img/full-star.png',
-            iconSize: [38, 95], // size of the icon
+            iconUrl: 'img/circle.png',
+            iconSize: [12, 12], // size of the icon
             shadowSize: [50, 64], // size of the shadow
-            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            iconAnchor: [6, 6], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
