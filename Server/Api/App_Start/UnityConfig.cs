@@ -53,7 +53,7 @@ namespace Api
                 container.RegisterType<DbContext, AppDbContext>(new InjectionConstructor("app"));
             }
 
-            var trmmFilePath = ConfigurationManager.AppSettings["trmmFilePath"];
+            var trmmFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["trmmFilePath"]);
             container.RegisterType<RainWaterHarvest>(new InjectionConstructor(trmmFilePath));
         }
 
