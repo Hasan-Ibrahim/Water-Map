@@ -4,17 +4,25 @@ lloydApp.service('markerIconService', function () {
         getSourceMarkerIcon: function (marker) {
 
         },
-        getAwesomeMarker: function (layer, isMySource) {
+        getAwesomeMarker: function (layer, sourceType, isMySource) {
 
             if (layer.feature.geometry.type != "Point")
                 return layer;
             var icon;
+            var iconImage;
             if (isMySource) {
-                icon = L.AwesomeMarkers.icon({icon: 'coffee', prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'});
+                iconImage = 'coffee';
             }
             else {
-                icon = L.AwesomeMarkers.icon({icon: 'spinner', prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'});
+                iconImage = 'spinner';
             }
+            if(sourceType == "Well"){
+                iconImage = 'shopping-cart';
+            }
+            else if(sourceType == "Rain_Water"){
+                iconImage = 'info';
+            }
+            icon = L.AwesomeMarkers.icon({icon: iconImage, prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'});
             return L.marker([layer._latlng.lat, layer._latlng.lng], {icon: icon});
         }
     };
