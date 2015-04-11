@@ -1334,10 +1334,10 @@ div.item-note.item-right-panel h2.item-distance {
 .button .icon::before, .button.icon::before, .button.icon-left::before, .button.icon-right::before {
     font-size: 20px;
 }
-.modal-backdrop
-{
-    width: 60%;
-    left: 20%;
-    height: 70%;
-    top: 10px;
+
+.modal-backdrop {
+    height: 80%;
+    left: 10%;
+    width: 80%;
+    top: 10%;
 }
