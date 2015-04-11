@@ -44,4 +44,5 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="splashscreen" value="screen" />
     <preference name="splashScreenDelay" value="6000" />
+    <icon src="res/drawable/icon.png" />
 </widget>
