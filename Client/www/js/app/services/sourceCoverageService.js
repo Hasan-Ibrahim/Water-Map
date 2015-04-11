@@ -7,7 +7,7 @@ lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull',
         var showingCoverage = false;
 
         function showCoveragePolygon(userLocations){
-            _link.innerHTML = "HC";
+            _link.innerHTML = '<img src="img/scIco.png" />';
             showingCoverage = true;
             var mainMap = mapService.getMap();
             if(!consumerPointsFeatureGroup){
@@ -44,7 +44,7 @@ lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull',
 
         function hideCoveragePolygon(){
             showingCoverage = false;
-            _link.innerHTML = "SC";
+            _link.innerHTML = '<img src="img/scIco.png" />';
             var mainMap = mapService.getMap();
             if(coveragePolygon){
                 mainMap.removeLayer(coveragePolygon);
