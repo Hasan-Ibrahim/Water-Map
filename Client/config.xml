@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.jantrik.water-map" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Water Map</name>
+    <description>
+        This app will enable the end users to identify the existing potable water sources, incorporate primary supply info, quality issue, potential hazards, and to monitor source status both spatially and temporally. Based on the crowd-sourcing dataset, the app is able to measure the water stress in different locations and illustrate them in forms of comprehensive water stress maps across the globe. In addition the app can assess the potential rainwater availability based on the satellite precipitation data in the user locations. Finally the app improves the understanding of the potable water condition in a community and connects the mass people with their water usage information in order to meet their present and future water need.
+    </description>
+    <author email="info@jantrik.com" href="http://www.jantrik.com">
+        Jantrik Developers
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <!--<preference name="ShowSplashScreenSpinner" value="false" />-->
+    <preference name="splashscreen" value="icon" />
+    <preference name="splashScreenDelay" value="6000" />
+</widget>
