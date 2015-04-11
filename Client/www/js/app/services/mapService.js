@@ -1,10 +1,15 @@
-lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocationService', function ($http, $q, serverUrl, jqHttp, geoLocationService) {
+lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocationService', 'homePlaceService', function ($http, $q, serverUrl, jqHttp, geoLocationService, homePlaceService) {
     var appRoot = serverUrl;
     var mainMap = null;
     var displayTracking = true;
+    var trackingLocation = false;
 
     function getMap() {
         mainMap = mainMap || L.map('map', {editable: true});
+        if (!trackingLocation) {
+            trackingLocation = true;
+            trackLocation();
+        }
         return mainMap;
     }
 
@@ -32,6 +37,13 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
             fillOpacity: 0.2,
             weight: 0
         }).addTo(map);
+
+        marker.bindPopup('<button id="setHomeLocation">Set Home Location</button>');
+        marker.on('click', function () {
+            $('#setHomeLocation').click(function () {
+                homePlaceService.updateToCurrentLocation();
+            });
+        });
 
         function panToPosition(position) {
             var lat = position.coords.latitude;
@@ -88,8 +100,8 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
         },
         subscribeFeature: function (sourceId, subscriptions) {
             var selectedTypes = [];
-            for(var i in subscriptions){
-                if(subscriptions[i]){
+            for (var i in subscriptions) {
+                if (subscriptions[i]) {
                     selectedTypes.push(i);
                 }
             }
