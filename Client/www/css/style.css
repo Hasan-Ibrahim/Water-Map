@@ -1309,3 +1309,10 @@ div.item-note.item-right-panel h2.item-distance {
 .sp-blue {
     background-color: #0078A8;
 }
+
+.modal-wrapper{
+    position: absolute;top: 10px;left: 10px;
+    background-color: lightgray;
+    right: 10px;
+    bottom: 50px;
+}
