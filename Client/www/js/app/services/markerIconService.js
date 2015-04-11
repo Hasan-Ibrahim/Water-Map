@@ -8,8 +8,15 @@ lloydApp.service('markerIconService', function () {
     };
 
     return {
-        getSourceMarkerIcon: function (marker) {
 
+        changeLayerColor: function (layer, majorQuality) {
+            var featurecolor = quailityIconColors[majorQuality];
+            if(!layer.setStyle){
+                layer.markerColor = featurecolor;
+            }
+            else {
+                layer.setStyle({fillColor: featurecolor, color: featurecolor});
+            }
         },
         getAwesomeMarker: function (layer, source, isMySource) {
             var sourceType = source.SourceType;
