@@ -1,0 +1,2 @@
+1. Set Redis folder to "C:\\programFiles\"
+2. Run the command: sc create Redis start= auto DisplayName= Redis binpath= "\"C:\Program Files\Redis\RedisService_1.1.exe\" \"C:\Program Files\Redis\redis.conf\""
