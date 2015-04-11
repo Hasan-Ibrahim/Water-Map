@@ -11,5 +11,6 @@ lloydApp.controller('qualityController', ['$scope', '$rootScope', 'sidebarServic
         $scope.close = function(){
             $scope.source = {quality: null};
             $scope.closeWaterQualityWindow();
+            mapService.selectedSource.closePopup();
         }
     }]);
