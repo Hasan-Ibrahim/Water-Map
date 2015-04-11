@@ -1,28 +1,28 @@
 ﻿var formTemplates = {
-    source: '<h5>Source Quality</h5>' +
+    source: '<h4>Source Quality</h4>' +
     '<table id="water-quality">' +
     '<tr>' +
     '<td><input type="radio" name="source-state" value="Drinkable"/></td>' +
-    '<td>Drinkable</td>' +
-    '<td id="PotableRatingPercent"></td>' +
+    '<td style="color: #3d832c">Drinkable</td>' +
+    '<td id="PotableRatingPercent" style="color: #3d832c"></td>' +
     '</tr>' +
     '<td><input type="radio" name="source-state" value="NeedTreatment"/></td>' +
-    '<td>NeedTreatment</td>' +
-    '<td id="ProcessableRatingPercent"></td>' +
+    '<td style="color: #ff7301">NeedTreatment</td>' +
+    '<td id="ProcessableRatingPercent" style="color: #ff7301"></td>' +
     '</tr>' +
     '<tr>' +
     '<td><input type="radio" name="source-state" value="Undrinkable"/></td>' +
-    '<td>Undrinkable</td>' +
-    '<td id="UnpotableRatingPercent"></td>' +
+    '<td style="color: #b40909">Undrinkable</td>' +
+    '<td id="UnpotableRatingPercent" style="color: #b40909"></td>' +
     '</tr>' +
     '<tr>' +
     '<tr>' +
-    '<td><input type="radio" name="source-state" value="Unknown"/></td>' +
-    '<td>Unknown</td>' +
-    '<td id="UnknownRatingPercent"></td>' +
+    '<td style="color: #b68ada"><input type="radio" name="source-state" value="Unknown"/></td>' +
+    '<td style="color: #b68ada">Unknown</td>' +
+    '<td id="UnknownRatingPercent" style="color: #b68ada"></td>' +
     '</tr>' +
     '<tr>' +
-    '<td colspan="2"><input id="submit-quality" type="submit"  value="Submit" disabled="disabled"/></td>' +
+    '<td colspan="2"><input id="submit-quality" class="button button-small button-block button-balanced" type="submit"  value="Submit" disabled="disabled"/></td>' +
     '</tr>' +
     '</table>'
 };
