@@ -2,6 +2,7 @@ lloydApp.controller('notificationController', ['$scope', '$rootScope', 'sidebarS
     function ($scope, $rootScope, sidebarService, mapService) {
         $scope.options = null;
         $rootScope.$on('markerClicked', function (e, sourceId) {
+            if(!sourceId)return;
             mapService.getSourceSubscriptionStatus(sourceId).success(function (data) {
                 $scope.options = data.Subscriptions;
             }).error(function () {
