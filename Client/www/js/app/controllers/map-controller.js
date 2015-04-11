@@ -2,6 +2,8 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
     function (mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService) {
         init();
         function init() {
+            var currentSourceType;
+
             var mainMap = mapService.getMap();
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
 
@@ -23,13 +25,14 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mapService.getSources().success(function (sources) {
                     for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
-                        layer = markerIconService.getAwesomeMarker(layer, true);
+                        layer = markerIconService.getAwesomeMarker(layer, sources.MySources[i].SourceType, true);
                         addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
-                        layer = markerIconService.getAwesomeMarker(layer, false);
+                        //sources.OthersSources[j].SourceType = "Rain_Water";
+                        layer = markerIconService.getAwesomeMarker(layer, sources.OthersSources[i].SourceType, false);
                         addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
                     }
                 });
@@ -50,6 +53,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         link.innerHTML = 'Stream';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
+                                currentSourceType = "Stream";
                                 map.editTools.startPolyline();
                             });
 
@@ -68,9 +72,10 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
 
                         link.href = '#';
                         link.title = 'Create a new polygon';
-                        link.innerHTML = 'Reservior';
+                        link.innerHTML = 'Reservoir';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
+                                currentSourceType = "Reservoir";
                                 map.editTools.startPolygon();
                             });
 
@@ -92,6 +97,7 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         link.innerHTML = 'Well';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
+                                currentSourceType = "Well";
                                 map.editTools.startMarker();
                             });
 
@@ -119,7 +125,29 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                     }
                 });
 
+                L.RainWaterSourceControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
+
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                            link = L.DomUtil.create('a', '', container);
+
+                        link.href = '#';
+                        link.title = 'Add a new marker';
+                        link.innerHTML = 'Rain Water';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function () {
+                                currentSourceType = "Rain_Water";
+                                map.editTools.startMarker();
+                            });
+                        return container;
+                    }
+                });
+
                 mainMap.addControl(new L.NewMarkerControl());
+                mainMap.addControl(new L.RainWaterSourceControl());
                 mainMap.addControl(new L.NewLineControl());
                 mainMap.addControl(new L.NewPolygonControl());
                 mainMap.addControl(new L.NewPreferredZoneControl());
@@ -127,8 +155,10 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                 mainMap.on("editable:drawing:end", function (e) {
                     console.log("layer created");
                     e.layer.addTo(mainMap);
+                    var sourceType = currentSourceType ? currentSourceType : "Test";
+                    e.layer.options.sourceType = sourceType;
                     addLayerToMap(e.layer, 0, otherFeatureGroup);
-                    mapService.addFeature(toWKT(e.layer), "Test").then(function(data){
+                    mapService.addFeature(toWKT(e.layer), sourceType).then(function(data){
                         e.layer.options.id = data.data.Id;
                         e.layer.disableEdit();
                     });
