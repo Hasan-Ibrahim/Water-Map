@@ -1,8 +1,6 @@
 lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sidebarService', 'mapService',
     function ($scope, $rootScope, sidebarService, mapService) {
 
-
-        $scope.isPreferred = false;
         $scope.options = null;
         $rootScope.$on('markerClicked', function (e, sourceId) {
             mapService.getSourceSubscriptionStatus(sourceId).success(function (data) {
@@ -13,8 +11,11 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
         });
 
         $scope.submit = function () {
-            console.log($scope.options);
             sidebarService.showBottomBar = false;
             mapService.subscribeFeature(mapService.selectedSourceId, $scope.options);
         }
+
+        $scope.cancel  = function(){
+            sidebarService.showBottomBar = false;
+        };
     }]);

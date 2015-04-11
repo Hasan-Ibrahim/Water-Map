@@ -5,7 +5,7 @@ function JqHttp($q, $, loginObject) {
         $.ajax({
             url: url,
             type: "POST",
-            data: JSON.stringify(data),
+            data: data,
             dataType: "json"
         }).done(function (data) {
             q.resolve({data: data});

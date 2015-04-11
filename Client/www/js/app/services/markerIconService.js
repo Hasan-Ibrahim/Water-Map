@@ -4,8 +4,8 @@ lloydApp.service('markerIconService', function () {
         getSourceMarkerIcon: function (marker) {
 
         },
-        getAwesomeMarker: function (layer, sourceType, isMySource) {
-
+        getAwesomeMarker: function (layer, source, isMySource) {
+            var sourceType = source.SourceType;
             if (layer.feature.geometry.type != "Point")
                 return layer;
             var icon;
@@ -22,7 +22,15 @@ lloydApp.service('markerIconService', function () {
             else if(sourceType == "Rain_Water"){
                 iconImage = 'info';
             }
-            icon = L.AwesomeMarkers.icon({icon: iconImage, prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'});
+
+            var quailityIconColors = {
+                "Drinkable" : "green",
+                "NeedTreatment": "orange",
+                "Undrinkable": "red",
+                "Unknown": "darkblue"
+            };
+            var markerColor = quailityIconColors[source.MajorQuality];
+            icon = L.AwesomeMarkers.icon({icon: iconImage, prefix: 'fa', markerColor: markerColor, iconColor: '#ffffff'});
             return L.marker([layer._latlng.lat, layer._latlng.lng], {icon: icon});
         }
     };
