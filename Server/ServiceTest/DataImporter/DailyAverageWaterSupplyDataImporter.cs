@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Spatial;
 using Data.Context;
 using Data.Model;
 using Data.Model.Views;
 using Data.Repositories.Abstraction;
 using NUnit.Framework;
-using Service.WaterSources;
+using Service.RainWater;
 using Service.WaterSupply;
 
 namespace ServiceTest.DataImporter
@@ -15,6 +14,7 @@ namespace ServiceTest.DataImporter
     public class DailyAverageWaterSupplyDataImporter
     {
         private DailySupplyService _dailySupplyService;
+        private RainWaterService _rainWaterService;
         [SetUp]
         public void Setup()
         {
@@ -23,15 +23,28 @@ namespace ServiceTest.DataImporter
                 new DbContextRepository<DbDailyAverageSupply>(dbContext),
                 new DbContextRepository<DbDailyAverageSupplySummary>(dbContext),
                 new DbContextRepository<DbSourceSummaryGrid>(dbContext));
+
+            _rainWaterService = new RainWaterService(
+                new DbContextRepository<DbRainHarvestTank>(dbContext), null);
         }
 
-        [TearDown]
-        public void TearDown()
+        // Do not run this if you do not know what it is!
+        //[Test]
+        public void ImportRainHarvestData()
         {
-            _dailySupplyService.Dispose();
+            var random = new Random();
+            for (var i = 0; i < 100; i++)
+            {
+                _rainWaterService.AddRainHarvestTank(new RainHarvestTankEntry
+                {
+                    Location = string.Format("POINT({0} {1})", random.NextDouble() * 360 - 180, random.NextDouble() * 180 - 90),
+                    AreaInSquareMetre = random.NextDouble() * 30 + 1
+                });
+            }
         }
 
-        // [Test] Do not run this if you do not know what it is!
+        // Do not run this if you do not know what it is!
+        //[Test]
         public void ImportData()
         {
             var sourceId = 22;
@@ -62,7 +75,7 @@ namespace ServiceTest.DataImporter
                     Supply = supply,
                     Location = location,
                     SupplyDate = date
-                }; 
+                };
                 _dailySupplyService.AddSupply(dse);
             }
         }
