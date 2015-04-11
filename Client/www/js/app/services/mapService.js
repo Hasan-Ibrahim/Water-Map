@@ -89,13 +89,25 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
             });
         },
         subscribeFeature: function (sourceId, subscriptions) {
+            var selectedTypes = [];
+            for(var i in subscriptions){
+                if(subscriptions[i]){
+                    selectedTypes.push(i);
+                }
+            }
             return jqHttp.post(appRoot + "WaterSourceSubscription/Subscribe", {
                 SourceId: sourceId,
-                Subscriptions: subscriptions
+                SubscriptionTypes: selectedTypes
             });
         },
         getSourceSubscriptionStatus: function (sourceId) {
             return $http.get(appRoot + '/WaterSourceSubscription/GetSourceSubscription?sourceId=' + sourceId);
+        },
+        subscribeArea: function (geometry, subscriptions) {
+            return jqHttp.post(appRoot + "WaterSourceSubscription/SubscribeToArea", {
+                Geometry: geometry,
+                SubscriptionTypes: subscriptions
+            });
         },
         selectedSourceId: null
     }
