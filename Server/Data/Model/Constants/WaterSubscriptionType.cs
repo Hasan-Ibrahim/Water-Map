@@ -6,7 +6,6 @@ namespace Data.Model.Constants
     public enum WaterSubscriptionType
     {
         Quality = 1,
-        Accessibility = 2,
-        WaterStressIndex = 16
+        Accessibility = 2
     }
 }
