@@ -1,24 +1,6 @@
 lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sidebarService', 'mapService', '$ionicModal',
     function ($scope, $rootScope, sidebarService, mapService, $ionicModal) {
 
-        /*$scope.options = null;
-         $rootScope.$on('markerClicked', function (e, sourceId) {
-         mapService.getSourceSubscriptionStatus(sourceId).success(function (data) {
-         $scope.options = data.Subscriptions;
-         }).error(function () {
-         alert('failed to get subscription status.');
-         });
-         });
-
-         $scope.submit = function () {
-         sidebarService.showBottomBar = false;
-         mapService.subscribeFeature(mapService.selectedSourceId, $scope.options);
-         };
-
-         $scope.cancel  = function(){
-         sidebarService.showBottomBar = false;
-         };*/
-
         $ionicModal.fromTemplateUrl('partials/water-quality.html', {
             scope: $scope,
             animation: 'slide-in-up'

@@ -58,8 +58,6 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
         });
     }
 
-    trackLocation();
-
     function toggleDisplayTracking() {
         displayTracking = !displayTracking;
     }
@@ -107,6 +105,12 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
             return jqHttp.post(appRoot + "WaterSourceSubscription/SubscribeToArea", {
                 Geometry: geometry,
                 SubscriptionTypes: subscriptions
+            });
+        },
+        postSourceAccessibility: function(sourceId, accessibility){
+            return jqHttp.post(appRoot + "WaterSource/UpdateAccessibility", {
+                WaterSourceId: sourceId,
+                Accessibility: accessibility
             });
         },
         selectedSourceId: null
