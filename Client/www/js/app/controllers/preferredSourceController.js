@@ -16,6 +16,10 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
             $scope.waterQualityWindow.hide();
         };
 
+        $scope.closeSupplyDemandWindow = function () {
+            $scope.demandAndSupplyWindow.hide();
+        };
+
         $ionicModal.fromTemplateUrl('partials/accessibility.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -58,7 +62,7 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
             $scope.demandAndSupplyWindow.show();
         };
 
-        $scope.hideDemandAndSupplyWindow = function () {
+        $scope.closeDemandAndSupplyWindow = function () {
             $scope.demandAndSupplyWindow.hide();
         };
 

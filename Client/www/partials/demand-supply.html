@@ -1,3 +1,16 @@
 <div ng-controller="demandSupplyController">
-    <home-place></home-place>
+    <div class="list">
+        <div style="margin: 10px;">
+            <label class="item item-input">
+                <input type="text" placeholder="Water Demand" ng-model="waterDemand" required>
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Water Supply" ng-model="waterSupply" required>
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Number of Consumer" ng-model="totalConsumer" required>
+            </label>
+            <button ng-click="submitDemandSupply()">Submit</button>
+        </div>
+    </div>
 </div>
