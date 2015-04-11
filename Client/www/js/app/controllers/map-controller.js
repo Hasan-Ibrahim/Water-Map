@@ -9,11 +9,11 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
             var myFeatureGroup = L.featureGroup().addTo(mainMap), otherFeatureGroup = L.featureGroup().addTo(mainMap);
             var myFeatureGroupStyle = {
                 radius: 8,
-                fillColor: "#ffff00",
-                color: "#000",
+                fillColor: "#5AD75A",
+                color: "#D65AD6",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.1
+                fillOpacity: 0.6
             };
             otherFeatureGroup.setStyle(myFeatureGroupStyle);
             L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -36,6 +36,9 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
                         layer = markerIconService.getAwesomeMarker(layer, sources.MySources[i], true);
                         addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
+                        if(layer.setStyle){
+                            layer.setStyle(myFeatureGroupStyle);
+                        }
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
@@ -234,22 +237,6 @@ lloydApp.controller('MapCtrl', ['mapService', 'ConvexHull', 'sourceCoverageServi
                                 container.text(data[i].toFixed(1) + "%");
                             }
                         }
-
-                        $('#water-quality input[type="radio"]').click(function () {
-                            var submitButton = $('#water-quality #submit-quality');
-                            if (submitButton.is(":disabled")) {
-                                submitButton.removeAttr('disabled');
-                            }
-                        });
-
-                        $('#water-quality #submit-quality').click(function () {
-                            var checked = $('#water-quality input[type=radio]:checked');
-
-                            if (checked.length) {
-                                mapService.rateSource(layer.options.id, checked[0].value);
-                                layer.closePopup();
-                            }
-                        });
                     });
                 });
             }
