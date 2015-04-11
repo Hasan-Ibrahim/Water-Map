@@ -15,9 +15,11 @@ lloydApp.directive('homePlace', ['sidebarService',
                         $scope.waterDemand,
                         $scope.waterSupply,
                         $scope.totalConsumer).then(function () {
+                            $scope.closeSupplyDemandWindow();
                         }, function () {
-
+                            $scope.closeSupplyDemandWindow();
                         });
+                    $scope.closeSupplyDemandWindow();
                 }
             }
         }
