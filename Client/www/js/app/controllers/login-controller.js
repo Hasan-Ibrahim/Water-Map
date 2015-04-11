@@ -1,6 +1,6 @@
 lloydApp.controller('LoginCtrl', ['$scope', 'sidebarService', 'loginService',
     function ($scope, sidebarService, loginService) {
-        $scope.loginId = 'TestUser';
+        $scope.loginId = 'nafeezabrar@gmail.com';
         $scope.password = '123';
 
         $scope.login = function () {
