@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.IO;
 using Data.Context;
 using Data.Model;
 using Data.Model.Views;
@@ -15,6 +17,9 @@ namespace ServiceTest.DataImporter
     {
         private DailySupplyService _dailySupplyService;
         private RainWaterService _rainWaterService;
+        private DbContextRepository<DbStressIndexGrid> _stressGridRepository;
+
+
         [SetUp]
         public void Setup()
         {
@@ -23,9 +28,42 @@ namespace ServiceTest.DataImporter
                 new DbContextRepository<DbDailyAverageSupply>(dbContext),
                 new DbContextRepository<DbDailyAverageSupplySummary>(dbContext),
                 new DbContextRepository<DbSourceSummaryGrid>(dbContext));
-
+            
             _rainWaterService = new RainWaterService(
                 new DbContextRepository<DbRainHarvestTank>(dbContext), null, null);
+
+            _stressGridRepository = new DbContextRepository<DbStressIndexGrid>(dbContext);
+        }
+
+        [Test]
+        public void ImportStressIndex()
+        {
+            using (var fileReader = new StreamReader("SEDAC_POP_2000-01-01_rgb_3600x1800.csv"))
+            {
+                var r = 0;
+                for (r = 0; r < 1800; r++)
+                {
+                    var row = fileReader.ReadLine().Split(',');
+                    Console.WriteLine("row {0}", r);
+                    for (var c = 0; c < 3600; c++)
+                    {
+                        double stressIndex;
+                        if (double.TryParse(row[c], out stressIndex))
+                        {
+                            var stressCell = new DbStressIndexGrid
+                            {
+                                Row = r,
+                                Col = c,
+                                StressIndex = stressIndex
+                            };
+                            _stressGridRepository.Create(stressCell);
+                        }
+                    }
+                }
+            }
+
+            _stressGridRepository.SaveChanges();
+            _stressGridRepository.Dispose();
         }
 
         // Do not run this if you do not know what it is!
