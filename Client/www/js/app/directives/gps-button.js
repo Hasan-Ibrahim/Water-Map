@@ -6,7 +6,7 @@ lloydApp.directive('gpsButton', ['mapService',
             restrict: 'E',
             link: function (scope, element, attrs, controller) {
                 scope.toggleDisplayTracking = function () {
-                    mapService.toggleDisplayTracking();
+                    mapService.moveToCurrentLocation();
                 };
             },
             templateUrl: 'partials/gps-button.html',
