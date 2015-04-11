@@ -13,7 +13,7 @@ lloydApp.controller('preferredSourceController', ['$scope', '$rootScope', 'sideb
         $scope.submit = function () {
             sidebarService.showBottomBar = false;
             mapService.subscribeFeature(mapService.selectedSourceId, $scope.options);
-        }
+        };
 
         $scope.cancel  = function(){
             sidebarService.showBottomBar = false;
