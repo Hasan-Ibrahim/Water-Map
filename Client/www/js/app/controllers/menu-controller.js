@@ -16,5 +16,9 @@ lloydApp.controller('MenuCtrl', ['$scope', '$rootScope', 'sidebarService', 'rain
         $scope.showTRMMMap = function () {
             console.log('trmm map');
             trmmDataService.showTrmmDataMap();
-        }
+        };
+
+        $scope.reloadApp = function () {
+            window.location.reload();
+        };
     }]);

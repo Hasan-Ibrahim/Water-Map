@@ -1,10 +1,15 @@
-lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocationService', function ($http, $q, serverUrl, jqHttp, geoLocationService) {
+lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocationService', 'homePlaceService', function ($http, $q, serverUrl, jqHttp, geoLocationService, homePlaceService) {
     var appRoot = serverUrl;
     var mainMap = null;
     var displayTracking = true;
+    var trackingLocation = false;
 
     function getMap() {
         mainMap = mainMap || L.map('map', {editable: true});
+        if (!trackingLocation) {
+            trackingLocation = true;
+            trackLocation();
+        }
         return mainMap;
     }
 
@@ -24,14 +29,30 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
 
     function trackLocation() {
         var map = getMap();
-
-        var marker = L.marker([29, 90]).addTo(map);
+        var icon = L.icon({
+            iconUrl: 'img/circle.png',
+            iconSize: [12, 12], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [6, 6], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        var marker = L.marker([29, 90], {
+            icon: icon
+        }).addTo(map);
         var circle = L.circle([29, 90], 5, {
             color: 'blue',
             fillColor: '#30B5F8',
             fillOpacity: 0.2,
             weight: 0
         }).addTo(map);
+
+        marker.bindPopup('<button id="setHomeLocation">Set Home Location</button>');
+        marker.on('click', function () {
+            $('#setHomeLocation').click(function () {
+                homePlaceService.updateToCurrentLocation();
+            });
+        });
 
         function panToPosition(position) {
             var lat = position.coords.latitude;
@@ -88,8 +109,8 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
         },
         subscribeFeature: function (sourceId, subscriptions) {
             var selectedTypes = [];
-            for(var i in subscriptions){
-                if(subscriptions[i]){
+            for (var i in subscriptions) {
+                if (subscriptions[i]) {
                     selectedTypes.push(i);
                 }
             }
@@ -107,12 +128,13 @@ lloydApp.factory('mapService', ['$http', '$q', 'serverUrl', 'jqHttp', 'geoLocati
                 SubscriptionTypes: subscriptions
             });
         },
-        postSourceAccessibility: function(sourceId, accessibility){
+        postSourceAccessibility: function (sourceId, accessibility) {
             return jqHttp.post(appRoot + "WaterSource/UpdateAccessibility", {
                 WaterSourceId: sourceId,
                 Accessibility: accessibility
             });
         },
+        toggleDisplayTracking: toggleDisplayTracking,
         selectedSourceId: null,
         setSelectedSource: null
     }
