@@ -146,7 +146,7 @@
                 //ctx.drawImage(this._circle, p[0] - this._r, p[1] - this._r);
                 //this.rectangle(width, height, p[2]);
                 //ctx.drawImage(this._circle, topLeft.x, topLeft.y, width, height);
-                ctx.globalAlpha = 0.5;
+                ctx.globalAlpha = 0.75;
                 ctx.beginPath();
                 ctx.rect(topLeft.x, topLeft.y, width, height);
                 ctx.fillStyle = this._colorCodeCalculator(p[2]);
