@@ -27,5 +27,6 @@ namespace Data.Context
         public DbSet<DbAreaSubscription> AreaSubscriptions { get; set; }
         public DbSet<DbSourceSummaryGrid> SourceSummaryGrids { get; set; }
         public DbSet<DbRainHarvestTank> DbRainHarvestTanks { get; set; }
+        public DbSet<DbRainHarvestTankGrid> RainHarvestTankGrids { get; set; }
     }
 }
