@@ -19,7 +19,11 @@
             <td>Unknown</td>
         </tr>
         <tr>
-            <td colspan="2"><input id="submit-quality" type="submit" value="Submit" ng-click="submit()" ng-disabled="!source.quality"/></td>
+            <td></td>
+            <td>
+                <input  type="submit" value="Submit" ng-click="submit()" ng-disabled="!source.quality" />
+                <input  type="button" ng-click="close()" value="Cancel"/>
+            </td>
         </tr>
     </table>
 </div>
