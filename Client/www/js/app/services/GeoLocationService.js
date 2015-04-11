@@ -6,7 +6,7 @@ function GeoLocationService($q, $cordovaGeolocation) {
         FAILED: 3
     };
 
-    var defaultLocation = {longitude: 90, latitude: 23};
+    var defaultLocation = {coords: {longitude: 90, latitude: 23}};
     var userLocation = defaultLocation;
     var acquiringState = ACQUIRING_STATE.NEVER_TRIED;
 
@@ -67,9 +67,8 @@ function GeoLocationService($q, $cordovaGeolocation) {
         return acquiringState == ACQUIRING_STATE.ACQUIRED;
     };
 
-    function storeUserLocation(geoLocation) {
-        userLocation.latitude = geoLocation.coords.latitude;
-        userLocation.longitude = geoLocation.coords.longitude;
+    function storeUserLocation(position) {
+        userLocation = position;
     }
 }
 

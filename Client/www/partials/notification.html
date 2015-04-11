@@ -1,3 +1,14 @@
 <div ng-controller="notificationController">
-    notification
+    <div>
+        <h5>Notify me on:</h5>
+        <div>
+            <ul>
+                <li ng-repeat="(key, value) in options">
+                    <input type="checkbox" ng-model="options[key]"/>{{key}}
+                </li>
+            </ul>
+            <input type="button" ng-click="submit()" value="Save">
+            <input type="button" ng-click="cancel()" value="Cancel">
+        </div>
+    </div>
 </div>
