@@ -28,13 +28,13 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     for (var i = 0; i < sources.MySources.length; i++) {
                         var layer = getLeafletLayer(sources.MySources[i].Geometry);
                         layer = markerIconService.getAwesomeMarker(layer, sources.MySources[i], true);
-                        addLayerToMap(layer, sources.MySources[i].Id, myFeatureGroup);
+                        addLayerToMap(layer, sources.MySources[i], myFeatureGroup);
                     }
 
                     for (var j = 0; j < sources.OthersSources.length; j++) {
                         var layer = getLeafletLayer(sources.OthersSources[j].Geometry);
                         layer = markerIconService.getAwesomeMarker(layer, sources.OthersSources[j], false);
-                        addLayerToMap(layer, sources.OthersSources[j].Id, otherFeatureGroup);
+                        addLayerToMap(layer, sources.OthersSources[j], otherFeatureGroup);
                     }
                 });
             }
@@ -227,16 +227,16 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     var sourceType = currentSourceType ? currentSourceType : "Test";
                     e.layer.options.sourceType = sourceType;
                     if (preferredAreaMode) {
-                        addLayerToMap(e.layer, 0, myFeatureGroup);
+                        addLayerToMap(e.layer, {Id: 0}, myFeatureGroup);
                         tempLayer = e.layer;
                         $scope.showNotificationForAreaWindow();
 
                     } else if (rainWaterMode) {
-                        addLayerToMap(e.layer, 0, myFeatureGroup);
+                        addLayerToMap(e.layer, {Id: 0}, myFeatureGroup);
                         tempLayer = e.layer;
                         $scope.showRainAreaModal();
                     } else {
-                        addLayerToMap(e.layer, 0, otherFeatureGroup);
+                        addLayerToMap(e.layer, {Id: 0}, otherFeatureGroup);
                         mapService.addFeature(toWKT(e.layer), sourceType).then(function (data) {
                             e.layer.options.id = data.data.Id;
                             e.layer.disableEdit();
@@ -271,8 +271,10 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
 
             var sourceCoverageControlAdded = false;
 
-            function addLayerToMap(layer, id, featureGroup) {
-                layer.options.id = id;
+            function addLayerToMap(layer, source, featureGroup) {
+
+                layer.options.id = source.Id;
+                layer.options.sourceType = source.SourceType;
                 layer.addTo(featureGroup);
                 layer.on('click', function (e) {
                     if (!e.target.options.id)return;
@@ -288,6 +290,10 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     if (!sourceCoverageControlAdded) {
                         mainMap.addControl(new L.SourceCoverageControl());
                         sourceCoverageControlAdded = true;
+                    }
+
+                    if(selectedSource.options.sourceType == "Rain_Water"){
+                        return;
                     }
 
                     mapService.getProperties(e.target.options.id).success(function (data) {

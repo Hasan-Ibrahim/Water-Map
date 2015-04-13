@@ -12,7 +12,9 @@ lloydApp.service('markerIconService', function () {
         changeLayerColor: function (layer, majorQuality) {
             var featurecolor = quailityIconColors[majorQuality];
             if(!layer.setStyle){
-                layer.markerColor = featurecolor;
+                var icon = layer.options.icon;
+                icon.options.markerColor = featurecolor;
+                layer.setIcon(icon);
             }
             else {
                 layer.setStyle({fillColor: featurecolor, color: featurecolor});
