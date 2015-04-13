@@ -12,11 +12,27 @@
     }
 
     // attach your plugin to the global 'L' variable
-    if (typeof window !== 'undefined' && window.L) {
+    if(typeof window !== 'undefined' && window.L){
         factory(window.L);
     }
 
 }(function (L) {
+    L.Well = L.Marker.extend({
+        options: {
+            icon: new L.AwesomeMarkers.icon(
+                {icon: 'circle', prefix: 'fa', markerColor: 'green', iconColor: '#ffffff'}
+            )
+        }
+    });
+
+    L.RainWater = L.Marker.extend({
+        options: {
+            icon: new L.AwesomeMarkers.icon(
+                {icon: 'cloud', prefix: 'fa', markerColor: 'green', iconColor: '#ffffff'}
+            )
+        }
+    });
+
     L.Editable = L.Evented.extend({
 
         statics: {
@@ -29,6 +45,8 @@
             polygonClass: L.Polygon,
             polylineClass: L.Polyline,
             markerClass: L.Marker,
+            wellClass: L.Well,
+            rainWaterClass: L.RainWater,
             drawingCSSClass: 'leaflet-editable-drawing'
         },
 
@@ -51,7 +69,7 @@
         },
 
         createLineGuide: function () {
-            var options = L.extend({ dashArray: '5,10', weight: 1 }, this.options.lineGuideOptions);
+            var options = L.extend({dashArray: '5,10', weight: 1}, this.options.lineGuideOptions);
             return L.polyline([], options);
         },
 
@@ -61,7 +79,7 @@
 
         createNewClickHandler: function () {
             return L.marker(this.map.getCenter(), {
-                icon: this.createVertexIcon({ className: 'leaflet-div-icon leaflet-drawing-icon' }),
+                icon: this.createVertexIcon({className: 'leaflet-div-icon leaflet-drawing-icon'}),
                 opacity: 0,
                 zIndexOffset: this._lastZIndex
             });
@@ -184,25 +202,55 @@
             return marker;
         },
 
+        startWell: function (latlng) {
+            latlng = latlng || this.map.getCenter();
+            var marker = this.createWell(latlng);
+            this.connectCreatedToMap(marker);
+            var editor = marker.enableEdit();
+            editor.startDrawing();
+            return marker;
+        },
+
+        startRainWater: function (latlng) {
+            latlng = latlng || this.map.getCenter();
+            var marker = this.createRainWater(latlng);
+            this.connectCreatedToMap(marker);
+            var editor = marker.enableEdit();
+            editor.startDrawing();
+            return marker;
+        },
+
         startHole: function (editor, latlng) {
             editor.newHole(latlng);
         },
 
         createPolyline: function (latlngs) {
-            var line = new this.options.polylineClass(latlngs, { editOptions: { editTools: this } });
-            this.fireAndForward('editable:created', { layer: line });
+            var line = new this.options.polylineClass(latlngs, {editOptions: {editTools: this}});
+            this.fireAndForward('editable:created', {layer: line});
             return line;
         },
 
         createPolygon: function (latlngs) {
-            var polygon = new this.options.polygonClass(latlngs, { editOptions: { editTools: this } });
-            this.fireAndForward('editable:created', { layer: polygon });
+            var polygon = new this.options.polygonClass(latlngs, {editOptions: {editTools: this}});
+            this.fireAndForward('editable:created', {layer: polygon});
             return polygon;
         },
 
         createMarker: function (latlng) {
-            var marker = new this.options.markerClass(latlng, { editOptions: { editTools: this } });
-            this.fireAndForward('editable:created', { layer: marker });
+            var marker = new this.options.markerClass(latlng, {editOptions: {editTools: this}});
+            this.fireAndForward('editable:created', {layer: marker});
+            return marker;
+        },
+
+        createWell: function (latlng) {
+            var marker = new this.options.wellClass(latlng, {editOptions: {editTools: this}});
+            this.fireAndForward('editable:created', {layer: marker});
+            return marker;
+        },
+
+        createRainWater: function (latlng) {
+            var marker = new this.options.rainWaterClass(latlng, {editOptions: {editTools: this}});
+            this.fireAndForward('editable:created', {layer: marker});
             return marker;
         }
 
@@ -248,7 +296,6 @@
 
     });
 
-
     L.Editable.VertexMarker = L.Marker.extend({
 
         options: {
@@ -261,7 +308,7 @@
             this.latlngs = latlngs;
             this.editor = editor;
             L.Marker.prototype.initialize.call(this, latlng, options);
-            this.options.icon = this.editor.tools.createVertexIcon({ className: this.options.className });
+            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
             this.latlng.__vertex = this;
             this.editor.editLayer.addLayer(this);
             this.setZIndexOffset(editor.tools._lastZIndex + 1);
@@ -336,7 +383,7 @@
             var next = this.getNext();  // Compute before changing latlng
             this.latlngs.splice(this.latlngs.indexOf(this.latlng), 1);
             this.editor.editLayer.removeLayer(this);
-            this.editor.onVertexDeleted({ latlng: this.latlng, vertex: this });
+            this.editor.onVertexDeleted({latlng: this.latlng, vertex: this});
             if (!this.latlngs.length) this.editor.deleteShape(this.latlngs);
             if (next) next.resetMiddleMarker();
             this.editor.refresh();
@@ -392,7 +439,7 @@
 
         _initInteraction: function () {
             L.Marker.prototype._initInteraction.call(this);
-            L.DomEvent.on(this._icon, 'touchstart', function (e) { this._fireMouseEvent(e); }, this);
+            L.DomEvent.on(this._icon, 'touchstart', function (e) {this._fireMouseEvent(e);}, this);
         }
 
     });
@@ -415,7 +462,7 @@
             this.latlngs = latlngs;
             L.Marker.prototype.initialize.call(this, this.computeLatLng(), options);
             this._opacity = this.options.opacity;
-            this.options.icon = this.editor.tools.createVertexIcon({ className: this.options.className });
+            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
             this.editor.editLayer.addLayer(this);
             this.setVisibility();
         },
@@ -493,7 +540,7 @@
 
         _initInteraction: function () {
             L.Marker.prototype._initInteraction.call(this);
-            L.DomEvent.on(this._icon, 'touchstart', function (e) { this._fireMouseEvent(e); }, this);
+            L.DomEvent.on(this._icon, 'touchstart', function (e) {this._fireMouseEvent(e);}, this);
         }
 
     });
@@ -857,7 +904,7 @@
             if (!shape) return;
             this.setDrawnLatLngs(shape);
             this.startDrawingForward();
-            this.fireAndForward('editable:shape:new', { shape: shape });
+            this.fireAndForward('editable:shape:new', {shape: shape});
             if (latlng) this.newPointForward(latlng);
         },
 
@@ -876,14 +923,14 @@
                     return shape;
                 },
                 doDelete = function (callback) {
-                    e = { shape: shape };
+                    e = {shape: shape};
                     L.Editable.makeCancellable(e);
                     self.fireAndForward('editable:shape:delete', e);
                     if (e._cancelled) return;
                     shape = callback(latlngs, shape);
                     self.refresh();
                     self.reset();
-                    self.fireAndForward('editable:shape:deleted', { shape: shape });
+                    self.fireAndForward('editable:shape:deleted', {shape: shape});
                     return;
                 };
             if (latlngs === shape) return doDelete(inplaceDelete);
@@ -1116,7 +1163,7 @@
                 l2 = latlngs[k];
 
                 if (((l1.lat > l.lat) !== (l2.lat > l.lat)) &&
-                        (l.lng < (l2.lng - l1.lng) * (l.lat - l1.lat) / (l2.lat - l1.lat) + l1.lng)) {
+                    (l.lng < (l2.lng - l1.lng) * (l.lat - l1.lat) / (l2.lat - l1.lat) + l1.lng)) {
                     inside = !inside;
                 }
             }

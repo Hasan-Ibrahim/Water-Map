@@ -99,7 +99,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 currentSourceType = "Well";
-                                map.editTools.startMarker();
+                                map.editTools.startWell();
                             });
 
                         return container;
@@ -142,7 +142,7 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function () {
                                 currentSourceType = "Rain_Water";
-                                map.editTools.startMarker();
+                                map.editTools.startRainWater();
                                 rainWaterMode = true;
                             });
                         return container;
