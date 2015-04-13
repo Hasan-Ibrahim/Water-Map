@@ -36,6 +36,11 @@ lloydApp.service('markerIconService', function () {
             }
             icon = L.AwesomeMarkers.icon({icon: iconImage, prefix: 'fa', markerColor: featurecolor, iconColor: '#ffffff'});
             return L.marker([layer._latlng.lat, layer._latlng.lng], {icon: icon});
+        },
+        getUserMarker: function(marker){
+            var icon = L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'purple', iconColor: '#ffffff'});
+            return L.marker([marker._latlng.lat, marker._latlng.lng], {icon: icon});
         }
+
     };
 });

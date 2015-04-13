@@ -17,10 +17,10 @@ lloydApp.service('rainWaterHarvestService', ['mapService' , '$http', 'serverUrl'
             //0.0001: 'blue',
             0.01: '#FEF8EB',
             /*0.2: '#6CCFF1',
-            0.35: '#92CA95',
-            0.5: '#A2C95C',
-            0.65: '#FBEB40',
-            0.85: '#F2AF42',*/
+             0.35: '#92CA95',
+             0.5: '#A2C95C',
+             0.65: '#FBEB40',
+             0.85: '#F2AF42',*/
             1.0: '#7F0100'
         };
 
