@@ -1,5 +1,5 @@
-lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull',
-    function (mapService, ConvexHull) {
+lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull', 'markerIconService',
+    function (mapService, ConvexHull, markerIconService) {
 
         var consumerPointsFeatureGroup = undefined;
         var coveragePolygon = undefined;
@@ -24,7 +24,8 @@ lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull',
             var hull = new ConvexHull();
             for(var i=0;i<points.length;i++){
                 var marker = getLeafletLayer(points[i]);
-                //consumerPointsFeatureGroup.addLayer(marker);
+                marker = markerIconService.getUserMarker(marker);
+                consumerPointsFeatureGroup.addLayer(marker);
                 hull.addPoint(marker._latlng.lng, marker._latlng.lat);
             }
 
@@ -48,6 +49,7 @@ lloydApp.service('sourceCoverageService', ['mapService', 'ConvexHull',
             var mainMap = mapService.getMap();
             if(coveragePolygon){
                 mainMap.removeLayer(coveragePolygon);
+                consumerPointsFeatureGroup.clearLayers();
             }
         }
 
