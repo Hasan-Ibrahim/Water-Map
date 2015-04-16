@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Service.WaterSupply;
 
 namespace Api.Controllers
@@ -14,6 +15,18 @@ namespace Api.Controllers
             _dailySupplyService = dailySupplyService;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _dailySupplyService.Dispose();
+            base.Dispose(disposing);
+        }
+
+        [HttpGet]
+        public Dictionary<int, Dictionary<int, int[]>> GetWaterSourceSummaryGrid()
+        {
+            return _dailySupplyService.GetWaterSourceSummaryGrid();
+        } 
+
         [HttpGet]
         public IEnumerable<StressByLocation> GetStressByLocation(DateTime fromDate, DateTime toDate)
         {
@@ -21,9 +34,18 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public void AddDailyAverageWaterSupply(DailySupplyEntry dailySupplyEntry)
+        public IHttpActionResult AddDailyAverageWaterSupply(DailySupplyEntry dailySupplyEntry)
         {
             _dailySupplyService.AddSupply(dailySupplyEntry);
+
+            return Ok(dailySupplyEntry);
         }
+
+        [HttpGet]
+        public Dictionary<string, List<string>> GetSuppliedLocationsForSource(int sourceId)
+        {
+            return _dailySupplyService.GetSuppliedLocationsForSource(sourceId);
+        }
+
     }
 }

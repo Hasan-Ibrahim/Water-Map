@@ -14,11 +14,11 @@ namespace Service.Profile
             _userRepository = userRepository;
         }
 
-        public ActiveUser GetProfile(int userId)
+        public UserProfile GetProfile(int userId)
         {
             var dbUserTask = _userRepository.Find(userId);
             var dbUser = dbUserTask;
-            return new ActiveUser(dbUser);
+            return new UserProfile(dbUser);
         }
 
         public async Task<string> GetAddress(int userId)

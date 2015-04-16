@@ -14,3 +14,77 @@ segments.gen
 *.cfx
 *.cfs
 Api/App_Data/
+Server/Api/Properties/PublishProfiles
+
+###############################
+# Client Project ignore files #
+###############################
+# ANDROID / ECLIPSE
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files - android project subfolder
+Client/Android/bin/
+Client/Android/gen/
+Client/Android/assets/
+
+# generated files
+Client/bin/
+Client/gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# IOS / Xcode
+Client/build/*
+Client/*.pbxuser
+Client/!default.pbxuser
+Client/*.mode1v3
+Client/!default.mode1v3
+Client/*.mode2v3
+Client/!default.mode2v3
+Client/*.perspectivev3
+Client/!default.perspectivev3
+Client/*.xcworkspace
+Client/!default.xcworkspace
+Client/xcuserdata
+Client/profile
+Client/*.moved-aside
+Client/IOS/www/
+
+# OSX
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Android Build Files
+Client/platforms/android/ant-build
+Client/platforms/android/ant-gen
+Client/platforms/android/assets/www
+Client/platforms/android/CordovaLib/ant-build
+Client/platforms/android/CordovaLib/ant-gen
+
+# Plugin Build Files
+Client/platforms/android/com.phonegap.plugins.facebookconnect/lloyds_list-FacebookLib/ant-build
+Client/platforms/android/com.phonegap.plugins.facebookconnect/lloyds_list-FacebookLib/ant-gen
+
+# WebStorm Files
+Client/.idea/workspace.xml
+
+#Mercurial Files
+*.orig
+*.rej
+request error case.txt

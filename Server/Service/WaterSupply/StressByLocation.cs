@@ -1,18 +1,19 @@
-﻿using System.Data.Entity.Spatial;
+﻿using Data.Model;
 
 namespace Service.WaterSupply
 {
     public class StressByLocation
     {
-        private readonly DbGeometry _location;
-
-        public string LocationWkt { get { return _location.AsText(); } }
+        public string Location { get; set; }
         public double StressIndex { get; set; }
-
-        public StressByLocation(DbGeometry location, double stressIndex)
+        
+        public static StressByLocation FromDbDailyAverageSupplySummary(DbDailyAverageSupplySummary summary)
         {
-            _location = location;
-            StressIndex = stressIndex;
+            return new StressByLocation
+            {
+                Location = summary.Location.AsText(),
+                StressIndex = summary.StressIndex
+            };
         }
     }
 }

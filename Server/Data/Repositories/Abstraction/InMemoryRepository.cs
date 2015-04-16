@@ -1,4 +1,6 @@
 ﻿using Data.Model;
+using Data.Model.Authentication;
+using Data.Model.Base;
 using FizzWare.NBuilder;
 using System;
 using System.Collections;
@@ -41,6 +43,13 @@ namespace Data.Repositories.Abstraction
         private readonly IDictionary<int, TModel> _collection;
         public InMemoryRepository()
         {
+            var type = typeof (TModel);
+            if (!_database.ContainsKey(type))
+            {
+                _database[type] = Builder<TModel>.CreateListOfSize(10)
+                    .Build()
+                    .ToDictionary(model => model.Id, model => model);
+            }
             _collection = (IDictionary<int, TModel>)_database[typeof(TModel)];
         }
 
@@ -60,14 +69,14 @@ namespace Data.Repositories.Abstraction
             return GetAll().AsQueryable().Any(query);
         }
 
-        public IEnumerable<TModel> GetAll()
+        public IQueryable<TModel> GetAll()
         {
             var all = _collection.Values.OrderBy(model => model.Id);
             var result = all.Where(model => !model.IsDeleted);
-            return result;
+            return result.AsQueryable();
         }
 
-        public IEnumerable<TModel> Where(Func<TModel, bool> query)
+        public IQueryable<TModel> Where(Expression<Func<TModel, bool>> query)
         {
             return GetAll().Where(query);
         }
@@ -95,15 +104,9 @@ namespace Data.Repositories.Abstraction
             return true;
         }
 
-        public bool SoftDelete(int id)
+        public bool SoftDelete(TModel deletedItem)
         {
-            var itemToDelete = Find(id);
-            if (itemToDelete == null)
-            {
-                return false;
-            }
-
-            itemToDelete.IsDeleted = true;
+            deletedItem.IsDeleted = true;
             return true;
         }
 
