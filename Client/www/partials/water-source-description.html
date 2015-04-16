@@ -1,6 +1,12 @@
 <script type="text/template" id="water-source-description">
-    <h4>Source Quality</h4>
+    <h4>Source description</h4>
+
     <table id="water-quality">
+        <tr>
+            <td colspan="2">
+                This source is <i id="water-source-accessibility"></i>
+            </td>
+        </tr>
         <tr>
             <td style="color: #3d832c">Drinkable</td>
             <td id="PotableRatingPercent" style="color: #3d832c"></td>
@@ -16,6 +22,10 @@
         <tr>
             <td style="color: #b68ada">Unknown</td>
             <td id="UnknownRatingPercent" style="color: #b68ada"></td>
+        </tr>
+
+        <tr>
+            <td colspan="2">Rated by <i id="water-source-rater-count"></i> users</td>
         </tr>
     </table>
 </script>

@@ -297,15 +297,18 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     }
 
                     mapService.getProperties(e.target.options.id).success(function (data) {
+
                         var template = $('#water-source-description').html();
                         layer.bindPopup(template);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
                             if (container.length) {
-                                container.text(data[i].toFixed(1) + "%");
+                                !isNaN(data[i]) && container.text(data[i].toFixed(1) + "%");
                             }
                         }
+                        $('#water-quality #water-source-accessibility').text(data.Accessibility);
+                        $('#water-quality #water-source-rater-count').text(data.TotalRatings);
                     });
                 });
             }
