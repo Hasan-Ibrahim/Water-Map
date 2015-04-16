@@ -42,14 +42,14 @@ namespace Service.Notifications
             }
         }
 
-        private static void SendMails(IEnumerable<string> emails, string subject, string body)
+        private async void SendMails(IEnumerable<string> emails, string subject, string body)
         {
             foreach (var email in emails)
             {
                 try
                 {
                     var mailMessage = new MailMessage("notification@waterquest.com", email, subject, body);
-                    new Email(mailMessage).Send();
+                    await new Email(mailMessage).Send();
                 }
                 catch (Exception)
                 {
