@@ -1,5 +1,5 @@
-lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope', 'sidebarService', 'markerIconService', '$ionicModal',
-    function ($scope, $rootScope, mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService, $ionicModal) {
+lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHull', 'sourceCoverageService', '$rootScope', 'sidebarService', 'markerIconService', '$ionicModal', '$templateCache',
+    function ($scope, $rootScope, mapService, ConvexHull, sourceCoverageService, $rootScope, sidebarService, markerIconService, $ionicModal,$templateCache) {
         init();
         function init() {
             var currentSourceType, preferredAreaMode = false, rainWaterMode = false;
@@ -297,7 +297,8 @@ lloydApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'ConvexHul
                     }
 
                     mapService.getProperties(e.target.options.id).success(function (data) {
-                        layer.bindPopup(formTemplates.source);
+                        var template = $('#water-source-description').html();
+                        layer.bindPopup(template);
                         layer.openPopup();
                         for (var i in data) {
                             var container = $('#water-quality td#' + i);
