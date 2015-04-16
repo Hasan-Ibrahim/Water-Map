@@ -1,0 +1,11 @@
+<div>
+    <video id="video" ng-src="{{VideoUrl}}" preload="auto" height="90%" on-tap="togglePlayPause()">
+    </video>
+    <div id="video-controls" on-touch="preventDefault($event)">
+        <button id="play-control" class="button button-icon icon ion-play" on-tap="togglePlayPause()"></button>
+        <input id="seek-control" type="range" min="0" max="100" value="0" on-release="seek($event)" ng-model="seekTime"/>
+        <span>{{seekMinute}}:{{seekSecond}}</span>
+        <button id="volume-control" class="button button-icon icon ion-volume-high" on-tap="toggleMuteVolume($event)"></button>
+        <input type="range" min="0" max="1" step="0.1" value="1" on-release="setVolume($event)"/>
+    </div>
+</div>
