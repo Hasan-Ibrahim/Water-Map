@@ -3,27 +3,51 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using Data.Model;
+using Data.Model.Views;
 using Data.Repositories.Abstraction;
 using Service.Constants;
+using Service.Utility;
 
 namespace Service.WaterSupply
 {
     public class DailySupplyService : IDisposable
     {
-        private readonly Repository<DbDailyAverageSupply> _supplyRepository;
-        private readonly Repository<DbDailyAverageSupplySummary> _summaryRepository;
+        private readonly IRepository<DbDailyAverageSupply> _supplyRepository;
+        private readonly IRepository<DbDailyAverageSupplySummary> _summaryRepository;
+        private readonly IRepository<DbSourceSummaryGrid> _gridRepository;
 
-        public DailySupplyService(Repository<DbDailyAverageSupply> supplyRepository,
-            Repository<DbDailyAverageSupplySummary> summaryRepository)
+        public DailySupplyService(IRepository<DbDailyAverageSupply> supplyRepository,
+            IRepository<DbDailyAverageSupplySummary> summaryRepository,
+            IRepository<DbSourceSummaryGrid> gridRepository)
         {
             _supplyRepository = supplyRepository;
             _summaryRepository = summaryRepository;
+            _gridRepository = gridRepository;
+        }
+
+        public void Dispose()
+        {
+            _supplyRepository.Dispose();
+            _summaryRepository.Dispose();
+        }
+
+        public Dictionary<int, Dictionary<int, int[]>> GetWaterSourceSummaryGrid()
+        {
+            var data = new Dictionary<int, Dictionary<int, int[]>>();
+
+            foreach (var gridData in _gridRepository.GetAll())
+            {
+                var rowData = data.GetEnsure(gridData.Row, new Dictionary<int, int[]>());
+                rowData[gridData.Col] = new[] { gridData.SupplyInLitre, gridData.NumberOfPeople };
+            }
+
+            return data;
         }
 
         public void AddSupply(DailySupplyEntry dailySupply)
         {
             var groupId = Guid.NewGuid();
-            var location = DbGeometry.FromText(dailySupply.LocationWkt);
+            var location = DbGeometry.FromText(dailySupply.Location);
             foreach (var supplyPerSource in dailySupply.Supply)
             {
                 var dbDailyAverageSupply = new DbDailyAverageSupply(groupId, location, supplyPerSource.Supply, dailySupply.SupplyDate, dailySupply.NumberOfPeople, supplyPerSource.SourceId);
@@ -43,13 +67,19 @@ namespace Service.WaterSupply
         public IEnumerable<StressByLocation> GetStressByLocation(DateTime from, DateTime to)
         {
             return _summaryRepository.Where(summary => summary.SupplyDate >= from && summary.SupplyDate <= to)
-                .Select(summary => new StressByLocation(summary.Location, summary.StressIndex));
+                .Select(StressByLocation.FromDbDailyAverageSupplySummary);
         }
 
-        public void Dispose()
+        public Dictionary<string, List<string>> GetSuppliedLocationsForSource(int sourceId)
         {
-            _supplyRepository.Dispose();
-            _summaryRepository.Dispose();
+            var allData = new Dictionary<string, List<string>>();
+            foreach (var supply in _supplyRepository.Where(supply => supply.SourceId == sourceId))
+            {
+                var dateData = allData.GetEnsure(supply.SupplyDate.Date.ToString("yyyy-MM-dd"), new List<string>());
+                dateData.Add(supply.Location.AsText());
+            }
+
+            return allData;
         }
     }
 }

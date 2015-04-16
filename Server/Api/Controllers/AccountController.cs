@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using Api.AccessControl;
+﻿using Api.AccessControl;
 using Api.AccessControl.Attribtues;
 using Data.TokenStorages;
 using Service.Account;
@@ -13,20 +12,16 @@ namespace Api.Controllers
     {
         private readonly AccountService _service;
         private readonly ITokenStorage _tokenStorage;
-        private readonly TokenUser _tokenUser;
-        private readonly AuthenticationCookieHandler _cookieHandler;
+        private readonly ActiveUser _activeUser;
 
         public AccountController(AccountService service,
             ITokenStorage tokenStorage,
-            TokenUser tokenUser,
-            AuthenticationCookieHandler cookieHandler)
+            ActiveUser activeUser)
         {
             _service = service;
             _tokenStorage = tokenStorage;
-            _tokenUser = tokenUser;
-            _cookieHandler = cookieHandler;
+            _activeUser = activeUser;
         }
-
 
         [HttpPost]
         [TokenUnLoggedIn]
@@ -70,7 +65,7 @@ namespace Api.Controllers
         [HttpPost]
         public IHttpActionResult RenewToken([FromBody]AuthToken authToken)
         {
-            if (_tokenStorage.TokenExists(authToken.Token).Result)
+            if (_tokenStorage.TokenExists(authToken.Token))
             {
                 var newToken = _tokenStorage.RenewToken(authToken.Token);
                 return Ok(new TokenResponse(newToken, true));
@@ -83,14 +78,14 @@ namespace Api.Controllers
         //[TokenAuthorize]
         public bool Logout()
         {
-            return _tokenStorage.DeleteToken(_tokenUser.Token);
+            return _tokenStorage.DeleteToken(_activeUser.Token);
         }
 
         [HttpPost]
         [TokenAuthorize]
         public IHttpActionResult ChangePassword(ChangePassword changePassword)
         {
-            var status = _service.ChangeUserPassword(_tokenUser.UserId, changePassword);
+            var status = _service.ChangeUserPassword(_activeUser.UserId, changePassword);
             var message = Messages.ChangePasswordMessages[status];
             if (status == DataUpdateStatus.Success)
             {

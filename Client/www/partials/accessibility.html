@@ -1,0 +1,42 @@
+<div ng-controller="accessibilityController">
+    <h4>Provide Source's Condition</h4>
+    <table id="water-accessibility">
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Accessible"/></td>
+            <td>Accessible</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Damages"/></td>
+            <td>Damaged</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Sediment"/></td>
+            <td>Sediment</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="IndustrialWaste"/></td>
+            <td>Polluted By Industrial Waste</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="AgriculturalWaste"/></td>
+            <td>Polluted By Agricultural Waste</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Chemical"/></td>
+            <td>Polluted By Chemical</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.accessibility" name="source-state" value="Others"/></td>
+            <td>Others</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="button button-small button-balanced" id="submit-quality" type="submit" value="Submit"
+                                   ng-click="submit()" ng-disabled="!source.accessibility"/>
+            <input class="button button-small button-assertive" type="button" value="Cancel" ng-click="cancel()"/></td>
+        </tr>
+    </table>
+
+
+
+</div>

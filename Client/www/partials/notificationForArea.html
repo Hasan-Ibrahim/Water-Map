@@ -1,0 +1,14 @@
+<div ng-controller="notificationForAreaController">
+    <div>
+        <h5>Notify me on:</h5>
+        <div>
+            <ul>
+                <li ng-repeat="option in options">
+                    <input type="checkbox" ng-model="option.isSelected"/>{{option.name}}
+                </li>
+            </ul>
+            <input type="button" ng-click="submit()" value="Save">
+            <input type="button" ng-click="cancel()" value="Cancel">
+        </div>
+    </div>
+</div>
