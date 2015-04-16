@@ -1,5 +1,4 @@
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace Service.Utility
 {
@@ -12,11 +11,11 @@ namespace Service.Utility
             _message = message;
         }
 
-        public async Task Send()
+        public void Send()
         {
             using (var smtpClient = new SmtpClient())
             {
-                await smtpClient.SendMailAsync(_message);
+                smtpClient.Send(_message);
             }
         }
     }
