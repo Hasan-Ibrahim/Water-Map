@@ -28,14 +28,14 @@ namespace ServiceTest.DataImporter
                 new DbContextRepository<DbDailyAverageSupply>(dbContext),
                 new DbContextRepository<DbDailyAverageSupplySummary>(dbContext),
                 new DbContextRepository<DbSourceSummaryGrid>(dbContext));
-            
+
             _rainWaterService = new RainWaterService(
                 new DbContextRepository<DbRainHarvestTank>(dbContext), null, null);
 
             _stressGridRepository = new DbContextRepository<DbStressIndexGrid>(dbContext);
         }
 
-        [Test]
+        //[Test]
         public void ImportStressIndex()
         {
             using (var fileReader = new StreamReader("SEDAC_POP_2000-01-01_rgb_3600x1800.csv"))
@@ -71,19 +71,26 @@ namespace ServiceTest.DataImporter
         public void ImportRainHarvestData()
         {
             var random = new Random();
-            var xMax = 92.683;
-            var xMin = 88.000;
-            var yMax = 26.617;
-            var yMin = 21.900;
+            // difX = 10, difY = 8
+            var xMax = 90.683;
+            var xMin = 80.000;
+            var yMax = 40.617;
+            var yMin = 30.900;
 
-            var count = 1500;
+            var count = 3000;
 
             for (var i = 0; i < count; i++)
             {
+                var x = (xMax - xMin) * random.NextDouble() + xMin;
+                var y = (yMax - yMin) * random.NextDouble() + yMin;
+
+                var location = string.Format("POINT({0} {1})", x, y);
+                var area = random.Next(1, (int) ((y + x)/2)); //(xMax - x) * (yMax - y) + random.NextDouble() * 50 + 1;
+
                 _rainWaterService.AddRainHarvestTank(new RainHarvestTankEntry
                 {
-                    Location = string.Format("POINT({0} {1})", (xMax - xMin) * random.NextDouble() + xMin, (yMax - yMin) * random.NextDouble() + yMin),
-                    AreaInSquareMetre = random.NextDouble() * 30 + 1
+                    Location = location,
+                    AreaInSquareMetre = area
                 });
             }
         }
@@ -92,13 +99,13 @@ namespace ServiceTest.DataImporter
         //[Test]
         public void ImportData()
         {
-            var sourceId = 22;
+            var sourceId = 81;
 
-            var x = 90.4523277282715;
-            var y = 23.894862543573097;
+            var x = 90.3817;
+            var y = 23.8019;
 
             var random = new Random();
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 15; i++)
             {
                 var population = random.Next(1, 10);
                 var sourceCount = random.Next(1, 4);
