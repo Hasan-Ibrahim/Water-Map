@@ -14,7 +14,7 @@ function Remote($http, serverUrl, jqHttp) {
         var supplyDate = new Date().toISOString().slice(0, 10);
         var location = 'POINT(' + lat + ' ' + lon + ')';
         var supply = [{
-            SourceId: 1,
+            SourceId: sourceId,
             Supply: waterSupply
         }];
         var data = {
