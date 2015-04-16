@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading;
 using Data.Model;
 using Data.Model.Authentication;
 using Data.Model.Constants;
@@ -38,25 +39,31 @@ namespace Service.Notifications
 
                 var body = string.Format("Drinkability of a {0} water source you subscribed to has been changed from {1} to {2}.", dbWaterSource.SourceType, oldMajorRate, newMajorRate);
 
-                SendMails(emails, "Water drinkability changed", body);
+                AsyncSendMails(emails, "Water drinkability changed", body);
             }
         }
 
-        private async void SendMails(IEnumerable<string> emails, string subject, string body)
+
+
+        private void AsyncSendMails(IEnumerable<string> emails, string subject, string body)
         {
-            foreach (var email in emails)
+            var thread = new Thread(() =>
             {
-                try
+                foreach (var email in emails)
                 {
-                    var mailMessage = new MailMessage("notification@waterquest.com", email, subject, body);
-                    await new Email(mailMessage).Send();
+                    try
+                    {
+                        var mailMessage = new MailMessage("notification@waterquest.com", email, subject, body);
+                        new Email(mailMessage).Send();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
-                catch (Exception)
-                {
-                }
-            }
+            });
+            thread.Start();
         }
-
+        
         private IEnumerable<string> GetEmailsBySubscription(WaterSubscriptionType type)
         {
             var userIds = _subscriptionService.GetUsersBySubscription(type).ToList();
@@ -68,7 +75,7 @@ namespace Service.Notifications
         {
             var emails = GetEmailsBySubscription(WaterSubscriptionType.Accessibility);
             var body = string.Format("Status of a {0} water source you subscribed to has been changed from {1} to {2}.", dbWaterSource.SourceType, oldAccessibility, newAccesibility);
-            SendMails(emails, "Water source status changed", body);
+            AsyncSendMails(emails, "Water source status changed", body);
         }
     }
 }
