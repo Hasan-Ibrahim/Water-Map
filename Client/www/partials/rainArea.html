@@ -1,0 +1,14 @@
+<div ng-controller="rainAreaController">
+    <div class="list">
+        <div style="margin: 10px;">
+            <label class="item item-input">
+                <input type="number" ng-model="area" placeholder="Area (sq m)">
+            </label>
+
+            <div style="margin-top: 10px">
+                <button ng-click="submit()" class="button button-small button-balanced">Submit</button>
+                <input class="button button-small button-assertive" type="button" ng-click="cancel()" value="Cancel"/>
+            </div>
+        </div>
+    </div>
+</div>

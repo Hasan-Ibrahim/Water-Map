@@ -1,0 +1,29 @@
+<div ng-controller="qualityController">
+    <h5>Provide Source Quality</h5>
+    <table id="water-quality">
+        <tr>
+            <td>
+                <input type="radio" ng-model="source.quality" name="source-state" value="Drinkable"/></td>
+            <td>Drinkable</td>
+        </tr>
+        <td><input type="radio" ng-model="source.quality" name="source-state" value="NeedTreatment"/></td>
+        <td>NeedTreatment</td>
+        </tr>
+        <tr>
+            <td><input type="radio" ng-model="source.quality" name="source-state" value="Undrinkable"/></td>
+            <td>Undrinkable</td>
+        </tr>
+        <tr>
+        <tr>
+            <td><input type="radio" ng-model="source.quality" name="source-state" value="Unknown"/></td>
+            <td>Unknown</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input class="button button-small button-balanced"  type="submit" value="Submit" ng-click="submit()" ng-disabled="!source.quality" />
+                <input class="button button-small button-assertive"  type="button" ng-click="close()" value="Cancel"/>
+            </td>
+        </tr>
+    </table>
+</div>
